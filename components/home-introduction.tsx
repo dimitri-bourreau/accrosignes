@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Title from "./title";
+import Typography from "./typography";
 
 export default function HomeIntroduction() {
   return (
@@ -29,18 +31,18 @@ export default function HomeIntroduction() {
           {/* Content - Right on Desktop */}
           <div className="space-y-6 md:order-2 pb-20">
             <div className="space-y-3">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+              <Title level="h1" className="text-gray-900">
                 Apprenez la LSF
-              </h1>
-              <p className="text-2xl text-teal-600 font-semibold">
+              </Title>
+              <Typography variant="subtitle" className="text-teal-600">
                 Ensemble à Grenoble
-              </p>
+              </Typography>
             </div>
 
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <Typography variant="body-lg" className="text-gray-600">
               Cours de Langue des Signes Française et rencontres authentiques
               entre sourds et entendants
-            </p>
+            </Typography>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <button className="cursor-pointer px-8 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 hover:shadow-md transition-all duration-200">
