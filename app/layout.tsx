@@ -15,6 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Accrosignes - Cours de LSF à Grenoble",
   description: "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants",
+  icons: {
+    icon: "/logo.jpeg",
+    apple: "/logo.jpeg",
+  },
   robots: {
     index: false,
     follow: false,
