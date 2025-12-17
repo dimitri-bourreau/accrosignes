@@ -30,15 +30,21 @@ export default function Navigation() {
               <Link href="/" className="cursor-pointer hover:text-teal-600 transition duration-200">
                 Accueil
               </Link>
-              <button className="cursor-pointer hover:text-teal-600 transition duration-200">
+              <Link href="/cours-de-lsf" className="cursor-pointer hover:text-teal-600 transition duration-200">
+                Cours
+              </Link>
+              <Link href="/actualites" className="cursor-pointer hover:text-teal-600 transition duration-200">
                 Actualités
-              </button>
-              <button className="cursor-pointer hover:text-teal-600 transition duration-200">
+              </Link>
+              <Link href="/agenda" className="cursor-pointer hover:text-teal-600 transition duration-200">
                 Agenda
-              </button>
-              <button className="cursor-pointer hover:text-teal-600 transition duration-200">
-                Membres
-              </button>
+              </Link>
+              <Link href="/espace-membre" className="cursor-pointer hover:text-teal-600 transition duration-200">
+                Espace membres
+              </Link>
+              <Link href="/donner" className="cursor-pointer hover:text-teal-600 transition duration-200">
+                Donner
+              </Link>
             </div>
 
             {/* Mobile Hamburger */}
@@ -102,24 +108,41 @@ export default function Navigation() {
           >
             Accueil
           </Link>
-          <button
+          <Link
+            href="/cours-de-lsf"
+            className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
+            onClick={() => setMenuOpen(false)}
+          >
+            Cours
+          </Link>
+          <Link
+            href="/actualites"
             className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
             Actualités
-          </button>
-          <button
+          </Link>
+          <Link
+            href="/agenda"
             className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
             Agenda
-          </button>
-          <button
+          </Link>
+          <Link
+            href="/espace-membre"
             className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
-            Membres
-          </button>
+            Espace membres
+          </Link>
+          <Link
+            href="/donner"
+            className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
+            onClick={() => setMenuOpen(false)}
+          >
+            Donner
+          </Link>
         </div>
       </div>
     </>
