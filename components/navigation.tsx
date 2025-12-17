@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Navigation() {
@@ -11,7 +12,7 @@ export default function Navigation() {
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
               <Image
                 src="/logo.jpeg"
                 alt="Accrosignes logo"
@@ -22,13 +23,13 @@ export default function Navigation() {
               <span className="font-bold text-base sm:text-lg text-gray-900">
                 Accrosignes
               </span>
-            </div>
+            </Link>
 
             {/* Desktop Menu */}
             <div className="hidden sm:flex gap-8 text-sm text-gray-600 font-medium">
-              <button className="cursor-pointer hover:text-teal-600 transition duration-200">
+              <Link href="/" className="cursor-pointer hover:text-teal-600 transition duration-200">
                 Accueil
-              </button>
+              </Link>
               <button className="cursor-pointer hover:text-teal-600 transition duration-200">
                 Actualités
               </button>
@@ -94,12 +95,13 @@ export default function Navigation() {
         </button>
 
         <div className="flex flex-col p-6 space-y-6 mt-16">
-          <button
+          <Link
+            href="/"
             className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
             Accueil
-          </button>
+          </Link>
           <button
             className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
             onClick={() => setMenuOpen(false)}
