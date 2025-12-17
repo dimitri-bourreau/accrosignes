@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Title from "./title";
 import Typography from "./typography";
 
@@ -11,15 +12,24 @@ export default function Footer() {
               Navigation
             </Title>
             <div className="space-y-2">
-              <button className="cursor-pointer block hover:text-white transition">
+              <Link
+                href="/actualites"
+                className="cursor-pointer block hover:text-white transition"
+              >
                 <Typography variant="body-sm">Actualités</Typography>
-              </button>
-              <button className="cursor-pointer block hover:text-white transition">
+              </Link>
+              <Link
+                href="/agenda"
+                className="cursor-pointer block hover:text-white transition"
+              >
                 <Typography variant="body-sm">Agenda</Typography>
-              </button>
-              <button className="cursor-pointer block hover:text-white transition">
+              </Link>
+              <Link
+                href="/espace-membre"
+                className="cursor-pointer block hover:text-white transition"
+              >
                 <Typography variant="body-sm">Espace membres</Typography>
-              </button>
+              </Link>
             </div>
           </div>
           <div>
@@ -27,15 +37,15 @@ export default function Footer() {
               Infos
             </Title>
             <div className="space-y-2">
-              <button className="cursor-pointer block hover:text-white transition">
+              <Link href="/nous-contacter" className="cursor-pointer block hover:text-white transition">
                 <Typography variant="body-sm">Nous contacter</Typography>
-              </button>
-              <button className="cursor-pointer block hover:text-white transition">
-                <Typography variant="body-sm">Tarifs</Typography>
-              </button>
-              <button className="cursor-pointer block hover:text-white transition">
+              </Link>
+              <Link href="/inscription" className="cursor-pointer block hover:text-white transition">
+                <Typography variant="body-sm">S&apos;inscrire</Typography>
+              </Link>
+              <Link href="/faq" className="cursor-pointer block hover:text-white transition">
                 <Typography variant="body-sm">FAQ</Typography>
-              </button>
+              </Link>
             </div>
           </div>
           <div>
@@ -43,14 +53,14 @@ export default function Footer() {
               Légal
             </Title>
             <div className="space-y-2">
-              <button className="cursor-pointer block hover:text-white transition">
+              <Link href="/mentions-legales" className="cursor-pointer block hover:text-white transition">
                 <Typography variant="body-sm">Mentions légales</Typography>
-              </button>
-              <button className="cursor-pointer block hover:text-white transition">
+              </Link>
+              <Link href="/politique-confidentialite" className="cursor-pointer block hover:text-white transition">
                 <Typography variant="body-sm">
                   Politique de confidentialité
                 </Typography>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
