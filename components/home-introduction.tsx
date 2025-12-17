@@ -5,7 +5,7 @@ import Typography from "./typography";
 
 export default function HomeIntroduction() {
   return (
-    <section className="relative pt-12 pb-0 px-6 bg-linear-to-b from-gray-50 to-white">
+    <section className="relative pt-12 pb-0 px-6 bg-linear-to-b from-gray-50 to-white overflow-hidden">
       {/* Subtle background elements */}
       <div className="absolute top-20 right-10 w-72 h-72 bg-teal-100 rounded-full opacity-10 animate-shimmer blur-3xl"></div>
       <div
