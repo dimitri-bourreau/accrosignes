@@ -1,17 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 import Title from "@/components/title";
 import Typography from "@/components/typography";
+import LoginForm from "@/components/auth/LoginForm";
 
 export default function EspaceMemberPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
+  const { user, role, loading, signOut } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    if (!loading && user) {
+      if (role === "Administrateur") {
+        router.push("/espace-membre/admin");
+      } else if (role === "Élève") {
+        router.push("/espace-membre/student");
+      }
+    }
+  }, [user, role, loading, router]);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-white flex items-center justify-center">
+        <Typography className="text-gray-600">Chargement...</Typography>
+      </main>
+    );
+  }
+
+  // Show message if user is logged in but has no role
+  if (user && !role) {
+    return (
+      <main className="min-h-screen bg-white flex items-center justify-center">
+        <div className="max-w-md mx-auto px-6 text-center space-y-6">
+          <div className="space-y-2">
+            <Title level="h1" className="text-gray-900">
+              Compte en attente
+            </Title>
+            <Typography variant="body-lg" className="text-gray-600">
+              Votre compte a été créé, mais un administrateur doit vous assigner un rôle.
+            </Typography>
+          </div>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-2">
+            <Typography className="font-semibold text-blue-900">
+              📝 Votre email
+            </Typography>
+            <Typography className="text-blue-800 font-mono text-sm break-all">
+              {user.email}
+            </Typography>
+          </div>
+          <button
+            onClick={() => {
+              signOut();
+            }}
+            className="cursor-pointer w-full px-6 py-2 bg-gray-200 text-gray-900 rounded-lg font-semibold hover:bg-gray-300 transition duration-200"
+          >
+            Déconnexion
+          </button>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-white">
@@ -19,100 +69,14 @@ export default function EspaceMemberPage() {
         <div className="space-y-8">
           <div className="space-y-4 text-center">
             <Title level="h1" className="text-gray-900">
-              {isLogin ? "Connexion" : "Inscription"}
+              Connexion
             </Title>
             <Typography variant="body-lg" className="text-gray-600">
-              {isLogin
-                ? "Accédez à votre espace personnel"
-                : "Rejoignez notre communauté"}
+              Accédez à votre espace personnel
             </Typography>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Input */}
-            <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Adresse e-mail
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="vous@exemple.com"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                required
-              />
-            </div>
-
-            {/* Password Input */}
-            <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Mot de passe
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                required
-              />
-            </div>
-
-            {/* Additional Fields for Registration */}
-            {!isLogin && (
-              <>
-                <div className="space-y-2">
-                  <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">
-                    Nom complet
-                  </label>
-                  <input
-                    id="fullname"
-                    type="text"
-                    placeholder="Jean Dupont"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                    Téléphone
-                  </label>
-                  <input
-                    id="phone"
-                    type="tel"
-                    placeholder="06 12 34 56 78"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
-                  />
-                </div>
-              </>
-            )}
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="cursor-pointer w-full px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
-            >
-              {isLogin ? "Se connecter" : "S&apos;inscrire"}
-            </button>
-          </form>
-
-          {/* Toggle Form Type */}
-          <div className="text-center">
-            <Typography variant="body-sm" className="text-gray-600">
-              {isLogin ? "Pas encore de compte? " : "Vous avez un compte? "}
-              <button
-                type="button"
-                onClick={() => setIsLogin(!isLogin)}
-                className="cursor-pointer text-teal-600 font-semibold hover:underline"
-              >
-                {isLogin ? "S&apos;inscrire" : "Se connecter"}
-              </button>
-            </Typography>
-          </div>
+          <LoginForm />
 
           {/* Info Box */}
           <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 space-y-2">
