@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Title from "./title";
 import Typography from "./typography";
 
@@ -14,9 +15,12 @@ export default function SupportSection() {
             d&apos;accueillir tous les niveaux
           </Typography>
         </div>
-        <button className="cursor-pointer px-8 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200">
+        <Link
+          href="/donner"
+          className="cursor-pointer px-8 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
+        >
           Faire un don
-        </button>
+        </Link>
       </div>
     </section>
   );
