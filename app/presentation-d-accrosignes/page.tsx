@@ -45,27 +45,11 @@ export default function PresentationPage() {
                   Nos Valeurs
                 </Title>
 
-                <ul className="list-disc list-inside space-y-2">
-                  <li>
-                    <Typography variant="body-lg">
-                      Inclusivité et accessibilité pour tous
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography variant="body-lg">
-                      Respect de la culture sourde
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography variant="body-lg">
-                      Apprentissage authentique avec des instructeurs sourds
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography variant="body-lg">
-                      Création d&apos;une communauté bienveillante
-                    </Typography>
-                  </li>
+                <ul className="list-disc list-inside space-y-2 text-gray-600">
+                  <li>Inclusivité et accessibilité pour tous</li>
+                  <li>Respect de la culture sourde</li>
+                  <li>Apprentissage authentique avec des instructeurs sourds</li>
+                  <li>Création d&apos;une communauté bienveillante</li>
                 </ul>
               </div>
 
