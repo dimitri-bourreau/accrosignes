@@ -49,14 +49,13 @@ export default function PolitiqueConfidentialitePage() {
                 Vos données sont utilisées pour:
               </Typography>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li>Gérer votre inscription et votre participation aux cours</li>
-                <li>Traiter les paiements</li>
-                <li>Vous envoyer des confirmations et des mises à jour</li>
-                <li>Améliorer nos services</li>
-                <li>Respecter nos obligations légales</li>
-                <li>Analyser l&apos;utilisation du site (données anonymisées)</li>
+                <li><Typography variant="body-lg">Gérer votre inscription et votre participation aux cours</Typography></li>
+                <li><Typography variant="body-lg">Traiter les paiements</Typography></li>
+                <li><Typography variant="body-lg">Vous envoyer des confirmations et des mises à jour</Typography></li>
+                <li><Typography variant="body-lg">Améliorer nos services</Typography></li>
+                <li><Typography variant="body-lg">Respecter nos obligations légales</Typography></li>
+                <li><Typography variant="body-lg">Analyser l&apos;utilisation du site (données anonymisées)</Typography></li>
               </ul>
-            </Typography>
             </section>
 
             {/* Fondement légal */}
@@ -68,12 +67,11 @@ export default function PolitiqueConfidentialitePage() {
                 Le traitement de vos données est basé sur:
               </Typography>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li>Votre consentement explicite</li>
-                <li>L&apos;exécution d&apos;un contrat</li>
-                <li>Nos obligations légales</li>
-                <li>Nos intérêts légitimes</li>
+                <li><Typography variant="body-lg">Votre consentement explicite</Typography></li>
+                <li><Typography variant="body-lg">L&apos;exécution d&apos;un contrat</Typography></li>
+                <li><Typography variant="body-lg">Nos obligations légales</Typography></li>
+                <li><Typography variant="body-lg">Nos intérêts légitimes</Typography></li>
               </ul>
-            </Typography>
             </section>
 
             {/* Partage des données */}
@@ -103,9 +101,9 @@ export default function PolitiqueConfidentialitePage() {
                 Généralement:
               </Typography>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li>Données d&apos;inscription: 3 ans après la fin du cours</li>
-                <li>Données de paiement: Selon les obligations fiscales (6 ans)</li>
-                <li>Messages de contact: 2 ans après traitement</li>
+                <li><Typography variant="body-lg">Données d&apos;inscription: 3 ans après la fin du cours</Typography></li>
+                <li><Typography variant="body-lg">Données de paiement: Selon les obligations fiscales (6 ans)</Typography></li>
+                <li><Typography variant="body-lg">Messages de contact: 2 ans après traitement</Typography></li>
               </ul>
             </section>
 
@@ -118,12 +116,12 @@ export default function PolitiqueConfidentialitePage() {
                 Vous avez le droit de:
               </Typography>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li><strong>Accès:</strong> Obtenir une copie de vos données</li>
-                <li><strong>Rectification:</strong> Corriger vos données inexactes</li>
-                <li><strong>Suppression:</strong> Demander l&apos;effacement (droit à l&apos;oubli)</li>
-                <li><strong>Limitation:</strong> Limiter l&apos;utilisation de vos données</li>
-                <li><strong>Portabilité:</strong> Recevoir vos données dans un format structuré</li>
-                <li><strong>Opposition:</strong> Vous opposer au traitement</li>
+                <li><Typography variant="body-lg"><strong>Accès:</strong> Obtenir une copie de vos données</Typography></li>
+                <li><Typography variant="body-lg"><strong>Rectification:</strong> Corriger vos données inexactes</Typography></li>
+                <li><Typography variant="body-lg"><strong>Suppression:</strong> Demander l&apos;effacement (droit à l&apos;oubli)</Typography></li>
+                <li><Typography variant="body-lg"><strong>Limitation:</strong> Limiter l&apos;utilisation de vos données</Typography></li>
+                <li><Typography variant="body-lg"><strong>Portabilité:</strong> Recevoir vos données dans un format structuré</Typography></li>
+                <li><Typography variant="body-lg"><strong>Opposition:</strong> Vous opposer au traitement</Typography></li>
               </ul>
               <Typography variant="body-lg" className="mt-4">
                 Pour exercer ces droits, contactez-nous à contact@accrosignes.fr
@@ -139,10 +137,10 @@ export default function PolitiqueConfidentialitePage() {
                 Nous avons mis en place des mesures de sécurité appropriées pour protéger vos données:
               </Typography>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li>Chiffrement SSL/TLS pour les connexions sécurisées</li>
-                <li>Sauvegarde régulière des données</li>
-                <li>Accès limité aux données autorisées</li>
-                <li>Conformité RGPD</li>
+                <li><Typography variant="body-lg">Chiffrement SSL/TLS pour les connexions sécurisées</Typography></li>
+                <li><Typography variant="body-lg">Sauvegarde régulière des données</Typography></li>
+                <li><Typography variant="body-lg">Accès limité aux données autorisées</Typography></li>
+                <li><Typography variant="body-lg">Conformité RGPD</Typography></li>
               </ul>
             </section>
 
@@ -155,9 +153,9 @@ export default function PolitiqueConfidentialitePage() {
                 Ce site utilise des cookies pour:
               </Typography>
               <ul className="list-disc list-inside space-y-2 ml-2">
-                <li>Améliorer votre expérience utilisateur</li>
-                <li>Analyser l&apos;utilisation du site</li>
-                <li>Mémoriser vos préférences</li>
+                <li><Typography variant="body-lg">Améliorer votre expérience utilisateur</Typography></li>
+                <li><Typography variant="body-lg">Analyser l&apos;utilisation du site</Typography></li>
+                <li><Typography variant="body-lg">Mémoriser vos préférences</Typography></li>
               </ul>
               <Typography variant="body-lg" className="mt-4">
                 Vous pouvez gérer vos préférences de cookies dans les paramètres de votre navigateur.
