@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navigation from "@/components/navigation";
+import Footer from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Accrosignes - Cours de LSF à Grenoble",
-  description: "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants",
+  description:
+    "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants",
   icons: {
     icon: "/logo.jpeg",
     apple: "/logo.jpeg",
@@ -40,7 +43,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="min-h-screen bg-white">
+          <Navigation />
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );
