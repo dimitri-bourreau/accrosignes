@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Title from "./title";
 import Typography from "./typography";
 
@@ -45,12 +46,18 @@ export default function HomeIntroduction() {
             </Typography>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
-              <button className="cursor-pointer px-8 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 hover:shadow-md transition-all duration-200">
-                Découvrir les cours
-              </button>
-              <button className="cursor-pointer px-8 py-3 border-2 border-teal-600 text-teal-600 rounded-lg font-semibold hover:bg-teal-50 transition-all duration-200">
+              <Link
+                href="/presentation-d-accrosignes"
+                className="cursor-pointer px-8 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 hover:shadow-md transition-all duration-200 flex items-center justify-center"
+              >
+                L&apos;association
+              </Link>
+              <Link
+                href="/agenda"
+                className="cursor-pointer px-8 py-3 border-2 border-teal-600 text-teal-600 rounded-lg font-semibold hover:bg-teal-50 hover:shadow-md transition-all duration-200 flex items-center justify-center"
+              >
                 Voir l&apos;agenda
-              </button>
+              </Link>
             </div>
           </div>
         </div>

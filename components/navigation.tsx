@@ -27,8 +27,8 @@ export default function Navigation() {
 
             {/* Desktop Menu */}
             <div className="hidden sm:flex gap-8 text-sm text-gray-600 font-medium">
-              <Link href="/" className="cursor-pointer hover:text-teal-600 transition duration-200">
-                Accueil
+              <Link href="/presentation-d-accrosignes" className="cursor-pointer hover:text-teal-600 transition duration-200">
+                Présentation d&apos;Accrosignes
               </Link>
               <Link href="/cours-de-lsf" className="cursor-pointer hover:text-teal-600 transition duration-200">
                 Cours
@@ -102,11 +102,11 @@ export default function Navigation() {
 
         <div className="flex flex-col p-6 space-y-6 mt-16">
           <Link
-            href="/"
+            href="/presentation-d-accrosignes"
             className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
-            Accueil
+            Présentation d&apos;Accrosignes
           </Link>
           <Link
             href="/cours-de-lsf"
