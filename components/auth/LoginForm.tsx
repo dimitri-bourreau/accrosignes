@@ -8,16 +8,40 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [linkSent, setLinkSent] = useState(false);
+  const [localError, setLocalError] = useState("");
   const { sendSignInLink, error, clearError } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
+    setLocalError("");
     setIsLoading(true);
     try {
+      // Check if email is registered
+      const checkResponse = await fetch("/api/check-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!checkResponse.ok) {
+        const errorData = await checkResponse.json();
+        setLocalError(
+          errorData.error ||
+            "Cet email n'est pas enregistré. Contactez un administrateur pour créer votre compte."
+        );
+        return;
+      }
+
       await sendSignInLink(email);
       setLinkSent(true);
       setEmail("");
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "Une erreur s'est produite. Veuillez réessayer.";
+      setLocalError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -46,9 +70,9 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {error && (
+      {(error || localError) && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-          <Typography className="text-red-700 text-sm">{error}</Typography>
+          <Typography className="text-red-700 text-sm">{error || localError}</Typography>
         </div>
       )}
       <div>
