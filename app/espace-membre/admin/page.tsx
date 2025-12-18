@@ -1,24 +1,74 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import Title from "@/components/title";
 import Typography from "@/components/typography";
 import Link from "next/link";
 
-type Tab = "content" | "articles" | "events" | "resources";
+type Tab = "content" | "articles" | "events" | "resources" | "users";
+
+interface User {
+  uid: string;
+  email: string;
+  role: "Administrateur" | "Élève" | null;
+}
 
 export default function AdminDashboard() {
-  const { role, loading, signOut } = useAuth();
+  const { user: currentUser, role, loading, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>("content");
   const [showAddForm, setShowAddForm] = useState(false);
+  const [users, setUsers] = useState<User[]>([]);
+  const [usersLoading, setUsersLoading] = useState(false);
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
     { id: "content", label: "Contenu", icon: "✏️" },
     { id: "articles", label: "Articles", icon: "📰" },
     { id: "events", label: "Événements", icon: "📅" },
     { id: "resources", label: "Ressources", icon: "📄" },
+    { id: "users", label: "Utilisateurs", icon: "👥" },
   ];
+
+  useEffect(() => {
+    if (activeTab === "users") {
+      fetchUsers();
+    }
+  }, [activeTab]);
+
+  const fetchUsers = async () => {
+    setUsersLoading(true);
+    try {
+      const response = await fetch("/api/users");
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data);
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setUsersLoading(false);
+    }
+  };
+
+  const handleSetRole = async (uid: string, newRole: "Administrateur" | "Élève") => {
+    if (!currentUser) return;
+    try {
+      const response = await fetch("/api/set-role", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid,
+          role: newRole,
+          adminId: currentUser.uid,
+        }),
+      });
+      if (response.ok) {
+        fetchUsers();
+      }
+    } catch (error) {
+      console.error("Error setting role:", error);
+    }
+  };
 
   if (loading) {
     return (
@@ -98,14 +148,18 @@ export default function AdminDashboard() {
                 ? "Gestion des articles"
                 : activeTab === "events"
                 ? "Gestion des événements"
-                : "Gestion des ressources"}
+                : activeTab === "resources"
+                ? "Gestion des ressources"
+                : "Gestion des utilisateurs"}
             </Title>
-            <button
-              onClick={() => setShowAddForm(!showAddForm)}
-              className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
-            >
-              {showAddForm ? "Annuler" : "Ajouter nouveau"}
-            </button>
+            {activeTab !== "users" && (
+              <button
+                onClick={() => setShowAddForm(!showAddForm)}
+                className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
+              >
+                {showAddForm ? "Annuler" : "Ajouter nouveau"}
+              </button>
+            )}
           </div>
 
           {/* Add Form */}
@@ -265,6 +319,72 @@ export default function AdminDashboard() {
                     Ajoutez votre première ressource
                   </Typography>
                 </div>
+              </div>
+            )}
+
+            {activeTab === "users" && (
+              <div className="overflow-x-auto border border-gray-200 rounded-lg">
+                {usersLoading ? (
+                  <div className="p-8 text-center">
+                    <Typography className="text-gray-600">Chargement des utilisateurs...</Typography>
+                  </div>
+                ) : users.length === 0 ? (
+                  <div className="p-4 bg-gray-50 flex justify-between items-center">
+                    <div>
+                      <Typography className="font-semibold text-gray-900">
+                        Aucun utilisateur
+                      </Typography>
+                    </div>
+                  </div>
+                ) : (
+                  <table className="w-full">
+                    <thead className="bg-gray-50 border-b border-gray-200">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Email</th>
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Rôle</th>
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {users.map((user) => (
+                        <tr key={user.uid} className="border-b border-gray-200 hover:bg-gray-50">
+                          <td className="px-6 py-3 text-sm text-gray-900">{user.email}</td>
+                          <td className="px-6 py-3 text-sm">
+                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                              user.role === "Administrateur"
+                                ? "bg-blue-100 text-blue-800"
+                                : user.role === "Élève"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-gray-100 text-gray-800"
+                            }`}>
+                              {user.role || "Sans rôle"}
+                            </span>
+                          </td>
+                          <td className="px-6 py-3 text-sm">
+                            <div className="flex items-center gap-3">
+                              <span className="text-xs font-semibold text-gray-700 w-10">Admin</span>
+                              <button
+                                onClick={() => handleSetRole(user.uid, user.role === "Administrateur" ? "Élève" : "Administrateur")}
+                                className="cursor-pointer relative inline-flex items-center justify-center h-6 w-12 rounded-full transition-colors duration-200"
+                                style={{
+                                  backgroundColor: user.role === "Administrateur" ? "#2563eb" : "#16a34a",
+                                }}
+                              >
+                                <div
+                                  className="h-5 w-5 rounded-full bg-white shadow-md transition-transform duration-300"
+                                  style={{
+                                    transform: user.role === "Administrateur" ? "translateX(-6px)" : "translateX(6px)",
+                                  }}
+                                />
+                              </button>
+                              <span className="text-xs font-semibold text-gray-700 w-10">Élève</span>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
             )}
           </div>
