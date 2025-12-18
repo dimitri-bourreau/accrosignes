@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Title from "@/components/title";
 import Typography from "@/components/typography";
 import LoginForm from "@/components/auth/LoginForm";
 
-export default function LoginPage() {
+function LoginPageContent() {
   const router = useRouter();
-  const { user, loading } = useAuth();
+  const { user, loading, signInWithLink, error, clearError } = useAuth();
+  const [isProcessingLink, setIsProcessingLink] = useState(false);
 
   useEffect(() => {
     if (!loading && user) {
@@ -17,10 +18,35 @@ export default function LoginPage() {
     }
   }, [user, loading, router]);
 
-  if (loading) {
+  useEffect(() => {
+    const processEmailLink = async () => {
+      const link = window.location.href;
+      const storedEmail = window.localStorage.getItem("emailForSignIn");
+
+      // Check if this is a sign-in link (Firebase adds oobCode parameter)
+      if (link.includes("oobCode") && storedEmail && !isProcessingLink) {
+        setIsProcessingLink(true);
+        try {
+          clearError();
+          await signInWithLink(storedEmail, link);
+        } catch (err) {
+          console.error("Error processing sign-in link:", err);
+        } finally {
+          setIsProcessingLink(false);
+        }
+      }
+    };
+
+    processEmailLink();
+  }, [signInWithLink, clearError, isProcessingLink]);
+
+  const link = typeof window !== "undefined" ? window.location.href : "";
+  const hasEmailLink = link.includes("oobCode");
+
+  if (loading || (hasEmailLink && isProcessingLink)) {
     return (
       <main className="min-h-screen bg-white flex items-center justify-center">
-        <Typography className="text-gray-600">Chargement...</Typography>
+        <Typography className="text-gray-600">Connexion en cours...</Typography>
       </main>
     );
   }
@@ -40,7 +66,12 @@ export default function LoginPage() {
 
           <LoginForm />
 
-          {/* Info Box */}
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+              <Typography className="text-red-700 text-sm">{error}</Typography>
+            </div>
+          )}
+
           <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 space-y-2">
             <Typography variant="body-sm" className="font-semibold text-teal-900">
               ℹ️ Espace Membres
@@ -52,5 +83,19 @@ export default function LoginPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-white flex items-center justify-center">
+          <Typography className="text-gray-600">Chargement...</Typography>
+        </main>
+      }
+    >
+      <LoginPageContent />
+    </Suspense>
   );
 }

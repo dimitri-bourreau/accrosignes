@@ -8,15 +8,15 @@ import {
   ReactNode,
 } from "react";
 import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
+  sendSignInLinkToEmail,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
   signOut,
   onAuthStateChanged,
   User,
   AuthError,
 } from "firebase/auth";
-import { auth, db } from "@/lib/firebase/config";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth } from "@/lib/firebase/config";
 
 type Role = "Administrateur" | "Élève" | null;
 
@@ -24,13 +24,8 @@ interface AuthContextType {
   user: User | null;
   role: Role;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (
-    email: string,
-    password: string,
-    fullname: string,
-    phone: string
-  ) => Promise<void>;
+  sendSignInLink: (email: string) => Promise<void>;
+  signInWithLink: (email: string, link: string) => Promise<void>;
   signOut: () => Promise<void>;
   error: string | null;
   clearError: () => void;
@@ -66,10 +61,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  const handleSignIn = async (email: string, password: string) => {
+  const handleSendSignInLink = async (email: string) => {
     try {
       setError(null);
-      await signInWithEmailAndPassword(auth, email, password);
+      const actionCodeSettings = {
+        url: `${window.location.origin}/espace-membre/login`,
+        handleCodeInApp: true,
+      };
+      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+      window.localStorage.setItem("emailForSignIn", email);
     } catch (err) {
       const authError = err as AuthError;
       setError(authError.message);
@@ -77,25 +77,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const handleSignUp = async (
-    email: string,
-    password: string,
-    fullname: string,
-    phone: string
-  ) => {
+  const handleSignInWithLink = async (email: string, link: string) => {
     try {
       setError(null);
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      await setDoc(doc(db, "users", result.user.uid), {
-        email,
-        fullname,
-        phone,
-        createdAt: serverTimestamp(),
-      });
+      if (isSignInWithEmailLink(auth, link)) {
+        await signInWithEmailLink(auth, email, link);
+        window.localStorage.removeItem("emailForSignIn");
+      } else {
+        throw new Error("Le lien de connexion est invalide ou a expiré");
+      }
     } catch (err) {
       const authError = err as AuthError;
       setError(authError.message);
@@ -109,6 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await signOut(auth);
       setUser(null);
       setRole(null);
+      window.location.href = "/";
     } catch (err) {
       const authError = err as AuthError;
       setError(authError.message);
@@ -124,8 +115,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         role,
         loading,
-        signIn: handleSignIn,
-        signUp: handleSignUp,
+        sendSignInLink: handleSendSignInLink,
+        signInWithLink: handleSignInWithLink,
         signOut: handleSignOut,
         error,
         clearError,

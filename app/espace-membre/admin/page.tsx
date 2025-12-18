@@ -20,6 +20,10 @@ export default function AdminDashboard() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [usersLoading, setUsersLoading] = useState(false);
+  const [showCreateUserForm, setShowCreateUserForm] = useState(false);
+  const [newUserEmail, setNewUserEmail] = useState("");
+  const [createUserLoading, setCreateUserLoading] = useState(false);
+  const [createUserError, setCreateUserError] = useState("");
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
     { id: "content", label: "Contenu", icon: "✏️" },
@@ -67,6 +71,35 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error("Error setting role:", error);
+    }
+  };
+
+  const handleCreateUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateUserError("");
+    setCreateUserLoading(true);
+    try {
+      const response = await fetch("/api/create-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: newUserEmail,
+          adminId: currentUser?.uid,
+        }),
+      });
+      if (response.ok) {
+        setNewUserEmail("");
+        setShowCreateUserForm(false);
+        fetchUsers();
+      } else {
+        const error = await response.json();
+        setCreateUserError(error.error || "Erreur lors de la création de l'utilisateur");
+      }
+    } catch (error) {
+      console.error("Error creating user:", error);
+      setCreateUserError("Erreur lors de la création de l'utilisateur");
+    } finally {
+      setCreateUserLoading(false);
     }
   };
 
@@ -152,7 +185,14 @@ export default function AdminDashboard() {
                 ? "Gestion des ressources"
                 : "Gestion des utilisateurs"}
             </Title>
-            {activeTab !== "users" && (
+            {activeTab === "users" ? (
+              <button
+                onClick={() => setShowCreateUserForm(!showCreateUserForm)}
+                className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
+              >
+                {showCreateUserForm ? "Annuler" : "Créer un utilisateur"}
+              </button>
+            ) : (
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
                 className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
@@ -323,8 +363,54 @@ export default function AdminDashboard() {
             )}
 
             {activeTab === "users" && (
-              <div className="overflow-x-auto border border-gray-200 rounded-lg">
-                {usersLoading ? (
+              <>
+                {showCreateUserForm && (
+                  <div className="p-6 bg-gray-50 border border-gray-200 rounded-lg mb-6">
+                    <form onSubmit={handleCreateUser} className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Email du nouvel utilisateur
+                        </label>
+                        <input
+                          type="email"
+                          value={newUserEmail}
+                          onChange={(e) => setNewUserEmail(e.target.value)}
+                          required
+                          placeholder="utilisateur@example.com"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        />
+                      </div>
+                      {createUserError && (
+                        <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                          <Typography className="text-red-700 text-sm">{createUserError}</Typography>
+                        </div>
+                      )}
+                      <div className="flex gap-3">
+                        <button
+                          type="submit"
+                          disabled={createUserLoading}
+                          className="cursor-pointer px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 disabled:bg-gray-400 transition duration-200"
+                        >
+                          {createUserLoading ? "Création en cours..." : "Créer l'utilisateur"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowCreateUserForm(false);
+                            setNewUserEmail("");
+                            setCreateUserError("");
+                          }}
+                          className="cursor-pointer px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition duration-200"
+                        >
+                          Annuler
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+
+                <div className={`overflow-x-auto border border-gray-200 rounded-lg ${showCreateUserForm ? "" : ""}`}>
+                  {usersLoading ? (
                   <div className="p-8 text-center">
                     <Typography className="text-gray-600">Chargement des utilisateurs...</Typography>
                   </div>
@@ -385,7 +471,8 @@ export default function AdminDashboard() {
                     </tbody>
                   </table>
                 )}
-              </div>
+                </div>
+              </>
             )}
           </div>
         </div>

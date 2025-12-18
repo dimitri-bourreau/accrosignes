@@ -4,26 +4,45 @@ import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import Typography from "@/components/typography";
 
-interface LoginFormProps {
-  onSwitchToSignup?: () => void;
-}
-
-export default function LoginForm({}: LoginFormProps = {}) {
+export default function LoginForm() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn, error, clearError } = useAuth();
+  const [linkSent, setLinkSent] = useState(false);
+  const { sendSignInLink, error, clearError } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
     setIsLoading(true);
     try {
-      await signIn(email, password);
+      await sendSignInLink(email);
+      setLinkSent(true);
+      setEmail("");
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (linkSent) {
+    return (
+      <div className="space-y-4 text-center">
+        <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+          <Typography className="text-green-700 font-semibold">
+            Vérifiez votre email
+          </Typography>
+          <Typography className="text-green-600 text-sm mt-2">
+            Un lien de connexion a été envoyé à votre adresse email. Cliquez sur le lien pour vous connecter.
+          </Typography>
+        </div>
+        <button
+          onClick={() => setLinkSent(false)}
+          className="cursor-pointer text-teal-600 hover:text-teal-700 text-sm font-semibold transition"
+        >
+          Retour
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -41,18 +60,7 @@ export default function LoginForm({}: LoginFormProps = {}) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Mot de passe
-        </label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
+          placeholder="votre@email.com"
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
         />
       </div>
@@ -61,7 +69,7 @@ export default function LoginForm({}: LoginFormProps = {}) {
         disabled={isLoading}
         className="w-full px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 disabled:bg-gray-400 transition duration-200 cursor-pointer"
       >
-        {isLoading ? "Connexion en cours..." : "Se connecter"}
+        {isLoading ? "Envoi en cours..." : "Envoyer le lien"}
       </button>
     </form>
   );
