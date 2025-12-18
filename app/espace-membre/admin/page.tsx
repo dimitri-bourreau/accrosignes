@@ -6,14 +6,16 @@ import Title from "@/components/title";
 import Typography from "@/components/typography";
 import Link from "next/link";
 
-type Tab = "events" | "resources";
+type Tab = "content" | "articles" | "events" | "resources";
 
 export default function AdminDashboard() {
   const { role, loading, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<Tab>("events");
+  const [activeTab, setActiveTab] = useState<Tab>("content");
   const [showAddForm, setShowAddForm] = useState(false);
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
+    { id: "content", label: "Contenu", icon: "✏️" },
+    { id: "articles", label: "Articles", icon: "📰" },
     { id: "events", label: "Événements", icon: "📅" },
     { id: "resources", label: "Ressources", icon: "📄" },
   ];
@@ -58,7 +60,7 @@ export default function AdminDashboard() {
               Tableau de bord administrateur
             </Title>
             <Typography variant="body-lg" className="text-gray-600">
-              Gérez les cours, événements et ressources
+              Gérez le contenu du site, articles, événements et ressources
             </Typography>
           </div>
           <button
@@ -90,8 +92,10 @@ export default function AdminDashboard() {
         <div className="space-y-8">
           <div className="flex justify-between items-center">
             <Title level="h2" className="text-gray-900">
-              {activeTab === "courses"
-                ? "Gestion des cours"
+              {activeTab === "content"
+                ? "Gestion du contenu"
+                : activeTab === "articles"
+                ? "Gestion des articles"
                 : activeTab === "events"
                 ? "Gestion des événements"
                 : "Gestion des ressources"}
@@ -107,6 +111,55 @@ export default function AdminDashboard() {
           {/* Add Form */}
           {showAddForm && (
             <div className="p-6 bg-gray-50 border border-gray-200 rounded-lg space-y-4">
+              {activeTab === "content" && (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Identifiant unique (ex: hero-title)"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                  <textarea
+                    placeholder="Contenu (texte ou HTML)"
+                    rows={6}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Section/Page (ex: accueil, à-propos)"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                </>
+              )}
+
+              {activeTab === "articles" && (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Titre de l'article"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                  <textarea
+                    placeholder="Résumé/Extrait"
+                    rows={2}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                  <textarea
+                    placeholder="Contenu complet"
+                    rows={6}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                  <input
+                    type="date"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                  <input
+                    type="file"
+                    placeholder="Image de couverture"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                </>
+              )}
+
               {activeTab === "events" && (
                 <>
                   <input
@@ -163,6 +216,32 @@ export default function AdminDashboard() {
 
           {/* Items List */}
           <div className="space-y-3">
+            {activeTab === "content" && (
+              <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center">
+                <div>
+                  <Typography className="font-semibold text-gray-900">
+                    Aucun contenu pour le moment
+                  </Typography>
+                  <Typography variant="caption" className="text-gray-600">
+                    Ajoutez votre premier bloc de contenu
+                  </Typography>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "articles" && (
+              <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center">
+                <div>
+                  <Typography className="font-semibold text-gray-900">
+                    Aucun article pour le moment
+                  </Typography>
+                  <Typography variant="caption" className="text-gray-600">
+                    Ajoutez votre premier article
+                  </Typography>
+                </div>
+              </div>
+            )}
+
             {activeTab === "events" && (
               <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center">
                 <div>
