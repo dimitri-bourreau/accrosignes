@@ -29,6 +29,9 @@ export async function POST(request: Request) {
       emailVerified: false,
     });
 
+    // Set default role to "Élève"
+    await adminAuth.setCustomUserClaims(userRecord.uid, { role: "Élève" });
+
     return NextResponse.json({
       uid: userRecord.uid,
       email: userRecord.email,

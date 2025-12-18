@@ -74,6 +74,31 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDeleteUser = async (uid: string, email: string) => {
+    if (!currentUser) return;
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer ${email} ?`)) return;
+
+    try {
+      const response = await fetch("/api/delete-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid,
+          adminId: currentUser.uid,
+        }),
+      });
+      if (response.ok) {
+        fetchUsers();
+      } else {
+        const error = await response.json();
+        alert(error.error || "Erreur lors de la suppression de l'utilisateur");
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert("Erreur lors de la suppression de l'utilisateur");
+    }
+  };
+
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     setCreateUserError("");
@@ -464,6 +489,12 @@ export default function AdminDashboard() {
                                 />
                               </button>
                               <span className="text-xs font-semibold text-gray-700 w-10">Élève</span>
+                              <button
+                                onClick={() => handleDeleteUser(user.uid, user.email)}
+                                className="cursor-pointer ml-2 px-3 py-1 bg-red-500 text-white rounded text-xs font-semibold hover:bg-red-600 transition duration-200"
+                              >
+                                Supprimer
+                              </button>
                             </div>
                           </td>
                         </tr>
