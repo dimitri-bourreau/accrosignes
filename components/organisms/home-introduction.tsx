@@ -14,9 +14,9 @@ export default function HomeIntroduction() {
       ></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
           {/* Photo - Left on Desktop */}
-          <div className="flex justify-center md:order-1 md:pb-0">
+          <div className="flex justify-center md:order-1">
             <div className="relative w-full">
               <Image
                 src="/photo-des-goat.png"
