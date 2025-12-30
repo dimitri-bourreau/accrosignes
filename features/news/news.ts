@@ -1,6 +1,6 @@
 import { db } from "@/features/auth/config";
 import { adminDb } from "@/features/auth/admin";
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { News } from "@/features/news/news.type";
 
 const COLLECTION = "news";
@@ -8,22 +8,6 @@ const COLLECTION = "news";
 export async function deleteNews(id: string): Promise<void> {
   const newsRef = doc(db, COLLECTION, id);
   await deleteDoc(newsRef);
-}
-
-export async function getNews(id: string): Promise<News | null> {
-  const newsRef = doc(db, COLLECTION, id);
-  const newsSnap = await getDoc(newsRef);
-
-  if (!newsSnap.exists()) return null;
-
-  const data = newsSnap.data();
-  return {
-    id: newsSnap.id,
-    ...data,
-    publishedAt: data.publishedAt.toDate(),
-    createdAt: data.createdAt.toDate(),
-    updatedAt: data.updatedAt.toDate(),
-  } as News;
 }
 
 export async function getAllNews(): Promise<News[]> {

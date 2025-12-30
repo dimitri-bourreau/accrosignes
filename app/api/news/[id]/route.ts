@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getNews, deleteNews, verifyAdminRole } from "@/features/news/news";
-import { UpdateNewsData } from "@/features/news/news.type";
-import { doc, Timestamp, updateDoc } from "firebase/firestore";
+import { deleteNews, verifyAdminRole } from "@/features/news/news";
+import { News, UpdateNewsData } from "@/features/news/news.type";
+import { doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { db } from "@/features/auth/config";
 import { generateSlug } from "@/features/news/services/generate-slug.service";
 
@@ -10,7 +10,18 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const news = await getNews(params.id);
+    const newsRef = doc(db, "news", params.id);
+    const newsSnap = await getDoc(newsRef);
+    if (!newsSnap.exists()) return null;
+
+    const data = newsSnap.data();
+    const news = {
+      id: newsSnap.id,
+      ...data,
+      publishedAt: data.publishedAt.toDate(),
+      createdAt: data.createdAt.toDate(),
+      updatedAt: data.updatedAt.toDate(),
+    } as News;
     if (!news) {
       return NextResponse.json({ error: "News not found" }, { status: 404 });
     }
