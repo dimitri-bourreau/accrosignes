@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAllNews, createNews, verifyAdminRole } from "@/features/news/news";
-import { CreateNewsData } from "@/features/news/news.type";
+import { getAllNews, verifyAdminRole } from "@/features/news/news";
+import { generateSlug } from "@/features/news/services/generate-slug.service";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { db } from "@/features/auth/config";
 
 export async function GET() {
   try {
@@ -18,15 +20,25 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const { title, content, imageUrl, authorId } = await req.json();
-
     const isAdmin = await verifyAdminRole(authorId);
+
     if (!isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    const newsData: CreateNewsData = { title, content, imageUrl, authorId };
-    const id = await createNews(newsData);
-
+    const slug = generateSlug(title);
+    const now = new Date();
+    const newsDocument = {
+      title,
+      content,
+      imageUrl,
+      authorId,
+      slug,
+      publishedAt: Timestamp.fromDate(now),
+      createdAt: Timestamp.fromDate(now),
+      updatedAt: Timestamp.fromDate(now),
+    };
+    const { id } = await addDoc(collection(db, "news"), newsDocument);
     return NextResponse.json({ id, success: true });
   } catch (error) {
     console.error("Error creating news:", error);

@@ -1,41 +1,16 @@
 import { db } from "@/features/auth/config";
 import { adminDb } from "@/features/auth/admin";
 import {
-  collection,
-  addDoc,
   updateDoc,
   deleteDoc,
   doc,
-  getDocs,
   getDoc,
-  query,
-  orderBy,
   Timestamp,
 } from "firebase/firestore";
-import {
-  News,
-  CreateNewsData,
-  UpdateNewsData,
-} from "@/features/news/news.type";
+import { News, UpdateNewsData } from "@/features/news/news.type";
 import { generateSlug } from "./services/generate-slug.service";
 
 const COLLECTION = "news";
-
-export async function createNews(data: CreateNewsData): Promise<string> {
-  const slug = generateSlug(data.title);
-  const now = new Date();
-
-  const newsData = {
-    ...data,
-    slug,
-    publishedAt: Timestamp.fromDate(now),
-    createdAt: Timestamp.fromDate(now),
-    updatedAt: Timestamp.fromDate(now),
-  };
-
-  const docRef = await addDoc(collection(db, COLLECTION), newsData);
-  return docRef.id;
-}
 
 export async function updateNews(
   id: string,
