@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Navigation from "@/components/organisms/navigation";
 
 const meta: Meta<typeof Navigation> = {
-  title: "Components/Navigation",
+  title: "organisms/Navigation",
   component: Navigation,
   tags: ["autodocs"],
   parameters: {

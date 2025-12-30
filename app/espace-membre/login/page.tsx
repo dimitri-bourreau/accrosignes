@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
-import LoginForm from "@/components/molecules/LoginForm";
+import LoginForm from "@/components/molecules/login-form";
 
 function LoginPageContent() {
   const router = useRouter();
@@ -46,7 +46,9 @@ function LoginPageContent() {
   if (loading || (hasEmailLink && isProcessingLink)) {
     return (
       <main className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
-        <Typography className="text-gray-600 dark:text-gray-300">Connexion en cours...</Typography>
+        <Typography className="text-gray-600 dark:text-gray-300">
+          Connexion en cours...
+        </Typography>
       </main>
     );
   }
@@ -59,7 +61,10 @@ function LoginPageContent() {
             <Title level="h1" className="text-gray-900 dark:text-gray-100">
               Connexion
             </Title>
-            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
+            <Typography
+              variant="body-lg"
+              className="text-gray-600 dark:text-gray-300"
+            >
               Accédez à votre espace personnel
             </Typography>
           </div>
@@ -68,16 +73,26 @@ function LoginPageContent() {
 
           {error && (
             <div className="p-3 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg">
-              <Typography className="text-red-700 dark:text-red-300 text-sm">{error}</Typography>
+              <Typography className="text-red-700 dark:text-red-300 text-sm">
+                {error}
+              </Typography>
             </div>
           )}
 
           <div className="bg-teal-50 dark:bg-teal-950 border border-teal-200 dark:border-teal-800 rounded-lg p-4 space-y-2">
-            <Typography variant="body-sm" className="font-semibold text-teal-900 dark:text-teal-100">
+            <Typography
+              variant="body-sm"
+              className="font-semibold text-teal-900 dark:text-teal-100"
+            >
               ℹ️ Espace Membres
             </Typography>
-            <Typography variant="body-sm" className="text-teal-800 dark:text-teal-200">
-              Accédez à votre espace personnel pour consulter vos cours, télécharger des ressources pédagogiques et rester informé de nos événements.
+            <Typography
+              variant="body-sm"
+              className="text-teal-800 dark:text-teal-200"
+            >
+              Accédez à votre espace personnel pour consulter vos cours,
+              télécharger des ressources pédagogiques et rester informé de nos
+              événements.
             </Typography>
           </div>
         </div>
@@ -91,7 +106,9 @@ export default function LoginPage() {
     <Suspense
       fallback={
         <main className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
-          <Typography className="text-gray-600 dark:text-gray-300">Chargement...</Typography>
+          <Typography className="text-gray-600 dark:text-gray-300">
+            Chargement...
+          </Typography>
         </main>
       }
     >

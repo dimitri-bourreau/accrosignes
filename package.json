@@ -13,11 +13,13 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.15",
     "firebase": "^12.7.0",
     "firebase-admin": "^13.6.0",
     "next": "16.0.10",
     "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "react-dom": "19.2.1",
+    "react-hook-form": "^7.69.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.3",

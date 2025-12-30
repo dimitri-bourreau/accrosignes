@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import HomeIntroduction from "@/components/organisms/home-introduction";
 
 const meta: Meta<typeof HomeIntroduction> = {
-  title: "Components/HomeIntroduction",
+  title: "organisms/HomeIntroduction",
   component: HomeIntroduction,
   tags: ["autodocs"],
   parameters: {

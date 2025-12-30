@@ -3,47 +3,27 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import Typography from "@/components/atoms/typography";
+import { useCheckEmail } from "@/features/auth/hooks/use-check-email";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [linkSent, setLinkSent] = useState(false);
   const [localError, setLocalError] = useState("");
   const { sendSignInLink, error, clearError } = useAuth();
+  const checkEmail = useCheckEmail();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
     setLocalError("");
-    setIsLoading(true);
+
     try {
-      // Check if email is registered
-      const checkResponse = await fetch("/api/check-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!checkResponse.ok) {
-        const errorData = await checkResponse.json();
-        setLocalError(
-          errorData.error ||
-            "Cet email n'est pas enregistré. Contactez un administrateur pour créer votre compte."
-        );
-        return;
-      }
-
+      await checkEmail.mutateAsync(email);
       await sendSignInLink(email);
       setLinkSent(true);
       setEmail("");
     } catch (err) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : "Une erreur s'est produite. Veuillez réessayer.";
-      setLocalError(errorMessage);
-    } finally {
-      setIsLoading(false);
+      setLocalError(err instanceof Error ? err.message : "Une erreur s'est produite. Veuillez réessayer.");
     }
   };
 
@@ -90,10 +70,10 @@ export default function LoginForm() {
       </div>
       <button
         type="submit"
-        disabled={isLoading}
+        disabled={checkEmail.isPending}
         className="w-full px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 disabled:bg-gray-400 transition duration-200 cursor-pointer"
       >
-        {isLoading ? "Envoi en cours..." : "Envoyer le lien"}
+        {checkEmail.isPending ? "Envoi en cours..." : "Envoyer le lien"}
       </button>
     </form>
   );

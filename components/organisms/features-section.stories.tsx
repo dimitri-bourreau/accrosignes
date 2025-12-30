@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import FeaturesSection from "@/components/organisms/features-section";
 
 const meta: Meta<typeof FeaturesSection> = {
-  title: "Components/FeaturesSection",
+  title: "organisms/FeaturesSection",
   component: FeaturesSection,
   tags: ["autodocs"],
   parameters: {
