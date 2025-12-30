@@ -1,5 +1,5 @@
 import { adminDb } from "@/features/auth/admin";
-import { News } from "../news.type";
+import { News } from "../types/news.type";
 
 export const getAllNews = async (): Promise<News[]> => {
   const querySnapshot = await adminDb

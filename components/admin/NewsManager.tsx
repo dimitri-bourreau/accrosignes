@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { News } from "@/features/news/news.type";
 import Typography from "@/components/typography";
 import Image from "next/image";
+import { News } from "@/features/news/types/news.type";
 
 interface NewsManagerProps {
   userId: string;

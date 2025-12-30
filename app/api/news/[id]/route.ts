@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { News, UpdateNewsData } from "@/features/news/news.type";
 import {
   deleteDoc,
   doc,
@@ -10,6 +9,8 @@ import {
 import { db } from "@/features/auth/config";
 import { generateSlug } from "@/features/news/services/generate-slug.service";
 import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
+import { News } from "@/features/news/types/news.type";
+import { UpdateNews } from "@/features/news/types/update-news.type";
 
 export async function GET(
   req: NextRequest,
@@ -51,7 +52,7 @@ export async function PUT(
     if (!isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
-    const updateData: UpdateNewsData = {
+    const updateData: UpdateNews = {
       content,
       imageUrl,
       title,
