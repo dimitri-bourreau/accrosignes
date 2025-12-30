@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getNews, updateNews, deleteNews, verifyAdminRole } from "@/lib/firebase/news";
-import { UpdateNewsData } from "@/lib/types/news";
+import {
+  getNews,
+  updateNews,
+  deleteNews,
+  verifyAdminRole,
+} from "@/features/news/news";
+import { UpdateNewsData } from "@/features/news/news.type";
 
 export async function GET(
   req: NextRequest,
@@ -14,7 +19,10 @@ export async function GET(
     return NextResponse.json(news);
   } catch (error) {
     console.error("Error fetching news:", error);
-    return NextResponse.json({ error: "Failed to fetch news" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch news" },
+      { status: 500 }
+    );
   }
 }
 
@@ -40,7 +48,10 @@ export async function PUT(
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error updating news:", error);
-    return NextResponse.json({ error: "Failed to update news" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update news" },
+      { status: 500 }
+    );
   }
 }
 
@@ -61,6 +72,9 @@ export async function DELETE(
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting news:", error);
-    return NextResponse.json({ error: "Failed to delete news" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete news" },
+      { status: 500 }
+    );
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { News } from "@/lib/types/news";
+import { News } from "@/features/news/news.type";
 import Typography from "@/components/typography";
 import Image from "next/image";
 

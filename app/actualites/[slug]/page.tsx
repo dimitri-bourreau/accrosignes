@@ -1,4 +1,4 @@
-import { getNewsBySlug, getAllNews } from "@/lib/firebase/news";
+import { getNewsBySlug, getAllNews } from "@/features/news/news";
 import Title from "@/components/title";
 import Typography from "@/components/typography";
 import Link from "next/link";

@@ -1,4 +1,4 @@
-import { adminAuth } from "@/lib/firebase/admin";
+import { adminAuth } from "@/features/auth/admin";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -18,7 +18,9 @@ export async function POST(request: Request) {
 
     if (adminClaims?.role !== "Administrateur") {
       return NextResponse.json(
-        { error: "Seuls les administrateurs peuvent supprimer des utilisateurs" },
+        {
+          error: "Seuls les administrateurs peuvent supprimer des utilisateurs",
+        },
         { status: 403 }
       );
     }
@@ -41,7 +43,10 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { error: error.message || "Erreur lors de la suppression de l'utilisateur" },
+      {
+        error:
+          error.message || "Erreur lors de la suppression de l'utilisateur",
+      },
       { status: 500 }
     );
   }

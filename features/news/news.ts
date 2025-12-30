@@ -1,5 +1,5 @@
-import { db } from "@/lib/firebase/config";
-import { adminDb } from "@/lib/firebase/admin";
+import { db } from "@/features/auth/config";
+import { adminDb } from "@/features/auth/admin";
 import {
   collection,
   addDoc,
@@ -12,7 +12,11 @@ import {
   orderBy,
   Timestamp,
 } from "firebase/firestore";
-import { News, CreateNewsData, UpdateNewsData } from "@/lib/types/news";
+import {
+  News,
+  CreateNewsData,
+  UpdateNewsData,
+} from "@/features/news/news.type";
 
 const COLLECTION = "news";
 

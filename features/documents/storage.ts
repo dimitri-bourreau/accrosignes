@@ -1,5 +1,10 @@
-import { storage } from "@/lib/firebase/config";
-import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { storage } from "@/features/auth/config";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 
 export async function uploadResource(
   file: File,
@@ -7,7 +12,10 @@ export async function uploadResource(
   resourceName: string
 ): Promise<string> {
   const timestamp = Date.now();
-  const storageRef = ref(storage, `resources/${userId}/${timestamp}-${resourceName}`);
+  const storageRef = ref(
+    storage,
+    `resources/${userId}/${timestamp}-${resourceName}`
+  );
   await uploadBytes(storageRef, file);
   return getDownloadURL(storageRef);
 }
@@ -18,7 +26,10 @@ export async function uploadNewsImage(
 ): Promise<string> {
   const timestamp = Date.now();
   const extension = file.name.split(".").pop();
-  const storageRef = ref(storage, `news-images/${userId}/${timestamp}.${extension}`);
+  const storageRef = ref(
+    storage,
+    `news-images/${userId}/${timestamp}.${extension}`
+  );
   await uploadBytes(storageRef, file);
   return getDownloadURL(storageRef);
 }

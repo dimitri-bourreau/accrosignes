@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyAdminRole } from "@/lib/firebase/news";
+import { verifyAdminRole } from "@/features/news/news";
 import * as admin from "firebase-admin";
 
 export async function POST(req: NextRequest) {
@@ -9,12 +9,18 @@ export async function POST(req: NextRequest) {
     const userId = formData.get("userId") as string;
 
     if (!file || !userId) {
-      return NextResponse.json({ error: "Missing file or userId" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Missing file or userId" },
+        { status: 400 }
+      );
     }
 
     const isAdmin = await verifyAdminRole(userId);
     if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized - User is not admin" }, { status: 403 });
+      return NextResponse.json(
+        { error: "Unauthorized - User is not admin" },
+        { status: 403 }
+      );
     }
 
     const bucketName = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
@@ -42,6 +48,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ imageUrl });
   } catch (error) {
     console.error("Error uploading image:", error);
-    return NextResponse.json({ error: "Failed to upload image" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to upload image" },
+      { status: 500 }
+    );
   }
 }

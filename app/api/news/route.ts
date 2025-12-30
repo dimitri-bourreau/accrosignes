@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAllNews, createNews, verifyAdminRole } from "@/lib/firebase/news";
-import { CreateNewsData } from "@/lib/types/news";
+import { getAllNews, createNews, verifyAdminRole } from "@/features/news/news";
+import { CreateNewsData } from "@/features/news/news.type";
 
 export async function GET() {
   try {
@@ -8,7 +8,10 @@ export async function GET() {
     return NextResponse.json(news);
   } catch (error) {
     console.error("Error fetching news:", error);
-    return NextResponse.json({ error: "Failed to fetch news" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch news" },
+      { status: 500 }
+    );
   }
 }
 
@@ -27,6 +30,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ id, success: true });
   } catch (error) {
     console.error("Error creating news:", error);
-    return NextResponse.json({ error: "Failed to create news" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create news" },
+      { status: 500 }
+    );
   }
 }

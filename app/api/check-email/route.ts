@@ -1,4 +1,4 @@
-import { adminAuth } from "@/lib/firebase/admin";
+import { adminAuth } from "@/features/auth/admin";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -6,10 +6,7 @@ export async function POST(request: Request) {
     const { email } = await request.json();
 
     if (!email) {
-      return NextResponse.json(
-        { error: "Email est requis" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Email est requis" }, { status: 400 });
     }
 
     // Try to get the user by email
@@ -21,7 +18,10 @@ export async function POST(request: Request) {
       // User doesn't exist
       if (error.code === "auth/user-not-found") {
         return NextResponse.json(
-          { error: "Cet email n'est pas enregistré. Contactez un administrateur pour créer votre compte." },
+          {
+            error:
+              "Cet email n'est pas enregistré. Contactez un administrateur pour créer votre compte.",
+          },
           { status: 404 }
         );
       }

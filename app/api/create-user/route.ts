@@ -1,4 +1,4 @@
-import { adminAuth } from "@/lib/firebase/admin";
+import { adminAuth } from "@/features/auth/admin";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -35,7 +35,8 @@ export async function POST(request: Request) {
     return NextResponse.json({
       uid: userRecord.uid,
       email: userRecord.email,
-      message: "Utilisateur créé avec succès. Un lien de connexion sera envoyé à son adresse email.",
+      message:
+        "Utilisateur créé avec succès. Un lien de connexion sera envoyé à son adresse email.",
     });
   } catch (error: any) {
     console.error("Error creating user:", error);

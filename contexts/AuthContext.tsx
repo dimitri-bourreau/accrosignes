@@ -16,7 +16,7 @@ import {
   User,
   AuthError,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase/config";
+import { auth } from "@/features/auth/config";
 
 type Role = "Administrateur" | "Élève" | null;
 
