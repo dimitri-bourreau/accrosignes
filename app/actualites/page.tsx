@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllNews } from "@/features/news/services/get-all-news.service";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function ActualitesPage() {
   const news = await getAllNews();

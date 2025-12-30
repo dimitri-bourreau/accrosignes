@@ -6,7 +6,7 @@ import Image from "next/image";
 import { getAllNews } from "@/features/news/services/get-all-news.service";
 import { getNewsBySlug } from "@/features/news/services/get-news-by-slug.service";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const news = await getAllNews();
