@@ -1,14 +1,7 @@
-import { db } from "@/features/auth/config";
 import { adminDb } from "@/features/auth/admin";
-import { deleteDoc, doc } from "firebase/firestore";
 import { News } from "@/features/news/news.type";
 
 const COLLECTION = "news";
-
-export async function deleteNews(id: string): Promise<void> {
-  const newsRef = doc(db, COLLECTION, id);
-  await deleteDoc(newsRef);
-}
 
 export async function getAllNews(): Promise<News[]> {
   const querySnapshot = await adminDb

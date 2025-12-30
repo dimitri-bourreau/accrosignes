@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { deleteNews, verifyAdminRole } from "@/features/news/news";
 import { News, UpdateNewsData } from "@/features/news/news.type";
-import { doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  getDoc,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "@/features/auth/config";
 import { generateSlug } from "@/features/news/services/generate-slug.service";
 
@@ -76,8 +82,8 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    await deleteNews(params.id);
-
+    const newsRef = doc(db, "news", params.id);
+    await deleteDoc(newsRef);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting news:", error);
