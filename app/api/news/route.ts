@@ -9,7 +9,7 @@ export async function GET() {
   try {
     const news = await getAllNews();
     return NextResponse.json(news);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error fetching news:", error);
     return NextResponse.json(
       { error: "Failed to fetch news" },
@@ -21,8 +21,15 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const { title, content, imageUrl, authorId } = await req.json();
-    const isAdmin = await userIsAdmin(authorId);
 
+    if (!title || typeof title !== "string" || !content || typeof content !== "string" || !authorId || typeof authorId !== "string") {
+      return NextResponse.json(
+        { error: "Title, content et authorId sont requis" },
+        { status: 400 }
+      );
+    }
+
+    const isAdmin = await userIsAdmin(authorId);
     if (!isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
@@ -41,7 +48,7 @@ export async function POST(req: NextRequest) {
     };
     const { id } = await addDoc(collection(db, "news"), newsDocument);
     return NextResponse.json({ id, success: true });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error creating news:", error);
     return NextResponse.json(
       { error: "Failed to create news" },
