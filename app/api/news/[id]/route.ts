@@ -14,12 +14,15 @@ import { UpdateNews } from "@/features/news/types/update-news.type";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const newsRef = doc(db, "news", params.id);
+    const { id } = await params;
+    const newsRef = doc(db, "news", id);
     const newsSnap = await getDoc(newsRef);
-    if (!newsSnap.exists()) return null;
+    if (!newsSnap.exists()) {
+      return NextResponse.json({ error: "News not found" }, { status: 404 });
+    }
 
     const data = newsSnap.data();
     const news = {
@@ -29,9 +32,6 @@ export async function GET(
       createdAt: data.createdAt.toDate(),
       updatedAt: data.updatedAt.toDate(),
     } as News;
-    if (!news) {
-      return NextResponse.json({ error: "News not found" }, { status: 404 });
-    }
     return NextResponse.json(news);
   } catch (error: unknown) {
     console.error("Error fetching news:", error);
@@ -44,9 +44,10 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { title, content, imageUrl, adminId } = await req.json();
 
     if (!title || typeof title !== "string" || !content || typeof content !== "string" || !adminId || typeof adminId !== "string") {
@@ -68,7 +69,7 @@ export async function PUT(
       updatedAt: Timestamp.fromDate(new Date()),
       slug: generateSlug(title),
     };
-    const newsRef = doc(db, "news", params.id);
+    const newsRef = doc(db, "news", id);
     await updateDoc(newsRef, updateData as Record<string, unknown>);
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
@@ -82,9 +83,10 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { adminId } = await req.json();
 
     if (!adminId || typeof adminId !== "string") {
@@ -99,7 +101,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    const newsRef = doc(db, "news", params.id);
+    const newsRef = doc(db, "news", id);
     await deleteDoc(newsRef);
     return NextResponse.json({ success: true });
   } catch (error: unknown) {

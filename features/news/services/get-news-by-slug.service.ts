@@ -1,4 +1,4 @@
-import { News } from "../news.type";
+import { News } from "../types/news.type";
 import { getAllNews } from "./get-all-news.service";
 
 export const getNewsBySlug = async (slug: string): Promise<News | null> => {
