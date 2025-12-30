@@ -9,7 +9,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
+      <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
@@ -20,29 +20,29 @@ export default function Navigation() {
                 height={36}
                 className="rounded-full object-cover"
               />
-              <span className="font-bold text-base sm:text-lg text-gray-900">
+              <span className="font-bold text-base sm:text-lg text-gray-900 dark:text-gray-100">
                 Accrosignes
               </span>
             </Link>
 
             {/* Desktop Menu */}
-            <div className="hidden sm:flex gap-8 text-sm text-gray-600 font-medium">
-              <Link href="/presentation-d-accrosignes" className="cursor-pointer hover:text-teal-600 transition duration-200">
+            <div className="hidden sm:flex gap-8 text-sm text-gray-600 dark:text-gray-400 font-medium">
+              <Link href="/presentation-d-accrosignes" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
                 Présentation d&apos;Accrosignes
               </Link>
-              <Link href="/cours-de-lsf" className="cursor-pointer hover:text-teal-600 transition duration-200">
+              <Link href="/cours-de-lsf" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
                 Cours
               </Link>
-              <Link href="/actualites" className="cursor-pointer hover:text-teal-600 transition duration-200">
+              <Link href="/actualites" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
                 Actualités
               </Link>
-              <Link href="/agenda" className="cursor-pointer hover:text-teal-600 transition duration-200">
+              <Link href="/agenda" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
                 Agenda
               </Link>
-              <Link href="/espace-membre" className="cursor-pointer hover:text-teal-600 transition duration-200">
+              <Link href="/espace-membre" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
                 Espace membres
               </Link>
-              <Link href="/donner" className="cursor-pointer hover:text-teal-600 transition duration-200">
+              <Link href="/donner" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
                 Donner
               </Link>
             </div>
@@ -55,17 +55,17 @@ export default function Navigation() {
             >
               <div className="w-6 h-5 flex flex-col justify-between">
                 <span
-                  className={`block h-0.5 w-full bg-gray-900 transition-all duration-300 ${
+                  className={`block h-0.5 w-full bg-gray-900 dark:bg-gray-100 transition-all duration-300 ${
                     menuOpen ? "rotate-45 translate-y-2" : ""
                   }`}
                 ></span>
                 <span
-                  className={`block h-0.5 w-full bg-gray-900 transition-all duration-300 ${
+                  className={`block h-0.5 w-full bg-gray-900 dark:bg-gray-100 transition-all duration-300 ${
                     menuOpen ? "opacity-0" : ""
                   }`}
                 ></span>
                 <span
-                  className={`block h-0.5 w-full bg-gray-900 transition-all duration-300 ${
+                  className={`block h-0.5 w-full bg-gray-900 dark:bg-gray-100 transition-all duration-300 ${
                     menuOpen ? "-rotate-45 -translate-y-2" : ""
                   }`}
                 ></span>
@@ -85,7 +85,7 @@ export default function Navigation() {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-white shadow-2xl z-50 transform transition-transform duration-300 sm:hidden ${
+        className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-900 shadow-2xl z-50 transform transition-transform duration-300 sm:hidden ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -95,50 +95,50 @@ export default function Navigation() {
           aria-label="Close menu"
         >
           <div className="w-6 h-6 relative">
-            <span className="absolute block h-0.5 w-full bg-gray-900 rotate-45 top-1/2"></span>
-            <span className="absolute block h-0.5 w-full bg-gray-900 -rotate-45 top-1/2"></span>
+            <span className="absolute block h-0.5 w-full bg-gray-900 dark:bg-gray-100 rotate-45 top-1/2"></span>
+            <span className="absolute block h-0.5 w-full bg-gray-900 dark:bg-gray-100 -rotate-45 top-1/2"></span>
           </div>
         </button>
 
         <div className="flex flex-col p-6 space-y-6 mt-16">
           <Link
             href="/presentation-d-accrosignes"
-            className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
+            className="cursor-pointer text-left text-lg text-gray-900 dark:text-gray-100 hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
             Présentation d&apos;Accrosignes
           </Link>
           <Link
             href="/cours-de-lsf"
-            className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
+            className="cursor-pointer text-left text-lg text-gray-900 dark:text-gray-100 hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
             Cours
           </Link>
           <Link
             href="/actualites"
-            className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
+            className="cursor-pointer text-left text-lg text-gray-900 dark:text-gray-100 hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
             Actualités
           </Link>
           <Link
             href="/agenda"
-            className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
+            className="cursor-pointer text-left text-lg text-gray-900 dark:text-gray-100 hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
             Agenda
           </Link>
           <Link
             href="/espace-membre"
-            className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
+            className="cursor-pointer text-left text-lg text-gray-900 dark:text-gray-100 hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
             Espace membres
           </Link>
           <Link
             href="/donner"
-            className="cursor-pointer text-left text-lg text-gray-900 hover:text-teal-600 transition duration-200"
+            className="cursor-pointer text-left text-lg text-gray-900 dark:text-gray-100 hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
             onClick={() => setMenuOpen(false)}
           >
             Donner

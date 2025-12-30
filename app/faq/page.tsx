@@ -79,14 +79,14 @@ export default function FAQPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-gray-950">
       <div className="max-w-4xl mx-auto px-6 py-20">
         <div className="space-y-12">
           <div className="space-y-4 text-center">
-            <Title level="h1" className="text-gray-900">
+            <Title level="h1" className="text-gray-900 dark:text-gray-100">
               Foire aux Questions
             </Title>
-            <Typography variant="subtitle" className="text-teal-600">
+            <Typography variant="subtitle" className="text-teal-600 dark:text-teal-400">
               Trouvez les réponses à vos questions
             </Typography>
           </div>
@@ -94,7 +94,7 @@ export default function FAQPage() {
           <div className="space-y-8">
             {faqs.map((section, sectionIndex) => (
               <div key={sectionIndex} className="space-y-4">
-                <Title level="h2" className="text-gray-900">
+                <Title level="h2" className="text-gray-900 dark:text-gray-100">
                   {section.category}
                 </Title>
 
@@ -106,17 +106,17 @@ export default function FAQPage() {
                     return (
                       <div
                         key={itemIndex}
-                        className="border border-gray-200 rounded-lg overflow-hidden"
+                        className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
                       >
                         <button
                           onClick={() => setOpenIndex(isOpen ? null : globalIndex)}
-                          className="cursor-pointer w-full px-6 py-4 hover:bg-gray-50 transition flex items-center justify-between"
+                          className="cursor-pointer w-full px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition flex items-center justify-between"
                         >
-                          <Typography variant="body-lg" className="font-semibold text-gray-900 text-left">
+                          <Typography variant="body-lg" className="font-semibold text-gray-900 dark:text-gray-100 text-left">
                             {item.q}
                           </Typography>
                           <span
-                            className={`text-teal-600 text-xl transition-transform ${
+                            className={`text-teal-600 dark:text-teal-400 text-xl transition-transform ${
                               isOpen ? "rotate-180" : ""
                             }`}
                           >
@@ -125,8 +125,8 @@ export default function FAQPage() {
                         </button>
 
                         {isOpen && (
-                          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
-                            <Typography variant="body-lg" className="text-gray-600">
+                          <div className="px-6 py-4 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
                               {item.a}
                             </Typography>
                           </div>
@@ -140,14 +140,14 @@ export default function FAQPage() {
           </div>
 
           {/* Contact Section */}
-          <div className="bg-teal-50 rounded-lg p-8 space-y-4 text-center">
-            <Title level="h2" className="text-gray-900">
+          <div className="bg-teal-50 dark:bg-teal-950 rounded-lg p-8 space-y-4 text-center">
+            <Title level="h2" className="text-gray-900 dark:text-gray-100">
               Vous n&apos;avez pas trouvé votre réponse?
             </Title>
-            <Typography variant="body-lg" className="text-gray-600">
+            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
               N&apos;hésitez pas à nous contacter directement. Notre équipe sera heureuse de vous aider.
             </Typography>
-            <Typography variant="body-lg" className="text-gray-600">
+            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
               📧 contact@accrosignes.fr<br />
               📞 +33 4 76 XX XX XX
             </Typography>

@@ -40,12 +40,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-white dark:bg-gray-950">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
-          <div className="min-h-screen bg-white">
+          <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
             <Navigation />
             {children}
             <Footer />

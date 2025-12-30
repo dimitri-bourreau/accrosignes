@@ -53,34 +53,34 @@ export default function AgendaPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-gray-950">
       <div className="max-w-5xl mx-auto px-6 py-20">
         <div className="space-y-12">
           <div className="space-y-4">
-            <Title level="h1" className="text-gray-900">
+            <Title level="h1" className="text-gray-900 dark:text-gray-100">
               Agenda
             </Title>
-            <Typography variant="subtitle" className="text-teal-600">
+            <Typography variant="subtitle" className="text-teal-600 dark:text-teal-400">
               Découvrez tous nos événements et cours
             </Typography>
           </div>
 
           {/* Calendar */}
-          <div className="bg-white border border-gray-200 rounded-lg p-8">
+          <div className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
             {/* Month Navigation */}
             <div className="flex items-center justify-between mb-8">
               <button
                 onClick={previousMonth}
-                className="cursor-pointer px-4 py-2 hover:bg-gray-100 rounded transition"
+                className="cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition"
               >
                 ← Mois précédent
               </button>
-              <Title level="h2" className="text-gray-900 capitalize">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100 capitalize">
                 {monthName}
               </Title>
               <button
                 onClick={nextMonth}
-                className="cursor-pointer px-4 py-2 hover:bg-gray-100 rounded transition"
+                className="cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition"
               >
                 Mois suivant →
               </button>
@@ -89,7 +89,7 @@ export default function AgendaPage() {
             {/* Days of Week Header */}
             <div className="grid grid-cols-7 gap-2 mb-4">
               {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((day) => (
-                <div key={day} className="text-center font-semibold text-gray-600 py-2">
+                <div key={day} className="text-center font-semibold text-gray-600 dark:text-gray-300 py-2">
                   {day}
                 </div>
               ))}
@@ -106,21 +106,21 @@ export default function AgendaPage() {
                     key={index}
                     className={`min-h-32 p-2 rounded border ${
                       day === null
-                        ? "bg-gray-50"
+                        ? "bg-gray-50 dark:bg-gray-800"
                         : hasEvents
-                          ? "bg-teal-50 border-teal-300"
-                          : "bg-white border-gray-200 hover:bg-gray-50"
+                          ? "bg-teal-50 dark:bg-teal-950 border-teal-300 dark:border-teal-700"
+                          : "bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
                     } transition`}
                   >
                     {day && (
                       <div className="space-y-1">
-                        <div className="font-semibold text-gray-900">{day}</div>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100">{day}</div>
                         {dayEvents.map((event, idx) => (
                           <div key={idx} className="text-xs space-y-1">
                             <div className="bg-teal-600 text-white rounded px-2 py-1 truncate">
                               {event.title}
                             </div>
-                            <div className="text-gray-600 text-xs">{event.time}</div>
+                            <div className="text-gray-600 dark:text-gray-300 text-xs">{event.time}</div>
                           </div>
                         ))}
                       </div>
@@ -133,20 +133,20 @@ export default function AgendaPage() {
 
           {/* Upcoming Events List */}
           <div className="space-y-4">
-            <Title level="h2" className="text-gray-900">
+            <Title level="h2" className="text-gray-900 dark:text-gray-100">
               Prochains Événements
             </Title>
             <div className="space-y-3">
               {events.slice(0, 5).map((event, idx) => (
-                <div key={idx} className="flex gap-4 p-4 border border-gray-200 rounded-lg hover:shadow transition">
-                  <div className="w-16 h-16 bg-teal-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="font-bold text-teal-600 text-lg">{event.date}</span>
+                <div key={idx} className="flex gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow transition">
+                  <div className="w-16 h-16 bg-teal-100 dark:bg-teal-950 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="font-bold text-teal-600 dark:text-teal-400 text-lg">{event.date}</span>
                   </div>
                   <div className="flex-1">
-                    <Typography variant="body-lg" className="font-semibold text-gray-900">
+                    <Typography variant="body-lg" className="font-semibold text-gray-900 dark:text-gray-100">
                       {event.title}
                     </Typography>
-                    <Typography variant="body-sm" className="text-gray-600">
+                    <Typography variant="body-sm" className="text-gray-600 dark:text-gray-300">
                       {event.time}
                     </Typography>
                   </div>

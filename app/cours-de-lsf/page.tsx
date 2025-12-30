@@ -34,14 +34,14 @@ export default function CoursPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-gray-950">
       <div className="max-w-5xl mx-auto px-6 py-20">
         <div className="space-y-12">
           <div className="space-y-4">
-            <Title level="h1" className="text-gray-900">
+            <Title level="h1" className="text-gray-900 dark:text-gray-100">
               Nos Cours de LSF
             </Title>
-            <Typography variant="subtitle" className="text-teal-600">
+            <Typography variant="subtitle" className="text-teal-600 dark:text-teal-400">
               Trouvez le cours adapté à votre niveau
             </Typography>
           </div>
@@ -50,39 +50,39 @@ export default function CoursPage() {
             {courses.map((course) => (
               <div
                 key={course.level}
-                className="border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow"
+                className="border border-gray-200 dark:border-gray-700 rounded-lg p-8 hover:shadow-lg transition-shadow"
               >
-                <Title level="h3" className="text-gray-900 mb-4">
+                <Title level="h3" className="text-gray-900 dark:text-gray-100 mb-4">
                   {course.level}
                 </Title>
 
                 <div className="space-y-4">
                   <div>
-                    <Typography variant="body-sm" className="text-gray-500">
+                    <Typography variant="body-sm" className="text-gray-500 dark:text-gray-400">
                       Durée
                     </Typography>
-                    <Typography variant="body-lg" className="text-gray-700">
+                    <Typography variant="body-lg" className="text-gray-700 dark:text-gray-200">
                       {course.duration}
                     </Typography>
                   </div>
 
                   <div>
-                    <Typography variant="body-sm" className="text-gray-500">
+                    <Typography variant="body-sm" className="text-gray-500 dark:text-gray-400">
                       Horaire
                     </Typography>
-                    <Typography variant="body-lg" className="text-gray-700">
+                    <Typography variant="body-lg" className="text-gray-700 dark:text-gray-200">
                       {course.schedule}
                     </Typography>
                   </div>
 
                   <div>
-                    <Typography variant="body-lg" className="text-gray-600">
+                    <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
                       {course.description}
                     </Typography>
                   </div>
 
-                  <div className="pt-4 border-t border-gray-200">
-                    <Typography variant="body-lg" className="font-semibold text-teal-600">
+                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <Typography variant="body-lg" className="font-semibold text-teal-600 dark:text-teal-400">
                       {course.price}
                     </Typography>
                   </div>
@@ -91,11 +91,11 @@ export default function CoursPage() {
             ))}
           </div>
 
-          <div className="bg-teal-50 rounded-lg p-8 space-y-4">
-            <Title level="h2" className="text-gray-900">
+          <div className="bg-teal-50 dark:bg-teal-950 rounded-lg p-8 space-y-4">
+            <Title level="h2" className="text-gray-900 dark:text-gray-100">
               Rejoins-nous!
             </Title>
-            <Typography variant="body-lg" className="text-gray-600">
+            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
               Les inscriptions sont ouvertes toute l&apos;année. Contacte-nous pour plus d&apos;informations ou pour t&apos;inscrire à un cours.
             </Typography>
           </div>

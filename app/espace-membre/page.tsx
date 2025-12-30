@@ -25,8 +25,8 @@ export default function EspaceMemberPage() {
 
   // Always show loading state to prevent flash of wrong content
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center">
-      <Typography className="text-gray-600">Chargement...</Typography>
+    <main className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
+      <Typography className="text-gray-600 dark:text-gray-300">Chargement...</Typography>
     </main>
   );
 }

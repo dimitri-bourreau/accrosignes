@@ -131,8 +131,8 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-white flex items-center justify-center">
-        <Typography className="text-gray-600">
+      <main className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
+        <Typography className="text-gray-600 dark:text-gray-300">
           Vérification des permissions...
         </Typography>
       </main>
@@ -141,12 +141,12 @@ export default function AdminDashboard() {
 
   if (role !== "Administrateur") {
     return (
-      <main className="min-h-screen bg-white flex items-center justify-center">
+      <main className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center space-y-4">
-          <Title level="h1" className="text-gray-900">
+          <Title level="h1" className="text-gray-900 dark:text-gray-100">
             Accès refusé
           </Title>
-          <Typography variant="body-lg" className="text-gray-600">
+          <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
             Vous n&apos;avez pas les permissions pour accéder à cette page.
           </Typography>
           <Link
@@ -161,35 +161,35 @@ export default function AdminDashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-white py-12">
+    <main className="min-h-screen bg-white dark:bg-gray-950 py-12">
       <div className="max-w-5xl mx-auto px-6">
         <div className="flex justify-between items-start mb-12">
           <div>
-            <Title level="h1" className="text-gray-900 mb-2">
+            <Title level="h1" className="text-gray-900 dark:text-gray-100 mb-2">
               Tableau de bord administrateur
             </Title>
-            <Typography variant="body-lg" className="text-gray-600">
+            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
               Gérez le contenu du site, actualités, événements et ressources
             </Typography>
           </div>
           <button
             onClick={() => signOut()}
-            className="cursor-pointer px-6 py-2 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition duration-200"
+            className="cursor-pointer px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition duration-200"
           >
             Déconnexion
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-4 mb-8 border-b border-gray-200">
+        <div className="flex gap-4 mb-8 border-b border-gray-200 dark:border-gray-700">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`cursor-pointer px-6 py-3 font-semibold border-b-2 transition duration-200 ${
                 activeTab === tab.id
-                  ? "border-teal-600 text-teal-600"
-                  : "border-transparent text-gray-600 hover:text-gray-900"
+                  ? "border-teal-600 text-teal-600 dark:text-teal-400"
+                  : "border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
               }`}
             >
               {tab.icon} {tab.label}
@@ -200,7 +200,7 @@ export default function AdminDashboard() {
         {/* Content */}
         <div className="space-y-8">
           <div className="flex justify-between items-center">
-            <Title level="h2" className="text-gray-900">
+            <Title level="h2" className="text-gray-900 dark:text-gray-100">
               {activeTab === "content"
                 ? "Gestion du contenu"
                 : activeTab === "news"
@@ -230,23 +230,23 @@ export default function AdminDashboard() {
 
           {/* Add Form */}
           {showAddForm && (
-            <div className="p-6 bg-gray-50 border border-gray-200 rounded-lg space-y-4">
+            <div className="p-6 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg space-y-4">
               {activeTab === "content" && (
                 <>
                   <input
                     type="text"
                     placeholder="Identifiant unique (ex: hero-title)"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                   <textarea
                     placeholder="Contenu (texte ou HTML)"
                     rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                   <input
                     type="text"
                     placeholder="Section/Page (ex: accueil, à-propos)"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                 </>
               )}
@@ -256,20 +256,20 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     placeholder="Titre de l'événement"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                   <input
                     type="date"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                   <input
                     type="time"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                   <textarea
                     placeholder="Description"
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                 </>
               )}
@@ -279,14 +279,14 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     placeholder="Titre de la ressource"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                   <textarea
                     placeholder="Description"
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
-                  <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                  <select className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
                     <option>Sélectionner une catégorie</option>
                     <option>Initiation</option>
                     <option>Niveau 1</option>
@@ -294,7 +294,7 @@ export default function AdminDashboard() {
                   </select>
                   <input
                     type="file"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                 </>
               )}
@@ -312,12 +312,12 @@ export default function AdminDashboard() {
             )}
 
             {activeTab === "content" && (
-              <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center">
+              <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex justify-between items-center">
                 <div>
-                  <Typography className="font-semibold text-gray-900">
+                  <Typography className="font-semibold text-gray-900 dark:text-gray-100">
                     Aucun contenu pour le moment
                   </Typography>
-                  <Typography variant="caption" className="text-gray-600">
+                  <Typography variant="caption" className="text-gray-600 dark:text-gray-300">
                     Ajoutez votre premier bloc de contenu
                   </Typography>
                 </div>
@@ -325,12 +325,12 @@ export default function AdminDashboard() {
             )}
 
             {activeTab === "events" && (
-              <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center">
+              <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex justify-between items-center">
                 <div>
-                  <Typography className="font-semibold text-gray-900">
+                  <Typography className="font-semibold text-gray-900 dark:text-gray-100">
                     Aucun événement pour le moment
                   </Typography>
-                  <Typography variant="caption" className="text-gray-600">
+                  <Typography variant="caption" className="text-gray-600 dark:text-gray-300">
                     Ajoutez votre premier événement
                   </Typography>
                 </div>
@@ -338,12 +338,12 @@ export default function AdminDashboard() {
             )}
 
             {activeTab === "resources" && (
-              <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center">
+              <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex justify-between items-center">
                 <div>
-                  <Typography className="font-semibold text-gray-900">
+                  <Typography className="font-semibold text-gray-900 dark:text-gray-100">
                     Aucune ressource pour le moment
                   </Typography>
-                  <Typography variant="caption" className="text-gray-600">
+                  <Typography variant="caption" className="text-gray-600 dark:text-gray-300">
                     Ajoutez votre première ressource
                   </Typography>
                 </div>
@@ -353,10 +353,10 @@ export default function AdminDashboard() {
             {activeTab === "users" && (
               <>
                 {showCreateUserForm && (
-                  <div className="p-6 bg-gray-50 border border-gray-200 rounded-lg mb-6">
+                  <div className="p-6 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg mb-6">
                     <form onSubmit={handleCreateUser} className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                           Email du nouvel utilisateur
                         </label>
                         <input
@@ -365,12 +365,12 @@ export default function AdminDashboard() {
                           onChange={(e) => setNewUserEmail(e.target.value)}
                           required
                           placeholder="utilisateur@example.com"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                         />
                       </div>
                       {createUserError && (
-                        <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                          <Typography className="text-red-700 text-sm">{createUserError}</Typography>
+                        <div className="p-3 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg">
+                          <Typography className="text-red-700 dark:text-red-300 text-sm">{createUserError}</Typography>
                         </div>
                       )}
                       <div className="flex gap-3">
@@ -388,7 +388,7 @@ export default function AdminDashboard() {
                             setNewUserEmail("");
                             setCreateUserError("");
                           }}
-                          className="cursor-pointer px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition duration-200"
+                          className="cursor-pointer px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition duration-200"
                         >
                           Annuler
                         </button>
@@ -397,32 +397,32 @@ export default function AdminDashboard() {
                   </div>
                 )}
 
-                <div className={`overflow-x-auto border border-gray-200 rounded-lg ${showCreateUserForm ? "" : ""}`}>
+                <div className={`overflow-x-auto border border-gray-200 dark:border-gray-700 rounded-lg ${showCreateUserForm ? "" : ""}`}>
                   {usersLoading ? (
                   <div className="p-8 text-center">
-                    <Typography className="text-gray-600">Chargement des utilisateurs...</Typography>
+                    <Typography className="text-gray-600 dark:text-gray-300">Chargement des utilisateurs...</Typography>
                   </div>
                 ) : users.length === 0 ? (
-                  <div className="p-4 bg-gray-50 flex justify-between items-center">
+                  <div className="p-4 bg-gray-50 dark:bg-gray-800 flex justify-between items-center">
                     <div>
-                      <Typography className="font-semibold text-gray-900">
+                      <Typography className="font-semibold text-gray-900 dark:text-gray-100">
                         Aucun utilisateur
                       </Typography>
                     </div>
                   </div>
                 ) : (
                   <table className="w-full">
-                    <thead className="bg-gray-50 border-b border-gray-200">
+                    <thead className="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                       <tr>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Email</th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Rôle</th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Email</th>
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Rôle</th>
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {users.map((user) => (
-                        <tr key={user.uid} className="border-b border-gray-200 hover:bg-gray-50">
-                          <td className="px-6 py-3 text-sm text-gray-900">{user.email}</td>
+                        <tr key={user.uid} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+                          <td className="px-6 py-3 text-sm text-gray-900 dark:text-gray-100">{user.email}</td>
                           <td className="px-6 py-3 text-sm">
                             <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                               user.role === "Administrateur"
@@ -436,7 +436,7 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-6 py-3 text-sm">
                             <div className="flex items-center gap-3">
-                              <span className="text-xs font-semibold text-gray-700 w-10">Admin</span>
+                              <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 w-10">Admin</span>
                               <button
                                 onClick={() => handleSetRole(user.uid, user.role === "Administrateur" ? "Élève" : "Administrateur")}
                                 className="cursor-pointer relative inline-flex items-center justify-center h-6 w-12 rounded-full transition-colors duration-200"
@@ -451,7 +451,7 @@ export default function AdminDashboard() {
                                   }}
                                 />
                               </button>
-                              <span className="text-xs font-semibold text-gray-700 w-10">Élève</span>
+                              <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 w-10">Élève</span>
                               <button
                                 onClick={() => handleDeleteUser(user.uid, user.email)}
                                 className="cursor-pointer ml-2 px-3 py-1 bg-red-500 text-white rounded text-xs font-semibold hover:bg-red-600 transition duration-200"

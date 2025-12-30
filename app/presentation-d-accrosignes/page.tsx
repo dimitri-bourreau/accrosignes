@@ -4,7 +4,7 @@ import Typography from "@/components/typography";
 
 export default function PresentationPage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-gray-950">
       <div className="max-w-4xl mx-auto px-6 py-20">
         <div className="space-y-12">
           {/* Logo Section */}
@@ -21,18 +21,18 @@ export default function PresentationPage() {
           {/* Presentation */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <Title level="h1" className="text-gray-900 text-center">
+              <Title level="h1" className="text-gray-900 dark:text-gray-100 text-center">
                 Accrosignes
               </Title>
               <Typography
                 variant="subtitle"
-                className="text-teal-600 text-center"
+                className="text-teal-600 dark:text-teal-400 text-center"
               >
                 Apprendre la Langue des Signes Française à Grenoble
               </Typography>
             </div>
 
-            <div className="space-y-6 text-gray-600">
+            <div className="space-y-6 text-gray-600 dark:text-gray-300">
               <Typography variant="body-lg">
                 Accrosignes est une association basée à Grenoble dédiée à
                 l&apos;enseignement et la promotion de la Langue des Signes
@@ -41,11 +41,11 @@ export default function PresentationPage() {
               </Typography>
 
               <div className="space-y-4">
-                <Title level="h2" className="text-gray-900">
+                <Title level="h2" className="text-gray-900 dark:text-gray-100">
                   Nos Valeurs
                 </Title>
 
-                <ul className="list-disc list-inside space-y-2 text-gray-600">
+                <ul className="list-disc list-inside space-y-2">
                   <li>Inclusivité et accessibilité pour tous</li>
                   <li>Respect de la culture sourde</li>
                   <li>Apprentissage authentique avec des instructeurs sourds</li>
@@ -54,7 +54,7 @@ export default function PresentationPage() {
               </div>
 
               <div className="space-y-4">
-                <Title level="h2" className="text-gray-900">
+                <Title level="h2" className="text-gray-900 dark:text-gray-100">
                   Nos Cours
                 </Title>
                 <Typography variant="body-lg">
@@ -66,7 +66,7 @@ export default function PresentationPage() {
               </div>
 
               <div className="space-y-4">
-                <Title level="h2" className="text-gray-900">
+                <Title level="h2" className="text-gray-900 dark:text-gray-100">
                   Notre Communauté
                 </Title>
                 <Typography variant="body-lg">

@@ -5,11 +5,11 @@ import Typography from "./typography";
 
 export default function HomeIntroduction() {
   return (
-    <section className="relative pt-12 pb-0 px-6 bg-linear-to-b from-gray-50 to-white overflow-hidden">
+    <section className="relative pt-12 pb-0 px-6 bg-white dark:bg-gray-950 overflow-hidden">
       {/* Subtle background elements */}
-      <div className="absolute top-20 right-10 w-72 h-72 bg-teal-100 rounded-full opacity-10 animate-shimmer blur-3xl"></div>
+      <div className="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full opacity-10 animate-shimmer blur-3xl"></div>
       <div
-        className="absolute -bottom-40 left-1/4 w-96 h-96 bg-amber-100 rounded-full opacity-5 animate-shimmer blur-3xl"
+        className="absolute -bottom-40 left-1/4 w-96 h-96 bg-primary/5 rounded-full opacity-5 animate-shimmer blur-3xl"
         style={{ animationDelay: "1s" }}
       ></div>
 
@@ -32,15 +32,15 @@ export default function HomeIntroduction() {
           {/* Content - Right on Desktop */}
           <div className="space-y-6 md:order-2 pb-20">
             <div className="space-y-3">
-              <Title level="h1" className="text-gray-900">
+              <Title level="h1" className="text-gray-900 dark:text-gray-100">
                 Apprenez la LSF
               </Title>
-              <Typography variant="subtitle" className="text-teal-600">
+              <Typography variant="subtitle" className="text-teal-600 dark:text-teal-400">
                 Ensemble à Grenoble
               </Typography>
             </div>
 
-            <Typography variant="body-lg" className="text-gray-600">
+            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
               Cours de Langue des Signes Française et rencontres authentiques
               entre sourds et entendants
             </Typography>
@@ -48,13 +48,13 @@ export default function HomeIntroduction() {
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Link
                 href="/presentation-d-accrosignes"
-                className="cursor-pointer px-8 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 hover:shadow-md transition-all duration-200 flex items-center justify-center"
+                className="cursor-pointer px-8 py-3 bg-teal-600 dark:bg-teal-500 text-white rounded-lg font-semibold hover:opacity-90 hover:shadow-md transition-all duration-200 flex items-center justify-center"
               >
                 L&apos;association
               </Link>
               <Link
                 href="/agenda"
-                className="cursor-pointer px-8 py-3 border-2 border-teal-600 text-teal-600 rounded-lg font-semibold hover:bg-teal-50 hover:shadow-md transition-all duration-200 flex items-center justify-center"
+                className="cursor-pointer px-8 py-3 border-2 border-teal-600 dark:border-teal-500 text-teal-600 dark:text-teal-400 rounded-lg font-semibold hover:bg-teal-50 dark:hover:bg-teal-950 hover:shadow-md transition-all duration-200 flex items-center justify-center"
               >
                 Voir l&apos;agenda
               </Link>

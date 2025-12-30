@@ -26,25 +26,25 @@ export default async function NewsDetailPage({
   }
 
   return (
-    <main className="min-h-screen bg-white py-12">
+    <main className="min-h-screen bg-white dark:bg-gray-950 py-12">
       <article className="max-w-4xl mx-auto px-6">
         <Link
           href="/actualites"
-          className="inline-flex items-center text-teal-600 hover:text-teal-700 mb-8 transition"
+          className="inline-flex items-center text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-500 mb-8 transition"
         >
           ← Retour aux actualités
         </Link>
 
         <div className="space-y-6">
           <div>
-            <Typography variant="caption" className="text-gray-500 mb-4">
+            <Typography variant="caption" className="text-gray-500 dark:text-gray-400 mb-4">
               {new Date(newsItem.publishedAt).toLocaleDateString("fr-FR", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
               })}
             </Typography>
-            <Title level="h1" className="text-gray-900 mb-6">
+            <Title level="h1" className="text-gray-900 dark:text-gray-100 mb-6">
               {newsItem.title}
             </Title>
           </div>
@@ -62,7 +62,7 @@ export default async function NewsDetailPage({
           <div className="prose prose-lg max-w-none">
             <Typography
               variant="body-lg"
-              className="text-gray-800 whitespace-pre-line"
+              className="text-gray-800 dark:text-gray-200 whitespace-pre-line"
             >
               {newsItem.content}
             </Typography>

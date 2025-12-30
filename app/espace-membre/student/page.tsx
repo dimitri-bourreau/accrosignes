@@ -10,20 +10,20 @@ export default function StudentDashboard() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-white flex items-center justify-center">
-        <Typography className="text-gray-600">Vérification des permissions...</Typography>
+      <main className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
+        <Typography className="text-gray-600 dark:text-gray-300">Vérification des permissions...</Typography>
       </main>
     );
   }
 
   if (role !== "Élève") {
     return (
-      <main className="min-h-screen bg-white flex items-center justify-center">
+      <main className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center space-y-4">
-          <Title level="h1" className="text-gray-900">
+          <Title level="h1" className="text-gray-900 dark:text-gray-100">
             Accès refusé
           </Title>
-          <Typography variant="body-lg" className="text-gray-600">
+          <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
             Vous n&apos;avez pas les permissions pour accéder à cette page.
           </Typography>
           <Link
@@ -59,20 +59,20 @@ export default function StudentDashboard() {
   ];
 
   return (
-    <main className="min-h-screen bg-white py-12">
+    <main className="min-h-screen bg-white dark:bg-gray-950 py-12">
       <div className="max-w-4xl mx-auto px-6">
         <div className="flex justify-between items-start mb-12">
           <div>
-            <Title level="h1" className="text-gray-900 mb-2">
+            <Title level="h1" className="text-gray-900 dark:text-gray-100 mb-2">
               Bienvenue, {user?.email?.split("@")[0] || "Élève"}!
             </Title>
-            <Typography variant="body-lg" className="text-gray-600">
+            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
               Accédez à vos ressources pédagogiques
             </Typography>
           </div>
           <button
             onClick={() => signOut()}
-            className="cursor-pointer px-6 py-2 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition duration-200"
+            className="cursor-pointer px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition duration-200"
           >
             Déconnexion
           </button>
@@ -82,10 +82,10 @@ export default function StudentDashboard() {
           {/* Resources Section */}
           <section className="space-y-6">
             <div>
-              <Title level="h2" className="text-gray-900 mb-2">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100 mb-2">
                 Ressources disponibles
               </Title>
-              <Typography variant="body-lg" className="text-gray-600">
+              <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
                 Téléchargez les documents et supports pédagogiques
               </Typography>
             </div>
@@ -94,19 +94,19 @@ export default function StudentDashboard() {
               {resources.map((resource) => (
                 <div
                   key={resource.id}
-                  className="p-6 border border-gray-200 rounded-lg hover:border-teal-300 hover:shadow-md transition duration-200"
+                  className="p-6 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-teal-300 dark:hover:border-teal-600 hover:shadow-md transition duration-200"
                 >
                   <div className="space-y-3">
-                    <div className="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold">
+                    <div className="inline-block px-3 py-1 bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-400 rounded-full text-sm font-semibold">
                       {resource.category}
                     </div>
-                    <Title level="h4" className="text-gray-900">
+                    <Title level="h4" className="text-gray-900 dark:text-gray-100">
                       {resource.title}
                     </Title>
-                    <Typography variant="caption" className="text-gray-600">
+                    <Typography variant="caption" className="text-gray-600 dark:text-gray-300">
                       {resource.description}
                     </Typography>
-                    <button className="cursor-pointer mt-4 flex items-center gap-2 text-teal-600 font-semibold hover:underline">
+                    <button className="cursor-pointer mt-4 flex items-center gap-2 text-teal-600 dark:text-teal-400 font-semibold hover:underline">
                       <span>Télécharger</span>
                       <span>📥</span>
                     </button>
@@ -117,11 +117,11 @@ export default function StudentDashboard() {
           </section>
 
           {/* Info Section */}
-          <section className="bg-teal-50 border border-teal-200 rounded-lg p-6 space-y-3">
-            <Typography className="font-semibold text-teal-900">
+          <section className="bg-teal-50 dark:bg-teal-950 border border-teal-200 dark:border-teal-800 rounded-lg p-6 space-y-3">
+            <Typography className="font-semibold text-teal-900 dark:text-teal-100">
               ℹ️ Besoin d&apos;aide?
             </Typography>
-            <Typography variant="body-sm" className="text-teal-800">
+            <Typography variant="body-sm" className="text-teal-800 dark:text-teal-200">
               Consultez notre{" "}
               <Link href="/faq" className="underline font-semibold">
                 FAQ

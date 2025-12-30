@@ -3,17 +3,17 @@ import Typography from "@/components/typography";
 
 export default function MentionsLegalesPage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-gray-950">
       <div className="max-w-4xl mx-auto px-6 py-20">
         <div className="space-y-8">
-          <Title level="h1" className="text-gray-900">
+          <Title level="h1" className="text-gray-900 dark:text-gray-100">
             Mentions Légales
           </Title>
 
-          <div className="space-y-8 text-gray-600">
+          <div className="space-y-8 text-gray-600 dark:text-gray-300">
             {/* Éditeur du site */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 1. Éditeur du site
               </Title>
               <Typography variant="body-lg">
@@ -29,7 +29,7 @@ export default function MentionsLegalesPage() {
 
             {/* Responsable de publication */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 2. Responsable de publication
               </Title>
               <Typography variant="body-lg">
@@ -39,7 +39,7 @@ export default function MentionsLegalesPage() {
 
             {/* Conception et développement */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 3. Conception et développement
               </Title>
               <Typography variant="body-lg">
@@ -50,7 +50,7 @@ export default function MentionsLegalesPage() {
 
             {/* Propriété intellectuelle */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 4. Propriété intellectuelle
               </Title>
               <Typography variant="body-lg">
@@ -61,7 +61,7 @@ export default function MentionsLegalesPage() {
 
             {/* Responsabilité */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 5. Limitation de responsabilité
               </Title>
               <Typography variant="body-lg">
@@ -72,7 +72,7 @@ export default function MentionsLegalesPage() {
 
             {/* Liens externes */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 6. Liens externes
               </Title>
               <Typography variant="body-lg">
@@ -83,7 +83,7 @@ export default function MentionsLegalesPage() {
 
             {/* Gestion des données personnelles */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 7. Protection des données personnelles
               </Title>
               <Typography variant="body-lg">
@@ -94,7 +94,7 @@ export default function MentionsLegalesPage() {
 
             {/* Cookies */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 8. Utilisation des cookies
               </Title>
               <Typography variant="body-lg">
@@ -105,7 +105,7 @@ export default function MentionsLegalesPage() {
 
             {/* Signalement de contenu illicite */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 9. Signalement de contenu illicite
               </Title>
               <Typography variant="body-lg">
@@ -116,7 +116,7 @@ export default function MentionsLegalesPage() {
 
             {/* Droit applicable */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 10. Droit applicable
               </Title>
               <Typography variant="body-lg">
@@ -127,7 +127,7 @@ export default function MentionsLegalesPage() {
 
             {/* Mise à jour */}
             <section className="space-y-3">
-              <Title level="h2" className="text-gray-900">
+              <Title level="h2" className="text-gray-900 dark:text-gray-100">
                 11. Mise à jour
               </Title>
               <Typography variant="body-lg">

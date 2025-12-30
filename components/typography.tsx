@@ -18,7 +18,7 @@ const variantStyles: Record<TypographyVariant, string> = {
   "body-base": "text-base leading-normal",
   "body-sm": "text-sm leading-normal",
   subtitle: "text-xl font-semibold",
-  caption: "text-sm text-gray-600",
+  caption: "text-sm text-gray-600 dark:text-gray-300",
 };
 
 export default function Typography({
