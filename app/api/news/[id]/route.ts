@@ -1,16 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  deleteDoc,
-  doc,
-  getDoc,
-  Timestamp,
-  updateDoc,
-} from "firebase/firestore";
-import { db } from "@/features/auth/config";
+import { adminDb } from "@/features/auth/admin";
 import { generateSlug } from "@/features/news/services/generate-slug.service";
 import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
 import { News } from "@/features/news/types/news.type";
-import { UpdateNews } from "@/features/news/types/update-news.type";
 
 export async function GET(
   req: NextRequest,
@@ -18,9 +10,8 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const newsRef = doc(db, "news", id);
-    const newsSnap = await getDoc(newsRef);
-    if (!newsSnap.exists()) {
+    const newsSnap = await adminDb.collection("news").doc(id).get();
+    if (!newsSnap.exists) {
       return NextResponse.json({ error: "News not found" }, { status: 404 });
     }
 
@@ -28,9 +19,9 @@ export async function GET(
     const news = {
       id: newsSnap.id,
       ...data,
-      publishedAt: data.publishedAt.toDate(),
-      createdAt: data.createdAt.toDate(),
-      updatedAt: data.updatedAt.toDate(),
+      publishedAt: data?.publishedAt?.toDate(),
+      createdAt: data?.createdAt?.toDate(),
+      updatedAt: data?.updatedAt?.toDate(),
     } as News;
     return NextResponse.json(news);
   } catch (error: unknown) {
@@ -62,15 +53,13 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    const updateData: UpdateNews = {
+    await adminDb.collection("news").doc(id).update({
       content,
       imageUrl,
       title,
-      updatedAt: Timestamp.fromDate(new Date()),
+      updatedAt: new Date(),
       slug: generateSlug(title),
-    };
-    const newsRef = doc(db, "news", id);
-    await updateDoc(newsRef, updateData as Record<string, unknown>);
+    });
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
     console.error("Error updating news:", error);
@@ -101,8 +90,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    const newsRef = doc(db, "news", id);
-    await deleteDoc(newsRef);
+    await adminDb.collection("news").doc(id).delete();
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
     console.error("Error deleting news:", error);

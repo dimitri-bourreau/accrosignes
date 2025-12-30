@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateSlug } from "@/features/news/services/generate-slug.service";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
-import { db } from "@/features/auth/config";
+import { adminDb } from "@/features/auth/admin";
 import { getAllNews } from "@/features/news/services/get-all-news.service";
 import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
 
@@ -42,12 +41,12 @@ export async function POST(req: NextRequest) {
       imageUrl,
       authorId,
       slug,
-      publishedAt: Timestamp.fromDate(now),
-      createdAt: Timestamp.fromDate(now),
-      updatedAt: Timestamp.fromDate(now),
+      publishedAt: now,
+      createdAt: now,
+      updatedAt: now,
     };
-    const { id } = await addDoc(collection(db, "news"), newsDocument);
-    return NextResponse.json({ id, success: true });
+    const docRef = await adminDb.collection("news").add(newsDocument);
+    return NextResponse.json({ id: docRef.id, success: true });
   } catch (error: unknown) {
     console.error("Error creating news:", error);
     return NextResponse.json(

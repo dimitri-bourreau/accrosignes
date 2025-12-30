@@ -1,4 +1,4 @@
-import { adminAuth } from "@/features/auth/admin";
+import { adminAuth, adminDb } from "@/features/auth/admin";
 import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -28,10 +28,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await adminAuth.setCustomUserClaims(uid, { role });
+    // Update both Firebase Auth custom claims AND Firestore
+    await Promise.all([
+      adminAuth.setCustomUserClaims(uid, { role }),
+      adminDb.collection("users").doc(uid).set({ role }, { merge: true }),
+    ]);
+
+    console.log(`Role set to ${role} for user ${uid} in both Auth and Firestore`);
 
     return NextResponse.json({
-      message: `Custom claims set successfully for user ${uid}`,
+      message: `Role set successfully for user ${uid}`,
       role,
     });
   } catch (error: unknown) {

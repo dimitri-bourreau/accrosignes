@@ -1,4 +1,4 @@
-import { adminAuth } from "@/features/auth/admin";
+import { adminAuth, adminDb } from "@/features/auth/admin";
 import { isFirebaseError } from "@/features/firebase/is-firebase-error.service";
 import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
 import { NextResponse } from "next/server";
@@ -8,7 +8,17 @@ async function createUserWithRole(email: string) {
     email,
     emailVerified: false,
   });
-  await adminAuth.setCustomUserClaims(userRecord.uid, { role: "Élève" });
+
+  // Set role in both Firebase Auth custom claims AND Firestore
+  await Promise.all([
+    adminAuth.setCustomUserClaims(userRecord.uid, { role: "Élève" }),
+    adminDb.collection("users").doc(userRecord.uid).set({
+      email,
+      role: "Élève",
+      createdAt: new Date(),
+    }),
+  ]);
+
   return userRecord;
 }
 

@@ -38,6 +38,8 @@ export default async function ActualitesPage() {
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
+                      width={800}
+                      height={450}
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-200"
                     />
                   </div>

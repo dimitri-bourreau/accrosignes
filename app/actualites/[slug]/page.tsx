@@ -54,6 +54,8 @@ export default async function NewsDetailPage({
               <Image
                 src={newsItem.imageUrl}
                 alt={newsItem.title}
+                width={1200}
+                height={675}
                 className="w-full h-full object-cover"
               />
             </div>

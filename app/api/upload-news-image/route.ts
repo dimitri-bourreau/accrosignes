@@ -17,11 +17,14 @@ export async function POST(req: NextRequest) {
 
     const isAdmin = await userIsAdmin(userId);
     if (!isAdmin) {
+      console.error(`User ${userId} is not admin - cannot upload image`);
       return NextResponse.json(
         { error: "Unauthorized - User is not admin" },
         { status: 403 }
       );
     }
+
+    console.log(`User ${userId} verified as admin - proceeding with upload`);
 
     const bucketName = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
     if (!bucketName) {
