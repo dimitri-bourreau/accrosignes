@@ -1,33 +1,9 @@
 import { db } from "@/features/auth/config";
 import { adminDb } from "@/features/auth/admin";
-import {
-  updateDoc,
-  deleteDoc,
-  doc,
-  getDoc,
-  Timestamp,
-} from "firebase/firestore";
-import { News, UpdateNewsData } from "@/features/news/news.type";
-import { generateSlug } from "./services/generate-slug.service";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import { News } from "@/features/news/news.type";
 
 const COLLECTION = "news";
-
-export async function updateNews(
-  id: string,
-  data: UpdateNewsData
-): Promise<void> {
-  const newsRef = doc(db, COLLECTION, id);
-  const updateData: any = {
-    ...data,
-    updatedAt: Timestamp.fromDate(new Date()),
-  };
-
-  if (data.title) {
-    updateData.slug = generateSlug(data.title);
-  }
-
-  await updateDoc(newsRef, updateData);
-}
 
 export async function deleteNews(id: string): Promise<void> {
   const newsRef = doc(db, COLLECTION, id);

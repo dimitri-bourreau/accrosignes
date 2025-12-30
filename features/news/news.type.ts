@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface News {
   id: string;
   title: string;
@@ -19,6 +21,8 @@ export interface CreateNewsData {
 
 export interface UpdateNewsData {
   title?: string;
+  slug?: string;
   content?: string;
   imageUrl?: string;
+  updatedAt?: Timestamp;
 }

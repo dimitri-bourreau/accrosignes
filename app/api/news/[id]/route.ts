@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getNews,
-  updateNews,
-  deleteNews,
-  verifyAdminRole,
-} from "@/features/news/news";
+import { getNews, deleteNews, verifyAdminRole } from "@/features/news/news";
 import { UpdateNewsData } from "@/features/news/news.type";
+import { doc, Timestamp, updateDoc } from "firebase/firestore";
+import { db } from "@/features/auth/config";
+import { generateSlug } from "@/features/news/services/generate-slug.service";
 
 export async function GET(
   req: NextRequest,
@@ -32,19 +30,19 @@ export async function PUT(
 ) {
   try {
     const { title, content, imageUrl, adminId } = await req.json();
-
     const isAdmin = await verifyAdminRole(adminId);
     if (!isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
-
-    const updateData: UpdateNewsData = {};
-    if (title) updateData.title = title;
-    if (content) updateData.content = content;
-    if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
-
-    await updateNews(params.id, updateData);
-
+    const updateData: UpdateNewsData = {
+      content,
+      imageUrl,
+      title,
+      updatedAt: Timestamp.fromDate(new Date()),
+      slug: generateSlug(title),
+    };
+    const newsRef = doc(db, "news", params.id);
+    await updateDoc(newsRef, updateData as Record<string, unknown>);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error updating news:", error);
