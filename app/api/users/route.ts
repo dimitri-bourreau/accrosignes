@@ -15,7 +15,7 @@ export async function GET() {
     });
 
     return NextResponse.json(users);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error listing users:", error);
     return NextResponse.json(
       { error: "Failed to fetch users" },
