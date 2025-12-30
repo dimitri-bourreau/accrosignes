@@ -1,52 +1,44 @@
 import { adminAuth } from "@/features/auth/admin";
+import { isFirebaseError } from "@/features/firebase/is-firebase-error.service";
+import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
     const { uid, adminId } = await request.json();
 
-    if (!uid || !adminId) {
+    if (!uid || typeof uid !== "string" || !adminId || typeof adminId !== "string") {
       return NextResponse.json(
         { error: "uid et adminId sont requis" },
         { status: 400 }
       );
     }
 
-    // Verify the requestor is an admin
-    const adminUser = await adminAuth.getUser(adminId);
-    const adminClaims = adminUser.customClaims as { role?: string } | null;
-
-    if (adminClaims?.role !== "Administrateur") {
+    const isAdmin = await userIsAdmin(adminId);
+    if (!isAdmin) {
       return NextResponse.json(
-        {
-          error: "Seuls les administrateurs peuvent supprimer des utilisateurs",
-        },
+        { error: "Seuls les administrateurs peuvent supprimer des utilisateurs" },
         { status: 403 }
       );
     }
 
-    // Delete the user
     await adminAuth.deleteUser(uid);
 
     return NextResponse.json({
       message: "Utilisateur supprimé avec succès",
       uid,
     });
-  } catch (error: any) {
-    console.error("Error deleting user:", error);
-
-    if (error.code === "auth/user-not-found") {
+  } catch (error: unknown) {
+    if (isFirebaseError(error) && error.code === "auth/user-not-found") {
       return NextResponse.json(
         { error: "Cet utilisateur n'existe pas" },
         { status: 404 }
       );
     }
 
+    console.error("Error deleting user:", error);
     return NextResponse.json(
-      {
-        error:
-          error.message || "Erreur lors de la suppression de l'utilisateur",
-      },
+      { error: "Erreur lors de la suppression de l'utilisateur" },
       { status: 500 }
     );
   }
