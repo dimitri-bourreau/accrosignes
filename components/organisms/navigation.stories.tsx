@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import FeaturesSection from "./features-section";
+import Navigation from "@/components/organisms/navigation";
 
-const meta: Meta<typeof FeaturesSection> = {
-  title: "Components/FeaturesSection",
-  component: FeaturesSection,
+const meta: Meta<typeof Navigation> = {
+  title: "Components/Navigation",
+  component: Navigation,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
@@ -11,7 +11,7 @@ const meta: Meta<typeof FeaturesSection> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof FeaturesSection>;
+type Story = StoryObj<typeof Navigation>;
 
 export const Default: Story = {};
 

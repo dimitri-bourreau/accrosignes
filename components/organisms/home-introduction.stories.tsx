@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Navigation from "./navigation";
+import HomeIntroduction from "@/components/organisms/home-introduction";
 
-const meta: Meta<typeof Navigation> = {
-  title: "Components/Navigation",
-  component: Navigation,
+const meta: Meta<typeof HomeIntroduction> = {
+  title: "Components/HomeIntroduction",
+  component: HomeIntroduction,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
@@ -11,7 +11,7 @@ const meta: Meta<typeof Navigation> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Navigation>;
+type Story = StoryObj<typeof HomeIntroduction>;
 
 export const Default: Story = {};
 
@@ -23,10 +23,10 @@ export const Mobile: Story = {
   },
 };
 
-export const Tablet: Story = {
+export const Desktop: Story = {
   parameters: {
     viewport: {
-      defaultViewport: "tablet",
+      defaultViewport: "desktop",
     },
   },
 };

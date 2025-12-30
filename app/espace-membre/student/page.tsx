@@ -1,8 +1,8 @@
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
-import Title from "@/components/title";
-import Typography from "@/components/typography";
+import Title from "@/components/atoms/title";
+import Typography from "@/components/atoms/typography";
 import Link from "next/link";
 
 export default function StudentDashboard() {

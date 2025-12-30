@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import Title from "@/components/title";
-import Typography from "@/components/typography";
+import Title from "@/components/atoms/title";
+import Typography from "@/components/atoms/typography";
 
 export default function PendingPage() {
   const router = useRouter();

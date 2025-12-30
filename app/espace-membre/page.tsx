@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import Typography from "@/components/typography";
+import Typography from "@/components/atoms/typography";
 
 export default function EspaceMemberPage() {
   const router = useRouter();

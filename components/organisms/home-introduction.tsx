@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import Title from "./title";
-import Typography from "./typography";
+import Title from "../atoms/title";
+import Typography from "../atoms/typography";
 
 export default function HomeIntroduction() {
   return (
@@ -35,12 +35,18 @@ export default function HomeIntroduction() {
               <Title level="h1" className="text-gray-900 dark:text-gray-100">
                 Apprenez la LSF
               </Title>
-              <Typography variant="subtitle" className="text-teal-600 dark:text-teal-400">
+              <Typography
+                variant="subtitle"
+                className="text-teal-600 dark:text-teal-400"
+              >
                 Ensemble à Grenoble
               </Typography>
             </div>
 
-            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
+            <Typography
+              variant="body-lg"
+              className="text-gray-600 dark:text-gray-300"
+            >
               Cours de Langue des Signes Française et rencontres authentiques
               entre sourds et entendants
             </Typography>

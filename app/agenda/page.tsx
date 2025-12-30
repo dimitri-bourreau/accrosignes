@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Title from "@/components/title";
-import Typography from "@/components/typography";
+import Title from "@/components/atoms/title";
+import Typography from "@/components/atoms/typography";
 
 export default function AgendaPage() {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 11, 1));

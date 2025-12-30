@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import SupportSection from "./support-section";
+import Footer from "@/components/organisms/footer";
 
-const meta: Meta<typeof SupportSection> = {
-  title: "Components/SupportSection",
-  component: SupportSection,
+const meta: Meta<typeof Footer> = {
+  title: "Components/Footer",
+  component: Footer,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
@@ -11,7 +11,7 @@ const meta: Meta<typeof SupportSection> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof SupportSection>;
+type Story = StoryObj<typeof Footer>;
 
 export const Default: Story = {};
 
@@ -19,6 +19,14 @@ export const Mobile: Story = {
   parameters: {
     viewport: {
       defaultViewport: "mobile1",
+    },
+  },
+};
+
+export const Tablet: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: "tablet",
     },
   },
 };

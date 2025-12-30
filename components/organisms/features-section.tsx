@@ -1,11 +1,14 @@
-import Title from "./title";
-import Typography from "./typography";
+import Title from "../atoms/title";
+import Typography from "../atoms/typography";
 
 export default function FeaturesSection() {
   return (
     <section className="px-6 py-20 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
       <div className="max-w-4xl mx-auto">
-        <Title level="h2" className="text-gray-900 dark:text-gray-100 text-center mb-16">
+        <Title
+          level="h2"
+          className="text-gray-900 dark:text-gray-100 text-center mb-16"
+        >
           Ce que nous proposons
         </Title>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

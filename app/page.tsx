@@ -1,6 +1,6 @@
-import HomeIntroduction from "@/components/home-introduction";
-import FeaturesSection from "@/components/features-section";
-import SupportSection from "@/components/support-section";
+import HomeIntroduction from "@/components/organisms/home-introduction";
+import FeaturesSection from "@/components/organisms/features-section";
+import SupportSection from "@/components/organisms/support-section";
 
 export default function Home() {
   return (

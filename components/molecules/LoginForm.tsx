@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import Typography from "@/components/typography";
+import Typography from "@/components/atoms/typography";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");

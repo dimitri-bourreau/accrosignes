@@ -1,5 +1,5 @@
-import Title from "@/components/title";
-import Typography from "@/components/typography";
+import Title from "@/components/atoms/title";
+import Typography from "@/components/atoms/typography";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";

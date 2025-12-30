@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Title from "./title";
-import Typography from "./typography";
+import Title from "../atoms/title";
+import Typography from "../atoms/typography";
 
 export default function Footer() {
   return (
@@ -37,13 +37,22 @@ export default function Footer() {
               Infos
             </Title>
             <div className="space-y-2">
-              <Link href="/nous-contacter" className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition">
+              <Link
+                href="/nous-contacter"
+                className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition"
+              >
                 <Typography variant="body-sm">Nous contacter</Typography>
               </Link>
-              <Link href="/inscription" className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition">
+              <Link
+                href="/inscription"
+                className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition"
+              >
                 <Typography variant="body-sm">S&apos;inscrire</Typography>
               </Link>
-              <Link href="/faq" className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition">
+              <Link
+                href="/faq"
+                className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition"
+              >
                 <Typography variant="body-sm">FAQ</Typography>
               </Link>
             </div>
@@ -53,10 +62,16 @@ export default function Footer() {
               Légal
             </Title>
             <div className="space-y-2">
-              <Link href="/mentions-legales" className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition">
+              <Link
+                href="/mentions-legales"
+                className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition"
+              >
                 <Typography variant="body-sm">Mentions légales</Typography>
               </Link>
-              <Link href="/politique-confidentialite" className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition">
+              <Link
+                href="/politique-confidentialite"
+                className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition"
+              >
                 <Typography variant="body-sm">
                   Politique de confidentialité
                 </Typography>

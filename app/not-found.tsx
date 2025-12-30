@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import Title from "@/components/title";
-import Typography from "@/components/typography";
+import Title from "@/components/atoms/title";
+import Typography from "@/components/atoms/typography";
 
 export default function NotFound() {
   return (

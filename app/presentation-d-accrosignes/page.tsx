@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Title from "@/components/title";
-import Typography from "@/components/typography";
+import Title from "@/components/atoms/title";
+import Typography from "@/components/atoms/typography";
 
 export default function PresentationPage() {
   return (

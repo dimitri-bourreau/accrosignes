@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import Title from "@/components/title";
-import Typography from "@/components/typography";
+import Title from "@/components/atoms/title";
+import Typography from "@/components/atoms/typography";
 import Link from "next/link";
-import NewsManager from "@/components/admin/NewsManager";
+import NewsManager from "@/components/molecules/NewsManager";
 
 type Tab = "content" | "events" | "resources" | "users" | "news";
 

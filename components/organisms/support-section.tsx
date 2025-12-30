@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Title from "./title";
-import Typography from "./typography";
+import Title from "../atoms/title";
+import Typography from "../atoms/typography";
 
 export default function SupportSection() {
   return (
@@ -10,7 +10,10 @@ export default function SupportSection() {
           <Title level="h2" className="text-gray-900 dark:text-gray-100">
             Soutenir notre association
           </Title>
-          <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
+          <Typography
+            variant="body-lg"
+            className="text-gray-600 dark:text-gray-300"
+          >
             Vos dons nous permettent de développer nos activités et
             d&apos;accueillir tous les niveaux
           </Typography>

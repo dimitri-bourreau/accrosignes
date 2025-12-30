@@ -3,9 +3,9 @@
 import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import Title from "@/components/title";
-import Typography from "@/components/typography";
-import LoginForm from "@/components/auth/LoginForm";
+import Title from "@/components/atoms/title";
+import Typography from "@/components/atoms/typography";
+import LoginForm from "@/components/molecules/LoginForm";
 
 function LoginPageContent() {
   const router = useRouter();
