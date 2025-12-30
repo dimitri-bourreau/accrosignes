@@ -8,9 +8,9 @@ export async function POST(req: NextRequest) {
     const file = formData.get("file") as File;
     const userId = formData.get("userId") as string;
 
-    if (!file || !userId) {
+    if (!file || !userId || typeof userId !== "string") {
       return NextResponse.json(
-        { error: "Missing file or userId" },
+        { error: "file et userId sont requis" },
         { status: 400 }
       );
     }
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     const imageUrl = `https://storage.googleapis.com/${bucket.name}/${filename}`;
 
     return NextResponse.json({ imageUrl });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error uploading image:", error);
     return NextResponse.json(
       { error: "Failed to upload image" },
