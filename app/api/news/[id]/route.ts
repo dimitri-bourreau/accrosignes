@@ -33,7 +33,7 @@ export async function GET(
       return NextResponse.json({ error: "News not found" }, { status: 404 });
     }
     return NextResponse.json(news);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error fetching news:", error);
     return NextResponse.json(
       { error: "Failed to fetch news" },
@@ -48,10 +48,19 @@ export async function PUT(
 ) {
   try {
     const { title, content, imageUrl, adminId } = await req.json();
+
+    if (!title || typeof title !== "string" || !content || typeof content !== "string" || !adminId || typeof adminId !== "string") {
+      return NextResponse.json(
+        { error: "Title, content et adminId sont requis" },
+        { status: 400 }
+      );
+    }
+
     const isAdmin = await userIsAdmin(adminId);
     if (!isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
+
     const updateData: UpdateNews = {
       content,
       imageUrl,
@@ -62,7 +71,7 @@ export async function PUT(
     const newsRef = doc(db, "news", params.id);
     await updateDoc(newsRef, updateData as Record<string, unknown>);
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error updating news:", error);
     return NextResponse.json(
       { error: "Failed to update news" },
@@ -78,6 +87,13 @@ export async function DELETE(
   try {
     const { adminId } = await req.json();
 
+    if (!adminId || typeof adminId !== "string") {
+      return NextResponse.json(
+        { error: "adminId est requis" },
+        { status: 400 }
+      );
+    }
+
     const isAdmin = await userIsAdmin(adminId);
     if (!isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
@@ -86,7 +102,7 @@ export async function DELETE(
     const newsRef = doc(db, "news", params.id);
     await deleteDoc(newsRef);
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error deleting news:", error);
     return NextResponse.json(
       { error: "Failed to delete news" },
