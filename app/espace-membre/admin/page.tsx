@@ -5,8 +5,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import Title from "@/components/title";
 import Typography from "@/components/typography";
 import Link from "next/link";
+import NewsManager from "@/components/admin/NewsManager";
 
-type Tab = "content" | "articles" | "events" | "resources" | "users";
+type Tab = "content" | "events" | "resources" | "users" | "news";
 
 interface User {
   uid: string;
@@ -16,7 +17,7 @@ interface User {
 
 export default function AdminDashboard() {
   const { user: currentUser, role, loading, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<Tab>("content");
+  const [activeTab, setActiveTab] = useState<Tab>("news");
   const [showAddForm, setShowAddForm] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [usersLoading, setUsersLoading] = useState(false);
@@ -27,7 +28,7 @@ export default function AdminDashboard() {
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
     { id: "content", label: "Contenu", icon: "✏️" },
-    { id: "articles", label: "Articles", icon: "📰" },
+    { id: "news", label: "Actualités", icon: "📢" },
     { id: "events", label: "Événements", icon: "📅" },
     { id: "resources", label: "Ressources", icon: "📄" },
     { id: "users", label: "Utilisateurs", icon: "👥" },
@@ -168,7 +169,7 @@ export default function AdminDashboard() {
               Tableau de bord administrateur
             </Title>
             <Typography variant="body-lg" className="text-gray-600">
-              Gérez le contenu du site, articles, événements et ressources
+              Gérez le contenu du site, actualités, événements et ressources
             </Typography>
           </div>
           <button
@@ -202,8 +203,8 @@ export default function AdminDashboard() {
             <Title level="h2" className="text-gray-900">
               {activeTab === "content"
                 ? "Gestion du contenu"
-                : activeTab === "articles"
-                ? "Gestion des articles"
+                : activeTab === "news"
+                ? "Gestion des actualités"
                 : activeTab === "events"
                 ? "Gestion des événements"
                 : activeTab === "resources"
@@ -217,7 +218,7 @@ export default function AdminDashboard() {
               >
                 {showCreateUserForm ? "Annuler" : "Créer un utilisateur"}
               </button>
-            ) : (
+            ) : activeTab === "news" ? null : (
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
                 className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
@@ -245,35 +246,6 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     placeholder="Section/Page (ex: accueil, à-propos)"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                </>
-              )}
-
-              {activeTab === "articles" && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Titre de l'article"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <textarea
-                    placeholder="Résumé/Extrait"
-                    rows={2}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <textarea
-                    placeholder="Contenu complet"
-                    rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <input
-                    type="date"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <input
-                    type="file"
-                    placeholder="Image de couverture"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                 </>
@@ -335,6 +307,10 @@ export default function AdminDashboard() {
 
           {/* Items List */}
           <div className="space-y-3">
+            {activeTab === "news" && currentUser && (
+              <NewsManager userId={currentUser.uid} />
+            )}
+
             {activeTab === "content" && (
               <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center">
                 <div>
@@ -343,19 +319,6 @@ export default function AdminDashboard() {
                   </Typography>
                   <Typography variant="caption" className="text-gray-600">
                     Ajoutez votre premier bloc de contenu
-                  </Typography>
-                </div>
-              </div>
-            )}
-
-            {activeTab === "articles" && (
-              <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center">
-                <div>
-                  <Typography className="font-semibold text-gray-900">
-                    Aucun article pour le moment
-                  </Typography>
-                  <Typography variant="caption" className="text-gray-600">
-                    Ajoutez votre premier article
                   </Typography>
                 </div>
               </div>

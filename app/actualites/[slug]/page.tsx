@@ -1,0 +1,73 @@
+import { getNewsBySlug, getAllNews } from "@/lib/firebase/news";
+import Title from "@/components/title";
+import Typography from "@/components/typography";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import Image from "next/image";
+
+export const dynamic = "force-dynamic";
+
+export async function generateStaticParams() {
+  const news = await getAllNews();
+  return news.map((item) => ({ slug: item.slug }));
+}
+
+export default async function NewsDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const newsItem = await getNewsBySlug(slug);
+
+  if (!newsItem) {
+    notFound();
+  }
+
+  return (
+    <main className="min-h-screen bg-white py-12">
+      <article className="max-w-4xl mx-auto px-6">
+        <Link
+          href="/actualites"
+          className="inline-flex items-center text-teal-600 hover:text-teal-700 mb-8 transition"
+        >
+          ← Retour aux actualités
+        </Link>
+
+        <div className="space-y-6">
+          <div>
+            <Typography variant="caption" className="text-gray-500 mb-4">
+              {new Date(newsItem.publishedAt).toLocaleDateString("fr-FR", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </Typography>
+            <Title level="h1" className="text-gray-900 mb-6">
+              {newsItem.title}
+            </Title>
+          </div>
+
+          {newsItem.imageUrl && (
+            <div className="aspect-video overflow-hidden rounded-lg">
+              <Image
+                src={newsItem.imageUrl}
+                alt={newsItem.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
+
+          <div className="prose prose-lg max-w-none">
+            <Typography
+              variant="body-lg"
+              className="text-gray-800 whitespace-pre-line"
+            >
+              {newsItem.content}
+            </Typography>
+          </div>
+        </div>
+      </article>
+    </main>
+  );
+}

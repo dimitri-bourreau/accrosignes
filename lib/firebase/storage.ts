@@ -12,6 +12,17 @@ export async function uploadResource(
   return getDownloadURL(storageRef);
 }
 
+export async function uploadNewsImage(
+  file: File,
+  userId: string
+): Promise<string> {
+  const timestamp = Date.now();
+  const extension = file.name.split(".").pop();
+  const storageRef = ref(storage, `news-images/${userId}/${timestamp}.${extension}`);
+  await uploadBytes(storageRef, file);
+  return getDownloadURL(storageRef);
+}
+
 export async function deleteResource(fileUrl: string): Promise<void> {
   const fileRef = ref(storage, fileUrl);
   await deleteObject(fileRef);
