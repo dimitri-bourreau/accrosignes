@@ -1,6 +1,6 @@
-import { adminDb } from "@/features/auth/admin";
+import { adminDb } from "../admin";
 
-export async function verifyAdminRole(uid: string): Promise<boolean> {
+export const userIsAdmin = async (uid: string): Promise<boolean> => {
   const userDoc = await adminDb.collection("users").doc(uid).get();
   return userDoc.exists && userDoc.data()?.role === "Administrateur";
-}
+};

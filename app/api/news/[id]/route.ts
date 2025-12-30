@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { deleteNews, verifyAdminRole } from "@/features/news/news";
 import { News, UpdateNewsData } from "@/features/news/news.type";
 import {
   deleteDoc,
@@ -10,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/features/auth/config";
 import { generateSlug } from "@/features/news/services/generate-slug.service";
+import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
 
 export async function GET(
   req: NextRequest,
@@ -47,7 +47,7 @@ export async function PUT(
 ) {
   try {
     const { title, content, imageUrl, adminId } = await req.json();
-    const isAdmin = await verifyAdminRole(adminId);
+    const isAdmin = await userIsAdmin(adminId);
     if (!isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
@@ -77,7 +77,7 @@ export async function DELETE(
   try {
     const { adminId } = await req.json();
 
-    const isAdmin = await verifyAdminRole(adminId);
+    const isAdmin = await userIsAdmin(adminId);
     if (!isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }

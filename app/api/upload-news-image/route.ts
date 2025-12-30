@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyAdminRole } from "@/features/news/news";
 import * as admin from "firebase-admin";
+import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const isAdmin = await verifyAdminRole(userId);
+    const isAdmin = await userIsAdmin(userId);
     if (!isAdmin) {
       return NextResponse.json(
         { error: "Unauthorized - User is not admin" },
