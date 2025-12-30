@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAllNews, verifyAdminRole } from "@/features/news/news";
+import { verifyAdminRole } from "@/features/news/news";
 import { generateSlug } from "@/features/news/services/generate-slug.service";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "@/features/auth/config";
+import { getAllNews } from "@/features/news/services/get-all-news.service";
 
 export async function GET() {
   try {

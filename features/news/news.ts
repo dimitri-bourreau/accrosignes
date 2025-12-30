@@ -1,25 +1,6 @@
 import { adminDb } from "@/features/auth/admin";
 import { News } from "@/features/news/news.type";
-
-const COLLECTION = "news";
-
-export async function getAllNews(): Promise<News[]> {
-  const querySnapshot = await adminDb
-    .collection(COLLECTION)
-    .orderBy("publishedAt", "desc")
-    .get();
-
-  return querySnapshot.docs.map((doc) => {
-    const data = doc.data();
-    return {
-      id: doc.id,
-      ...data,
-      publishedAt: data.publishedAt.toDate(),
-      createdAt: data.createdAt.toDate(),
-      updatedAt: data.updatedAt.toDate(),
-    } as News;
-  });
-}
+import { getAllNews } from "./services/get-all-news.service";
 
 export async function getNewsBySlug(slug: string): Promise<News | null> {
   const allNews = await getAllNews();

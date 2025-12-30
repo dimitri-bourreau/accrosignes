@@ -1,8 +1,8 @@
-import { getAllNews } from "@/features/news/news";
 import Title from "@/components/title";
 import Typography from "@/components/typography";
 import Link from "next/link";
 import Image from "next/image";
+import { getAllNews } from "@/features/news/services/get-all-news.service";
 
 export const dynamic = "force-dynamic";
 
