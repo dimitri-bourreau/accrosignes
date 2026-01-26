@@ -69,7 +69,7 @@ export default function Footer() {
         </div>
         <div className="border-t border-gray-300 dark:border-gray-700 pt-8 text-center">
           <Typography variant="body-sm">
-            &copy; 2025 Accrosignes. Tous droits réservés.
+            &copy; {new Date().getFullYear()} Accrosignes. Tous droits réservés.
           </Typography>
         </div>
       </div>
