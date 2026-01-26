@@ -3,10 +3,19 @@ import Link from "next/link";
 import Title from "../atoms/title";
 import Typography from "../atoms/typography";
 
-export default function HomeIntroduction() {
+interface HomeIntroductionProps {
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
+export default function HomeIntroduction({
+  title,
+  subtitle,
+  description,
+}: HomeIntroductionProps) {
   return (
     <section className="relative pt-12 pb-0 px-6 bg-white dark:bg-gray-950 overflow-hidden">
-      {/* Subtle background elements */}
       <div className="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full opacity-10 animate-shimmer blur-3xl"></div>
       <div
         className="absolute -bottom-40 left-1/4 w-96 h-96 bg-primary/5 rounded-full opacity-5 animate-shimmer blur-3xl"
@@ -15,7 +24,6 @@ export default function HomeIntroduction() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
-          {/* Photo - Left on Desktop */}
           <div className="flex justify-center md:order-1">
             <div className="relative w-full">
               <Image
@@ -29,17 +37,16 @@ export default function HomeIntroduction() {
             </div>
           </div>
 
-          {/* Content - Right on Desktop */}
           <div className="space-y-6 md:order-2 pb-20">
             <div className="space-y-3">
               <Title level="h1" className="text-gray-900 dark:text-gray-100">
-                Apprenez la LSF
+                {title}
               </Title>
               <Typography
                 variant="subtitle"
                 className="text-teal-600 dark:text-teal-400"
               >
-                Ensemble à Grenoble
+                {subtitle}
               </Typography>
             </div>
 
@@ -47,8 +54,7 @@ export default function HomeIntroduction() {
               variant="body-lg"
               className="text-gray-600 dark:text-gray-300"
             >
-              Cours de Langue des Signes Française et rencontres authentiques
-              entre sourds et entendants
+              {description}
             </Typography>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-4">

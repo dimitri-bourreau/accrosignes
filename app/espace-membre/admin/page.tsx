@@ -8,6 +8,7 @@ import Link from "next/link";
 import NewsManager from "@/components/molecules/news-manager";
 import { UsersTable } from "@/components/molecules/users-table";
 import { CreateUserForm } from "@/components/molecules/create-user-form";
+import ContentManager from "@/components/molecules/content-manager";
 
 type Tab = "content" | "events" | "resources" | "users" | "news";
 
@@ -113,14 +114,15 @@ export default function AdminDashboard() {
                       ? "Gestion des ressources"
                       : "Gestion des utilisateurs"}
             </Title>
-            {activeTab === "users" ? (
+            {activeTab === "users" && (
               <button
                 onClick={() => setShowCreateUserForm(!showCreateUserForm)}
                 className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
               >
                 {showCreateUserForm ? "Annuler" : "Créer un utilisateur"}
               </button>
-            ) : activeTab === "news" ? null : (
+            )}
+            {(activeTab === "events" || activeTab === "resources") && (
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
                 className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
@@ -133,26 +135,6 @@ export default function AdminDashboard() {
           {/* Add Form */}
           {showAddForm && (
             <div className="p-6 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg space-y-4">
-              {activeTab === "content" && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Identifiant unique (ex: hero-title)"
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <textarea
-                    placeholder="Contenu (texte ou HTML)"
-                    rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Section/Page (ex: accueil, à-propos)"
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                </>
-              )}
-
               {activeTab === "events" && (
                 <>
                   <input
@@ -213,20 +195,8 @@ export default function AdminDashboard() {
               <NewsManager userId={currentUser.uid} />
             )}
 
-            {activeTab === "content" && (
-              <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex justify-between items-center">
-                <div>
-                  <Typography className="font-semibold text-gray-900 dark:text-gray-100">
-                    Aucun contenu pour le moment
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    className="text-gray-600 dark:text-gray-300"
-                  >
-                    Ajoutez votre premier bloc de contenu
-                  </Typography>
-                </div>
-              </div>
+            {activeTab === "content" && currentUser && (
+              <ContentManager userId={currentUser.uid} />
             )}
 
             {activeTab === "events" && (
