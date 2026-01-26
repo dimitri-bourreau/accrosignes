@@ -13,7 +13,7 @@ type Tab = "content" | "events" | "resources" | "users" | "news";
 
 export default function AdminDashboard() {
   const { user: currentUser, role, loading, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<Tab>("news");
+  const [activeTab, setActiveTab] = useState<Tab>("content");
   const [showAddForm, setShowAddForm] = useState(false);
   const [showCreateUserForm, setShowCreateUserForm] = useState(false);
 
@@ -106,12 +106,12 @@ export default function AdminDashboard() {
               {activeTab === "content"
                 ? "Gestion du contenu"
                 : activeTab === "news"
-                ? "Gestion des actualités"
-                : activeTab === "events"
-                ? "Gestion des événements"
-                : activeTab === "resources"
-                ? "Gestion des ressources"
-                : "Gestion des utilisateurs"}
+                  ? "Gestion des actualités"
+                  : activeTab === "events"
+                    ? "Gestion des événements"
+                    : activeTab === "resources"
+                      ? "Gestion des ressources"
+                      : "Gestion des utilisateurs"}
             </Title>
             {activeTab === "users" ? (
               <button
