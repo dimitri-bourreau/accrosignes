@@ -12,7 +12,10 @@ export default function Navigation() {
       <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <Link
+              href="/"
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            >
               <Image
                 src="/logo.jpeg"
                 alt="Accrosignes logo"
@@ -27,23 +30,35 @@ export default function Navigation() {
 
             {/* Desktop Menu */}
             <div className="hidden sm:flex gap-8 text-sm text-gray-600 dark:text-gray-400 font-medium">
-              <Link href="/presentation-d-accrosignes" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
+              <Link
+                href="/presentation-d-accrosignes"
+                className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
+              >
                 Présentation d&apos;Accrosignes
               </Link>
-              <Link href="/cours-de-lsf" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
+              <Link
+                href="/cours-de-lsf"
+                className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
+              >
                 Cours
               </Link>
-              <Link href="/actualites" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
+              <Link
+                href="/actualites"
+                className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
+              >
                 Actualités
               </Link>
-              <Link href="/agenda" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
+              <Link
+                href="/agenda"
+                className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
+              >
                 Agenda
               </Link>
-              <Link href="/espace-membre" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
+              <Link
+                href="/espace-membre"
+                className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
+              >
                 Espace membres
-              </Link>
-              <Link href="/donner" className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200">
-                Donner
               </Link>
             </div>
 
