@@ -44,12 +44,6 @@ export default function Footer() {
                 <Typography variant="body-sm">Nous contacter</Typography>
               </Link>
               <Link
-                href="/inscription"
-                className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition"
-              >
-                <Typography variant="body-sm">S&apos;inscrire</Typography>
-              </Link>
-              <Link
                 href="/faq"
                 className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition"
               >

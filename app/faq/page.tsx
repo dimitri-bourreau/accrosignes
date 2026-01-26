@@ -26,23 +26,6 @@ export default function FAQPage() {
       ],
     },
     {
-      category: "Inscription et Paiement",
-      questions: [
-        {
-          q: "Comment puis-je m'inscrire?",
-          a: "Visitez notre page d'inscription, choisissez votre cours, remplissez le formulaire et effectuez le paiement. Vous recevrez une confirmation par e-mail immédiatement.",
-        },
-        {
-          q: "Quels modes de paiement acceptez-vous?",
-          a: "Nous acceptons les cartes de crédit, PayPal, et les virements bancaires. Tous les paiements sont traités de manière sécurisée.",
-        },
-        {
-          q: "Y a-t-il des réductions de groupe?",
-          a: "Oui! Pour les groupes de 5 personnes ou plus, des réductions spéciales sont disponibles. Contactez-nous pour plus d'informations.",
-        },
-      ],
-    },
-    {
       category: "Pratique et Apprentissage",
       questions: [
         {
@@ -86,7 +69,10 @@ export default function FAQPage() {
             <Title level="h1" className="text-gray-900 dark:text-gray-100">
               Foire aux Questions
             </Title>
-            <Typography variant="subtitle" className="text-teal-600 dark:text-teal-400">
+            <Typography
+              variant="subtitle"
+              className="text-teal-600 dark:text-teal-400"
+            >
               Trouvez les réponses à vos questions
             </Typography>
           </div>
@@ -109,10 +95,15 @@ export default function FAQPage() {
                         className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
                       >
                         <button
-                          onClick={() => setOpenIndex(isOpen ? null : globalIndex)}
+                          onClick={() =>
+                            setOpenIndex(isOpen ? null : globalIndex)
+                          }
                           className="cursor-pointer w-full px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition flex items-center justify-between"
                         >
-                          <Typography variant="body-lg" className="font-semibold text-gray-900 dark:text-gray-100 text-left">
+                          <Typography
+                            variant="body-lg"
+                            className="font-semibold text-gray-900 dark:text-gray-100 text-left"
+                          >
                             {item.q}
                           </Typography>
                           <span
@@ -126,7 +117,10 @@ export default function FAQPage() {
 
                         {isOpen && (
                           <div className="px-6 py-4 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-                            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
+                            <Typography
+                              variant="body-lg"
+                              className="text-gray-600 dark:text-gray-300"
+                            >
                               {item.a}
                             </Typography>
                           </div>
@@ -144,11 +138,19 @@ export default function FAQPage() {
             <Title level="h2" className="text-gray-900 dark:text-gray-100">
               Vous n&apos;avez pas trouvé votre réponse?
             </Title>
-            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
-              N&apos;hésitez pas à nous contacter directement. Notre équipe sera heureuse de vous aider.
+            <Typography
+              variant="body-lg"
+              className="text-gray-600 dark:text-gray-300"
+            >
+              N&apos;hésitez pas à nous contacter directement. Notre équipe sera
+              heureuse de vous aider.
             </Typography>
-            <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
-              📧 contact@accrosignes.fr<br />
+            <Typography
+              variant="body-lg"
+              className="text-gray-600 dark:text-gray-300"
+            >
+              📧 contact@accrosignes.fr
+              <br />
               📞 +33 4 76 XX XX XX
             </Typography>
           </div>
