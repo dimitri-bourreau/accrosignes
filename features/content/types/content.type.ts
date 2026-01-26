@@ -25,6 +25,7 @@ export const CONTENT_KEYS = {
   "home.feature3.emoji": "Bloc 3 - Emoji",
   "home.feature3.title": "Bloc 3 - Titre",
   "home.feature3.text": "Bloc 3 - Description",
+  about: "Contenu complet",
   legal: "Contenu complet",
   privacy: "Contenu complet",
 } as const;
@@ -52,6 +53,10 @@ export const CONTENT_SECTIONS: ContentSection[] = [
     ],
   },
   {
+    title: "Présentation de l'association",
+    keys: ["about"],
+  },
+  {
     title: "Mentions légales",
     keys: ["legal"],
   },
@@ -61,7 +66,7 @@ export const CONTENT_SECTIONS: ContentSection[] = [
   },
 ];
 
-export const RICH_TEXT_KEYS: ContentKey[] = ["legal", "privacy"];
+export const RICH_TEXT_KEYS: ContentKey[] = ["about", "legal", "privacy"];
 
 export const isRichTextKey = (key: ContentKey): boolean =>
   RICH_TEXT_KEYS.includes(key);
