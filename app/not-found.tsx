@@ -26,7 +26,8 @@ export default function NotFound() {
               Page non trouvée
             </Title>
             <Typography variant="body-lg" className="text-gray-600">
-              Oups! La page que vous recherchez n&apos;existe pas ou a été supprimée.
+              Oups! La page que vous recherchez n&apos;existe pas ou a été
+              supprimée.
             </Typography>
           </div>
 
@@ -36,8 +37,13 @@ export default function NotFound() {
           </div>
 
           {/* Description */}
-          <Typography variant="body-lg" className="text-gray-600 max-w-md mx-auto">
-            Nous n&apos;avons pas trouvé ce que vous cherchez. Peut-être souhaitez-vous retourner à la page d&apos;accueil ou explorer nos autres pages?
+          <Typography
+            variant="body-lg"
+            className="text-gray-600 max-w-md mx-auto"
+          >
+            Nous n&apos;avons pas trouvé ce que vous cherchez. Peut-être
+            souhaitez-vous retourner à la page d&apos;accueil ou explorer nos
+            autres pages?
           </Typography>
 
           {/* CTA Buttons */}
@@ -58,16 +64,13 @@ export default function NotFound() {
 
           {/* Helpful Links */}
           <div className="bg-gray-50 rounded-lg p-6 space-y-4">
-            <Typography variant="body-sm" className="font-semibold text-gray-900">
+            <Typography
+              variant="body-sm"
+              className="font-semibold text-gray-900"
+            >
               Pages populaires:
             </Typography>
             <div className="space-y-2">
-              <Link
-                href="/cours-de-lsf"
-                className="cursor-pointer block text-teal-600 hover:underline"
-              >
-                Nos cours de LSF
-              </Link>
               <Link
                 href="/agenda"
                 className="cursor-pointer block text-teal-600 hover:underline"

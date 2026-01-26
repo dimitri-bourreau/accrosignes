@@ -37,12 +37,6 @@ export default function Navigation() {
                 Présentation d&apos;Accrosignes
               </Link>
               <Link
-                href="/cours-de-lsf"
-                className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
-              >
-                Cours
-              </Link>
-              <Link
                 href="/actualites"
                 className="cursor-pointer hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
               >
@@ -122,13 +116,6 @@ export default function Navigation() {
             onClick={() => setMenuOpen(false)}
           >
             Présentation d&apos;Accrosignes
-          </Link>
-          <Link
-            href="/cours-de-lsf"
-            className="cursor-pointer text-left text-lg text-gray-900 dark:text-gray-100 hover:text-teal-600 dark:hover:text-teal-400 transition duration-200"
-            onClick={() => setMenuOpen(false)}
-          >
-            Cours
           </Link>
           <Link
             href="/actualites"
