@@ -7,6 +7,7 @@ import {
   useUploadImage,
 } from "@/features/news/hooks/use-news";
 import { ImageUpload } from "./image-upload";
+import ContentEditor from "./content-editor";
 
 type NewsFormData = {
   title: string;
@@ -41,6 +42,7 @@ export function NewsForm({
   const uploadImage = useUploadImage();
 
   const imageUrl = watch("imageUrl");
+  const content = watch("content");
 
   const onSubmit = (data: NewsFormData) => {
     if (editingNews) {
@@ -77,10 +79,9 @@ export function NewsForm({
         <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
           Contenu complet
         </label>
-        <textarea
-          {...register("content", { required: true })}
-          rows={12}
-          className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 font-mono text-sm"
+        <ContentEditor
+          content={content}
+          onChange={(html) => setValue("content", html)}
         />
       </div>
 
