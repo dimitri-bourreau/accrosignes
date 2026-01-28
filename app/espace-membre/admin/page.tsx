@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
@@ -15,9 +16,26 @@ type Tab = "content" | "events" | "resources" | "users" | "news";
 
 export default function AdminDashboard() {
   const { user: currentUser, role, loading, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<Tab>("content");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const getInitialTab = (): Tab => {
+    const param = searchParams.get("tab");
+    const validTabs: Tab[] = ["content", "events", "resources", "users", "news"];
+    if (param && validTabs.includes(param as Tab)) {
+      return param as Tab;
+    }
+    return "content";
+  };
+
+  const [activeTab, setActiveTab] = useState<Tab>(getInitialTab);
   const [showAddResourceForm, setShowAddResourceForm] = useState(false);
   const [showCreateUserForm, setShowCreateUserForm] = useState(false);
+
+  const handleTabChange = (tab: Tab) => {
+    setActiveTab(tab);
+    router.push(`?tab=${tab}`, { scroll: false });
+  };
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
     { id: "content", label: "Contenu", icon: "✏️" },
@@ -89,7 +107,7 @@ export default function AdminDashboard() {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabChange(tab.id)}
               className={`cursor-pointer px-6 py-3 font-semibold border-b-2 transition duration-200 ${
                 activeTab === tab.id
                   ? "border-teal-600 text-teal-600 dark:text-teal-400"
