@@ -6,6 +6,7 @@ import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
 import Link from "next/link";
 import NewsManager from "@/components/molecules/news-manager";
+import EventManager from "@/components/molecules/event-manager";
 import { UsersTable } from "@/components/molecules/users-table";
 import { CreateUserForm } from "@/components/molecules/create-user-form";
 import ContentManager from "@/components/molecules/content-manager";
@@ -15,7 +16,7 @@ type Tab = "content" | "events" | "resources" | "users" | "news";
 export default function AdminDashboard() {
   const { user: currentUser, role, loading, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>("content");
-  const [showAddForm, setShowAddForm] = useState(false);
+  const [showAddResourceForm, setShowAddResourceForm] = useState(false);
   const [showCreateUserForm, setShowCreateUserForm] = useState(false);
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
@@ -122,67 +123,39 @@ export default function AdminDashboard() {
                 {showCreateUserForm ? "Annuler" : "Créer un utilisateur"}
               </button>
             )}
-            {(activeTab === "events" || activeTab === "resources") && (
+            {activeTab === "resources" && (
               <button
-                onClick={() => setShowAddForm(!showAddForm)}
+                onClick={() => setShowAddResourceForm(!showAddResourceForm)}
                 className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
               >
-                {showAddForm ? "Annuler" : "Ajouter nouveau"}
+                {showAddResourceForm ? "Annuler" : "Ajouter nouveau"}
               </button>
             )}
           </div>
 
-          {/* Add Form */}
-          {showAddForm && (
+          {/* Add Resource Form */}
+          {showAddResourceForm && activeTab === "resources" && (
             <div className="p-6 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg space-y-4">
-              {activeTab === "events" && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Titre de l'événement"
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <input
-                    type="date"
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <input
-                    type="time"
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <textarea
-                    placeholder="Description"
-                    rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                </>
-              )}
-
-              {activeTab === "resources" && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Titre de la ressource"
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <textarea
-                    placeholder="Description"
-                    rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                  <select className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
-                    <option>Sélectionner une catégorie</option>
-                    <option>Initiation</option>
-                    <option>Niveau 1</option>
-                    <option>Niveau 2</option>
-                  </select>
-                  <input
-                    type="file"
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  />
-                </>
-              )}
-
+              <input
+                type="text"
+                placeholder="Titre de la ressource"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              />
+              <textarea
+                placeholder="Description"
+                rows={4}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              />
+              <select className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                <option>Sélectionner une catégorie</option>
+                <option>Initiation</option>
+                <option>Niveau 1</option>
+                <option>Niveau 2</option>
+              </select>
+              <input
+                type="file"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              />
               <button className="cursor-pointer w-full px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200">
                 Créer
               </button>
@@ -199,20 +172,8 @@ export default function AdminDashboard() {
               <ContentManager userId={currentUser.uid} />
             )}
 
-            {activeTab === "events" && (
-              <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex justify-between items-center">
-                <div>
-                  <Typography className="font-semibold text-gray-900 dark:text-gray-100">
-                    Aucun événement pour le moment
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    className="text-gray-600 dark:text-gray-300"
-                  >
-                    Ajoutez votre premier événement
-                  </Typography>
-                </div>
-              </div>
+            {activeTab === "events" && currentUser && (
+              <EventManager userId={currentUser.uid} />
             )}
 
             {activeTab === "resources" && (

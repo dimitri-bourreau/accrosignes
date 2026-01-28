@@ -3,29 +3,25 @@
 import { useState } from "react";
 import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
+import { useEvents } from "@/features/events/hooks/use-events";
+import { EventOccurrence } from "@/features/events/types/event.type";
+
+function formatTime(startTime: string, endTime?: string): string {
+  if (endTime) return `${startTime}-${endTime}`;
+  return startTime;
+}
 
 export default function AgendaPage() {
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 11, 1));
-
-  const events = [
-    { date: 4, title: "Cours Débutant - Groupe 1", time: "19h00-20h30" },
-    { date: 6, title: "Atelier Culturel: Cinéma Sourd", time: "14h00-16h00" },
-    { date: 8, title: "Cours Intermédiaire", time: "19h00-20h30" },
-    { date: 11, title: "Conférence: Langue des Signes en Entreprise", time: "18h00-19h30" },
-    { date: 13, title: "Cours Avancé", time: "19h00-20h30" },
-    { date: 15, title: "Rencontre Communautaire", time: "18h00-20h00" },
-    { date: 18, title: "Cours Intensif - Jour 1", time: "18h00-19h30" },
-    { date: 19, title: "Cours Intensif - Jour 2", time: "18h00-19h30" },
-    { date: 20, title: "Café des Signes", time: "20h00-22h00" },
-    { date: 25, title: "Fête de fin d&apos;année", time: "18h00-22h00" },
-  ];
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const { data: events = [], isLoading } = useEvents();
 
   const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   };
 
   const getFirstDayOfMonth = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+    const day = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+    return day === 0 ? 6 : day - 1;
   };
 
   const previousMonth = () => {
@@ -36,21 +32,37 @@ export default function AgendaPage() {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
   };
 
-  const getEventsForDay = (day: number) => {
-    return events.filter((event) => event.date === day);
+  const getEventsForDay = (day: number): EventOccurrence[] => {
+    return events.filter((event) => {
+      const eventDate = new Date(event.date);
+      return (
+        eventDate.getDate() === day &&
+        eventDate.getMonth() === currentDate.getMonth() &&
+        eventDate.getFullYear() === currentDate.getFullYear()
+      );
+    });
+  };
+
+  const getUpcomingEvents = (): EventOccurrence[] => {
+    const now = new Date();
+    return events
+      .filter((event) => new Date(event.date) >= now)
+      .slice(0, 5);
   };
 
   const daysInMonth = getDaysInMonth(currentDate);
   const firstDay = getFirstDayOfMonth(currentDate);
   const monthName = currentDate.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
 
-  const calendarDays = [];
+  const calendarDays: (number | null)[] = [];
   for (let i = 0; i < firstDay; i++) {
     calendarDays.push(null);
   }
   for (let i = 1; i <= daysInMonth; i++) {
     calendarDays.push(i);
   }
+
+  const upcomingEvents = getUpcomingEvents();
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">
@@ -96,39 +108,47 @@ export default function AgendaPage() {
             </div>
 
             {/* Calendar Grid */}
-            <div className="grid grid-cols-7 gap-2">
-              {calendarDays.map((day, index) => {
-                const dayEvents = day ? getEventsForDay(day) : [];
-                const hasEvents = dayEvents.length > 0;
+            {isLoading ? (
+              <Typography className="text-center text-gray-600 dark:text-gray-300 py-8">
+                Chargement...
+              </Typography>
+            ) : (
+              <div className="grid grid-cols-7 gap-2">
+                {calendarDays.map((day, index) => {
+                  const dayEvents = day ? getEventsForDay(day) : [];
+                  const hasEvents = dayEvents.length > 0;
 
-                return (
-                  <div
-                    key={index}
-                    className={`min-h-32 p-2 rounded border ${
-                      day === null
-                        ? "bg-gray-50 dark:bg-gray-800"
-                        : hasEvents
-                          ? "bg-teal-50 dark:bg-teal-950 border-teal-300 dark:border-teal-700"
-                          : "bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
-                    } transition`}
-                  >
-                    {day && (
-                      <div className="space-y-1">
-                        <div className="font-semibold text-gray-900 dark:text-gray-100">{day}</div>
-                        {dayEvents.map((event, idx) => (
-                          <div key={idx} className="text-xs space-y-1">
-                            <div className="bg-teal-600 text-white rounded px-2 py-1 truncate">
-                              {event.title}
+                  return (
+                    <div
+                      key={index}
+                      className={`min-h-32 p-2 rounded border ${
+                        day === null
+                          ? "bg-gray-50 dark:bg-gray-800"
+                          : hasEvents
+                            ? "bg-teal-50 dark:bg-teal-950 border-teal-300 dark:border-teal-700"
+                            : "bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+                      } transition`}
+                    >
+                      {day && (
+                        <div className="space-y-1">
+                          <div className="font-semibold text-gray-900 dark:text-gray-100">{day}</div>
+                          {dayEvents.map((event) => (
+                            <div key={event.id} className="text-xs space-y-1">
+                              <div className="bg-teal-600 text-white rounded px-2 py-1 truncate">
+                                {event.title}
+                              </div>
+                              <div className="text-gray-600 dark:text-gray-300 text-xs">
+                                {formatTime(event.startTime, event.endTime)}
+                              </div>
                             </div>
-                            <div className="text-gray-600 dark:text-gray-300 text-xs">{event.time}</div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Upcoming Events List */}
@@ -137,21 +157,43 @@ export default function AgendaPage() {
               Prochains Événements
             </Title>
             <div className="space-y-3">
-              {events.slice(0, 5).map((event, idx) => (
-                <div key={idx} className="flex gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow transition">
-                  <div className="w-16 h-16 bg-teal-100 dark:bg-teal-950 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="font-bold text-teal-600 dark:text-teal-400 text-lg">{event.date}</span>
+              {isLoading ? (
+                <Typography className="text-gray-600 dark:text-gray-300">
+                  Chargement...
+                </Typography>
+              ) : upcomingEvents.length === 0 ? (
+                <Typography className="text-gray-600 dark:text-gray-300">
+                  Aucun événement à venir
+                </Typography>
+              ) : (
+                upcomingEvents.map((event) => (
+                  <div key={event.id} className="flex gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow transition">
+                    <div className="w-16 h-16 bg-teal-100 dark:bg-teal-950 rounded-lg flex items-center justify-center shrink-0">
+                      <span className="font-bold text-teal-600 dark:text-teal-400 text-lg">
+                        {new Date(event.date).getDate()}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <Typography variant="body-lg" className="font-semibold text-gray-900 dark:text-gray-100">
+                        {event.title}
+                      </Typography>
+                      <Typography variant="body-sm" className="text-gray-600 dark:text-gray-300">
+                        {new Date(event.date).toLocaleDateString("fr-FR", {
+                          weekday: "long",
+                          day: "numeric",
+                          month: "long",
+                        })}{" "}
+                        • {formatTime(event.startTime, event.endTime)}
+                      </Typography>
+                      {event.description && (
+                        <Typography variant="body-sm" className="text-gray-700 dark:text-gray-200 mt-1">
+                          {event.description}
+                        </Typography>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <Typography variant="body-lg" className="font-semibold text-gray-900 dark:text-gray-100">
-                      {event.title}
-                    </Typography>
-                    <Typography variant="body-sm" className="text-gray-600 dark:text-gray-300">
-                      {event.time}
-                    </Typography>
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
