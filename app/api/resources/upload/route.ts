@@ -18,6 +18,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const ALLOWED_MIME_PREFIXES = ["image/", "application/pdf", "video/", "audio/"];
+    const isAllowedType = ALLOWED_MIME_PREFIXES.some((prefix) => file.type.startsWith(prefix));
+    if (!isAllowedType) {
+      return NextResponse.json(
+        { error: "Type de fichier non autorisé. Formats acceptés : images, PDF, vidéos, audios." },
+        { status: 400 }
+      );
+    }
+
     const MAX_FILE_SIZE = 50 * 1024 * 1024;
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
