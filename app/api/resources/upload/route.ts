@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
     const bucket = admin.storage().bucket(bucketName);
     const timestamp = Date.now();
-    const extension = file.name.split(".").pop();
+    const extension = file.name.includes(".") ? file.name.split(".").pop() : "bin";
     const filename = `resources/${adminId}/${timestamp}.${extension}`;
 
     const fileBuffer = Buffer.from(await file.arrayBuffer());
