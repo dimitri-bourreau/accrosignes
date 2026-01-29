@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import * as admin from "firebase-admin";
 import { adminDb } from "@/features/auth/admin";
 import {
   getResourcesByParent,
@@ -41,7 +42,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    const now = new Date();
+    const now = admin.firestore.Timestamp.now();
     const resourceDoc: Record<string, unknown> = {
       name,
       type,
