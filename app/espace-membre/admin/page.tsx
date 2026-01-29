@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { ROLES } from "@/features/auth/constants/roles";
@@ -16,7 +16,7 @@ import ContentManager from "@/components/molecules/content-manager";
 
 type Tab = "content" | "events" | "resources" | "users" | "news";
 
-export default function AdminDashboard() {
+function AdminDashboard() {
   const { user: currentUser, role, loading, signOut } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -180,5 +180,13 @@ export default function AdminDashboard() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense>
+      <AdminDashboard />
+    </Suspense>
   );
 }
