@@ -6,6 +6,7 @@ import { useResources, useDeleteResource } from "@/features/resources/hooks/use-
 import { ResourceItem } from "./resource-item";
 import { ResourceForm } from "./resource-form";
 import { Resource } from "@/features/resources/types/resource.type";
+import { StorageBar } from "./storage-bar";
 
 interface ResourceManagerProps {
   userId: string;
@@ -46,6 +47,7 @@ export default function ResourceManager({ userId }: ResourceManagerProps) {
 
   return (
     <>
+      <StorageBar />
       <div className="flex items-center gap-2 mb-4 text-sm">
         <button
           onClick={() => navigateToFolder(null)}

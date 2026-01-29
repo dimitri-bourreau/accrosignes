@@ -97,6 +97,17 @@ export const useUploadFile = () => {
   });
 };
 
+export const useStorageUsage = () => {
+  return useQuery({
+    queryKey: ["storage-usage"],
+    queryFn: async () => {
+      const response = await fetch("/api/resources/storage");
+      if (!response.ok) throw new Error("Failed to fetch storage usage");
+      return response.json() as Promise<{ usedBytes: number }>;
+    },
+  });
+};
+
 export const useDeleteResource = () => {
   const queryClient = useQueryClient();
   return useMutation({
