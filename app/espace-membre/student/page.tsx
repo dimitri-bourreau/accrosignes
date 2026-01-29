@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
 import Link from "next/link";
+import ResourceViewer from "@/components/molecules/resource-viewer";
 
 export default function StudentDashboard() {
   const { user, role, loading, signOut } = useAuth();
@@ -41,27 +42,6 @@ export default function StudentDashboard() {
       </main>
     );
   }
-
-  const resources = [
-    {
-      id: 1,
-      title: "Guide d'initiation LSF",
-      description: "Guide complet pour débuter en Langue des Signes Française",
-      category: "Initiation",
-    },
-    {
-      id: 2,
-      title: "Vocabulaire niveau 1",
-      description: "Vocabulaire de base pour le niveau 1",
-      category: "Niveau 1",
-    },
-    {
-      id: 3,
-      title: "Vocabulaire niveau 2",
-      description: "Vocabulaire intermédiaire pour le niveau 2",
-      category: "Niveau 2",
-    },
-  ];
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950 py-12">
@@ -104,36 +84,7 @@ export default function StudentDashboard() {
               </Typography>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {resources.map((resource) => (
-                <div
-                  key={resource.id}
-                  className="p-6 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-teal-300 dark:hover:border-teal-600 hover:shadow-md transition duration-200"
-                >
-                  <div className="space-y-3">
-                    <div className="inline-block px-3 py-1 bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-400 rounded-full text-sm font-semibold">
-                      {resource.category}
-                    </div>
-                    <Title
-                      level="h4"
-                      className="text-gray-900 dark:text-gray-100"
-                    >
-                      {resource.title}
-                    </Title>
-                    <Typography
-                      variant="caption"
-                      className="text-gray-600 dark:text-gray-300"
-                    >
-                      {resource.description}
-                    </Typography>
-                    <button className="cursor-pointer mt-4 flex items-center gap-2 text-teal-600 dark:text-teal-400 font-semibold hover:underline">
-                      <span>Télécharger</span>
-                      <span>📥</span>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ResourceViewer />
           </section>
         </div>
       </div>
