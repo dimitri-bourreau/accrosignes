@@ -15,8 +15,8 @@ function parseResource(doc: FirebaseFirestore.DocumentSnapshot): Resource {
     fileSize: data.fileSize,
     linkUrl: data.linkUrl,
     authorId: data.authorId,
-    createdAt: data.createdAt.toDate(),
-    updatedAt: data.updatedAt.toDate(),
+    createdAt: data.createdAt?.toDate?.() ?? new Date(),
+    updatedAt: data.updatedAt?.toDate?.() ?? new Date(),
   };
 }
 
