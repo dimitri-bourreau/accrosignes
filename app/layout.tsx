@@ -16,12 +16,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Accrosignes - Cours de LSF à Grenoble",
+  title: "AccroSignes - Cours de LSF à Grenoble",
   description:
-    "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants",
+    "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants à Grenoble.",
   icons: {
-    icon: "/logo.jpeg",
-    apple: "/logo.jpeg",
+    icon: "/icon-192.png",
+    apple: "/apple-icon.png",
+  },
+  openGraph: {
+    title: "AccroSignes - Cours de LSF à Grenoble",
+    description:
+      "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants à Grenoble.",
+    images: [{ url: "/logo.jpeg", width: 512, height: 512, alt: "Logo AccroSignes" }],
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "AccroSignes - Cours de LSF à Grenoble",
+    description:
+      "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants à Grenoble.",
+    images: ["/logo.jpeg"],
   },
   robots: {
     index: false,
@@ -40,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-white dark:bg-gray-950">
+    <html lang="fr" className="bg-white dark:bg-gray-950">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
