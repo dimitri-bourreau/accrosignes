@@ -37,7 +37,7 @@ export default function ResourceManager({ userId }: ResourceManagerProps) {
       ? "Supprimer ce dossier et tout son contenu ?"
       : "Supprimer cette ressource ?";
     if (confirm(message)) {
-      deleteResource.mutate({ id: resource.id, adminId: userId });
+      deleteResource.mutate({ id: resource.id, adminId: userId, parentId: resource.parentId });
     }
   };
 

@@ -111,7 +111,7 @@ export const useStorageUsage = () => {
 export const useDeleteResource = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, adminId }: { id: string; adminId: string }) => {
+    mutationFn: async ({ id, adminId }: { id: string; adminId: string; parentId: string | null }) => {
       const response = await fetch(`/api/resources/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -120,8 +120,9 @@ export const useDeleteResource = () => {
       if (!response.ok) throw new Error("Failed to delete resource");
       return response.json();
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["resources"] });
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["resources", variables.parentId] });
+      queryClient.invalidateQueries({ queryKey: ["storage-usage"] });
     },
   });
 };
