@@ -65,12 +65,21 @@ export async function getResourcePath(id: string | null): Promise<Resource[]> {
   return path;
 }
 
-export async function deleteResourceRecursive(id: string): Promise<void> {
+async function collectIds(id: string, ids: string[]): Promise<void> {
   const children = await getResourcesByParent(id);
-
   for (const child of children) {
-    await deleteResourceRecursive(child.id);
+    await collectIds(child.id, ids);
   }
+  ids.push(id);
+}
 
-  await adminDb.collection("resources").doc(id).delete();
+export async function deleteResourceRecursive(id: string): Promise<void> {
+  const ids: string[] = [];
+  await collectIds(id, ids);
+
+  const batch = adminDb.batch();
+  for (const docId of ids) {
+    batch.delete(adminDb.collection("resources").doc(docId));
+  }
+  await batch.commit();
 }
