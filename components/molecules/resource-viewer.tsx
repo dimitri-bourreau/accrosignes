@@ -4,21 +4,7 @@ import { useState } from "react";
 import Typography from "@/components/atoms/typography";
 import { useResources } from "@/features/resources/hooks/use-resources";
 import { Resource } from "@/features/resources/types/resource.type";
-
-function getIcon(resource: Resource): string {
-  if (resource.type === "folder") return "📁";
-  if (resource.type === "link") return "🔗";
-  if (resource.fileType?.startsWith("image/")) return "🖼️";
-  if (resource.fileType === "application/pdf") return "📄";
-  return "📎";
-}
-
-function formatFileSize(bytes?: number): string {
-  if (!bytes) return "";
-  if (bytes < 1024) return `${bytes} o`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} Ko`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} Mo`;
-}
+import { getResourceIcon, formatFileSize } from "@/features/resources/utils/format-resource";
 
 export default function ResourceViewer() {
   const [currentFolderId, setCurrentFolderId] = useState<string | null>(null);
@@ -82,7 +68,7 @@ export default function ResourceViewer() {
               className="cursor-pointer p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-teal-300 dark:hover:border-teal-600 hover:shadow-md transition text-left"
             >
               <div className="flex items-start gap-3">
-                <span className="text-2xl">{getIcon(resource)}</span>
+                <span className="text-2xl">{getResourceIcon(resource)}</span>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-gray-900 dark:text-gray-100 truncate">
                     {resource.name}
