@@ -51,9 +51,11 @@ export async function getResourceById(id: string): Promise<Resource | null> {
 
 export async function getResourcePath(id: string | null): Promise<Resource[]> {
   const path: Resource[] = [];
+  const visited = new Set<string>();
   let currentId = id;
 
-  while (currentId) {
+  while (currentId && !visited.has(currentId)) {
+    visited.add(currentId);
     const resource = await getResourceById(currentId);
     if (!resource) break;
     path.unshift(resource);
