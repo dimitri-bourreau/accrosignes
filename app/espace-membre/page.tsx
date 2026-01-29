@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { ROLES } from "@/features/auth/constants/roles";
 import Typography from "@/components/atoms/typography";
 
 export default function EspaceMemberPage() {
@@ -13,9 +14,9 @@ export default function EspaceMemberPage() {
     if (!loading) {
       if (!user) {
         router.push("/espace-membre/login");
-      } else if (role === "Administrateur") {
+      } else if (role === ROLES.ADMIN) {
         router.push("/espace-membre/admin");
-      } else if (role === "Élève") {
+      } else if (role === ROLES.STUDENT) {
         router.push("/espace-membre/student");
       } else if (!role) {
         router.push("/espace-membre/pending");

@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
+import { ROLES } from "@/features/auth/constants/roles";
 import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
 import Link from "next/link";
@@ -19,7 +20,7 @@ export default function StudentDashboard() {
     );
   }
 
-  if (role !== "Élève") {
+  if (role !== ROLES.STUDENT) {
     return (
       <main className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center space-y-4">
