@@ -52,8 +52,22 @@ export async function POST(req: NextRequest) {
       updatedAt: now,
     };
 
-    if (type === "link" && linkUrl) {
-      resourceDoc.linkUrl = linkUrl;
+    if (type === "link") {
+      try {
+        const url = new URL(linkUrl);
+        if (!["http:", "https:"].includes(url.protocol)) {
+          return NextResponse.json(
+            { error: "L'URL doit commencer par http:// ou https://" },
+            { status: 400 }
+          );
+        }
+        resourceDoc.linkUrl = linkUrl;
+      } catch {
+        return NextResponse.json(
+          { error: "URL invalide" },
+          { status: 400 }
+        );
+      }
     }
 
     const docRef = await adminDb.collection("resources").add(resourceDoc);
