@@ -1,3 +1,4 @@
+import * as admin from "firebase-admin";
 import { adminDb } from "@/features/auth/admin";
 import { Resource } from "../types/resource.type";
 
@@ -65,21 +66,47 @@ export async function getResourcePath(id: string | null): Promise<Resource[]> {
   return path;
 }
 
-async function collectIds(id: string, ids: string[]): Promise<void> {
+interface CollectedResource {
+  id: string;
+  fileUrl?: string;
+}
+
+async function collectResources(id: string, collected: CollectedResource[]): Promise<void> {
   const children = await getResourcesByParent(id);
   for (const child of children) {
-    await collectIds(child.id, ids);
+    await collectResources(child.id, collected);
   }
-  ids.push(id);
+  const resource = await getResourceById(id);
+  collected.push({ id, fileUrl: resource?.fileUrl });
+}
+
+function extractStoragePath(fileUrl: string): string | null {
+  const match = fileUrl.match(/storage\.googleapis\.com\/[^/]+\/(.+)/);
+  return match ? decodeURIComponent(match[1]) : null;
 }
 
 export async function deleteResourceRecursive(id: string): Promise<void> {
-  const ids: string[] = [];
-  await collectIds(id, ids);
+  const collected: CollectedResource[] = [];
+  await collectResources(id, collected);
+
+  const bucketName = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+  if (bucketName) {
+    const bucket = admin.storage().bucket(bucketName);
+    for (const res of collected) {
+      if (!res.fileUrl) continue;
+      const path = extractStoragePath(res.fileUrl);
+      if (!path) continue;
+      try {
+        await bucket.file(path).delete();
+      } catch {
+        console.warn(`Failed to delete storage file: ${path}`);
+      }
+    }
+  }
 
   const batch = adminDb.batch();
-  for (const docId of ids) {
-    batch.delete(adminDb.collection("resources").doc(docId));
+  for (const res of collected) {
+    batch.delete(adminDb.collection("resources").doc(res.id));
   }
   await batch.commit();
 }
