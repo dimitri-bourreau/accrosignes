@@ -18,6 +18,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const MAX_FILE_SIZE = 50 * 1024 * 1024;
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: "Le fichier ne doit pas dépasser 50 Mo. Pensez à utiliser des liens vers des services externes (Google Drive, YouTube) pour les fichiers volumineux afin de préserver l'espace de stockage." },
+        { status: 400 }
+      );
+    }
+
     const isAdmin = await userIsAdmin(adminId);
     if (!isAdmin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
