@@ -4,10 +4,6 @@ Accrosignes est une association Grenobloise qui propose des cours de langue des 
 
 <img src="./public/logo.jpeg" width="300" style="display: block; margin: 0 auto;" />
 
-## Conception en cours
-
-Je propose la conception de ce site bénévolement, le projet est en cours.
-
 ## Regard technique
 
 ### Architecture
