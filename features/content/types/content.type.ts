@@ -12,6 +12,7 @@ export interface ContentSection {
 }
 
 export const CONTENT_KEYS = {
+  "home.image": "Image principale",
   "home.title": "Titre principal",
   "home.subtitle": "Sous-titre",
   "home.description": "Description",
@@ -35,7 +36,7 @@ export type ContentKey = keyof typeof CONTENT_KEYS;
 export const CONTENT_SECTIONS: ContentSection[] = [
   {
     title: "Page d'accueil - Introduction",
-    keys: ["home.title", "home.subtitle", "home.description"],
+    keys: ["home.image", "home.title", "home.subtitle", "home.description"],
   },
   {
     title: "Page d'accueil - Ce que nous proposons",
@@ -68,5 +69,10 @@ export const CONTENT_SECTIONS: ContentSection[] = [
 
 export const RICH_TEXT_KEYS: ContentKey[] = ["about", "legal", "privacy"];
 
+export const IMAGE_KEYS: ContentKey[] = ["home.image"];
+
 export const isRichTextKey = (key: ContentKey): boolean =>
   RICH_TEXT_KEYS.includes(key);
+
+export const isImageKey = (key: ContentKey): boolean =>
+  IMAGE_KEYS.includes(key);

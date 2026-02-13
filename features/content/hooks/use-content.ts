@@ -27,3 +27,29 @@ export const useUpdateContent = () => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["content"] }),
   });
 };
+
+export const useUploadContentImage = () => {
+  return useMutation({
+    mutationFn: async ({
+      file,
+      userId,
+      contentKey,
+    }: {
+      file: File;
+      userId: string;
+      contentKey: string;
+    }) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("userId", userId);
+      formData.append("contentKey", contentKey);
+      const response = await fetch("/api/upload-content-image", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) throw new Error("Failed to upload image");
+      const { imageUrl } = await response.json();
+      return imageUrl as string;
+    },
+  });
+};

@@ -7,12 +7,16 @@ interface HomeIntroductionProps {
   title: string;
   subtitle: string;
   description: string;
+  imageUrl?: string;
 }
+
+const DEFAULT_IMAGE = "/photo-des-goat.png";
 
 export default function HomeIntroduction({
   title,
   subtitle,
   description,
+  imageUrl,
 }: HomeIntroductionProps) {
   return (
     <section className="relative pt-12 pb-0 px-6 bg-white dark:bg-gray-950 overflow-hidden">
@@ -27,7 +31,7 @@ export default function HomeIntroduction({
           <div className="flex justify-center md:order-1">
             <div className="relative w-full">
               <Image
-                src="/photo-des-goat.png"
+                src={imageUrl || DEFAULT_IMAGE}
                 alt="Communauté Accrosignes - cours de LSF"
                 width={600}
                 height={700}

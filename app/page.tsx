@@ -6,6 +6,7 @@ export const revalidate = 300;
 
 export default async function Home() {
   const [
+    homeImage,
     title,
     subtitle,
     description,
@@ -20,6 +21,7 @@ export default async function Home() {
     feature3Title,
     feature3Text,
   ] = await Promise.all([
+    getContentByKey("home.image"),
     getContentByKey("home.title"),
     getContentByKey("home.subtitle"),
     getContentByKey("home.description"),
@@ -59,6 +61,7 @@ export default async function Home() {
         title={title ?? "Apprenez la LSF"}
         subtitle={subtitle ?? "Ensemble à Grenoble"}
         description={description ?? "Cours de Langue des Signes Française et rencontres authentiques entre sourds et entendants"}
+        imageUrl={homeImage ?? undefined}
       />
       <FeaturesSection
         title={featuresTitle ?? "Ce que nous proposons"}

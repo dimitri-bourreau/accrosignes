@@ -1,16 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { useContent, useUpdateContent } from "@/features/content/hooks/use-content";
+import {
+  useContent,
+  useUpdateContent,
+  useUploadContentImage,
+} from "@/features/content/hooks/use-content";
 import {
   CONTENT_KEYS,
   CONTENT_SECTIONS,
   ContentKey,
   isRichTextKey,
+  isImageKey,
 } from "@/features/content/types/content.type";
 import Typography from "@/components/atoms/typography";
 import Title from "@/components/atoms/title";
 import ContentEditor from "./content-editor";
+import { ImageUpload } from "./image-upload";
+import Image from "next/image";
 
 interface ContentManagerProps {
   userId: string;
@@ -19,6 +26,7 @@ interface ContentManagerProps {
 export default function ContentManager({ userId }: ContentManagerProps) {
   const { data: content, isLoading } = useContent();
   const updateContent = useUpdateContent();
+  const uploadImage = useUploadContentImage();
   const [editingKey, setEditingKey] = useState<ContentKey | null>(null);
   const [editValue, setEditValue] = useState("");
 
@@ -44,6 +52,14 @@ export default function ContentManager({ userId }: ContentManagerProps) {
     setEditValue("");
   };
 
+  const handleDeleteImage = async (key: ContentKey) => {
+    await updateContent.mutateAsync({
+      key,
+      value: "",
+      adminId: userId,
+    });
+  };
+
   if (isLoading) {
     return (
       <Typography className="text-gray-600 dark:text-gray-300">
@@ -52,8 +68,19 @@ export default function ContentManager({ userId }: ContentManagerProps) {
     );
   }
 
+  const handleImageUpload = async (file: File) => {
+    if (!editingKey) return;
+    const url = await uploadImage.mutateAsync({
+      file,
+      userId,
+      contentKey: editingKey,
+    });
+    setEditValue(url);
+  };
+
   if (editingKey) {
     const isRichText = isRichTextKey(editingKey);
+    const isImage = isImageKey(editingKey);
 
     return (
       <div className="space-y-4">
@@ -70,7 +97,7 @@ export default function ContentManager({ userId }: ContentManagerProps) {
             </button>
             <button
               onClick={handleSave}
-              disabled={updateContent.isPending}
+              disabled={updateContent.isPending || uploadImage.isPending}
               className="cursor-pointer px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition disabled:opacity-50"
             >
               {updateContent.isPending ? "Enregistrement..." : "Enregistrer"}
@@ -78,7 +105,14 @@ export default function ContentManager({ userId }: ContentManagerProps) {
           </div>
         </div>
 
-        {isRichText ? (
+        {isImage ? (
+          <ImageUpload
+            imageUrl={editValue}
+            uploading={uploadImage.isPending}
+            onUpload={handleImageUpload}
+            onRemove={() => setEditValue("")}
+          />
+        ) : isRichText ? (
           <ContentEditor content={editValue} onChange={setEditValue} />
         ) : (
           <input
@@ -103,12 +137,22 @@ export default function ContentManager({ userId }: ContentManagerProps) {
           <div className="space-y-2">
             {section.keys.map((key) => {
               const existing = content?.find((c) => c.key === key);
-              const preview = getPreview(existing?.value);
+              const isImage = isImageKey(key);
+              const preview = isImage ? null : getPreview(existing?.value);
               return (
                 <div
                   key={key}
                   className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex justify-between items-center gap-4"
                 >
+                  {isImage && existing?.value && (
+                    <Image
+                      src={existing.value}
+                      alt="Aperçu"
+                      width={80}
+                      height={60}
+                      className="rounded border border-gray-300 dark:border-gray-600 object-cover"
+                    />
+                  )}
                   <div className="flex-1 min-w-0">
                     <Typography className="font-semibold text-gray-900 dark:text-gray-100">
                       {CONTENT_KEYS[key]}
@@ -130,12 +174,23 @@ export default function ContentManager({ userId }: ContentManagerProps) {
                         : "Non configuré"}
                     </Typography>
                   </div>
-                  <button
-                    onClick={() => handleEdit(key)}
-                    className="cursor-pointer px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition shrink-0"
-                  >
-                    Modifier
-                  </button>
+                  <div className="flex gap-2 shrink-0">
+                    <button
+                      onClick={() => handleEdit(key)}
+                      className="cursor-pointer px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition"
+                    >
+                      Modifier
+                    </button>
+                    {isImage && existing?.value && (
+                      <button
+                        onClick={() => handleDeleteImage(key)}
+                        disabled={updateContent.isPending}
+                        className="cursor-pointer px-4 py-2 bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700 rounded-lg font-semibold hover:bg-red-100 dark:hover:bg-red-900 transition disabled:opacity-50"
+                      >
+                        Supprimer
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })}
