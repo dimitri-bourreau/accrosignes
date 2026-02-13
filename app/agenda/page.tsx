@@ -5,7 +5,7 @@ import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
 import DayEventsModal from "@/components/molecules/day-events-modal";
 import { useEvents } from "@/features/events/hooks/use-events";
-import { EventOccurrence } from "@/features/events/types/event.type";
+import { EventOccurrence, EVENT_COLORS } from "@/features/events/types/event.type";
 
 function formatTime(startTime: string, endTime?: string): string {
   if (endTime) return `${startTime}-${endTime}`;
@@ -149,17 +149,20 @@ export default function AgendaPage() {
                       {day && (
                         <div className="space-y-1">
                           <div className="font-semibold text-gray-900 dark:text-gray-100">{day}</div>
-                          {dayEvents.slice(0, 2).map((eventItem) => (
-                            <div
-                              key={eventItem.id}
-                              className="bg-teal-600 text-white rounded px-2 py-1 text-xs"
-                            >
-                              <div className="font-medium truncate">{eventItem.title}</div>
-                              <div className="text-teal-100 text-[10px]">
-                                {formatTime(eventItem.startTime, eventItem.endTime)}
+                          {dayEvents.slice(0, 2).map((eventItem) => {
+                            const colorBg = EVENT_COLORS[eventItem.color || "teal"].bg;
+                            return (
+                              <div
+                                key={eventItem.id}
+                                className={`${colorBg} text-white rounded px-2 py-1 text-xs`}
+                              >
+                                <div className="font-medium truncate">{eventItem.title}</div>
+                                <div className="text-white/70 text-[10px]">
+                                  {formatTime(eventItem.startTime, eventItem.endTime)}
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                           {dayEvents.length > 2 && (
                             <div className="text-xs text-teal-600 dark:text-teal-400 font-medium text-center">
                               +{dayEvents.length - 2} autre{dayEvents.length > 3 ? "s" : ""}

@@ -2,7 +2,11 @@
 
 import { useForm } from "react-hook-form";
 import { useCreateEvent, useUpdateEvent } from "@/features/events/hooks/use-events";
-import { RecurrenceType, Recurrence } from "@/features/events/types/event.type";
+import {
+  RecurrenceType,
+  EventColor,
+  EVENT_COLORS,
+} from "@/features/events/types/event.type";
 
 type EventFormData = {
   title: string;
@@ -10,6 +14,7 @@ type EventFormData = {
   date: string;
   startTime: string;
   endTime: string;
+  color: EventColor;
   isRecurrent: boolean;
   recurrenceType: RecurrenceType;
   recurrenceEndDate: string;
@@ -21,10 +26,14 @@ interface EventFormProps {
     id: string;
     title: string;
     description?: string;
-    date: Date;
+    date: Date | string;
     startTime: string;
     endTime?: string;
-    recurrence?: Recurrence;
+    color?: EventColor;
+    recurrence?: {
+      type: RecurrenceType;
+      endDate: Date | string;
+    };
     isRecurrenceInstance?: boolean;
     seriesId?: string;
   } | null;
@@ -33,8 +42,9 @@ interface EventFormProps {
   onCancel: () => void;
 }
 
-function formatDateForInput(date: Date): string {
-  return new Date(date).toISOString().split("T")[0];
+function formatDateForInput(date: Date | string): string {
+  const dateObj = typeof date === "string" ? new Date(date) : date;
+  return dateObj.toISOString().split("T")[0];
 }
 
 export function EventForm({
@@ -44,7 +54,7 @@ export function EventForm({
   onSuccess,
   onCancel,
 }: EventFormProps) {
-  const { register, handleSubmit, watch } = useForm<EventFormData>({
+  const { register, handleSubmit, watch, setValue } = useForm<EventFormData>({
     defaultValues: editingEvent
       ? {
           title: editingEvent.title,
@@ -52,6 +62,7 @@ export function EventForm({
           date: formatDateForInput(editingEvent.date),
           startTime: editingEvent.startTime,
           endTime: editingEvent.endTime || "",
+          color: editingEvent.color || "teal",
           isRecurrent: !!editingEvent.recurrence,
           recurrenceType: editingEvent.recurrence?.type || "weekly",
           recurrenceEndDate: editingEvent.recurrence
@@ -64,11 +75,14 @@ export function EventForm({
           date: "",
           startTime: "",
           endTime: "",
+          color: "teal",
           isRecurrent: false,
           recurrenceType: "weekly",
           recurrenceEndDate: "",
         },
   });
+
+  const selectedColor = watch("color");
 
   const isRecurrent = watch("isRecurrent");
   const createEvent = useCreateEvent();
@@ -81,15 +95,20 @@ export function EventForm({
         : undefined;
 
     if (editingEvent) {
+      const eventId =
+        scope === "all" && editingEvent.seriesId
+          ? editingEvent.seriesId
+          : editingEvent.id;
       updateEvent.mutate(
         {
-          id: editingEvent.id,
+          id: eventId,
           data: {
             title: data.title,
             description: data.description,
             date: data.date,
             startTime: data.startTime,
             endTime: data.endTime,
+            color: data.color,
             adminId: userId,
             recurrence,
             scope,
@@ -107,6 +126,7 @@ export function EventForm({
           date: data.date,
           startTime: data.startTime,
           endTime: data.endTime,
+          color: data.color,
           authorId: userId,
           recurrence,
         },
@@ -141,6 +161,31 @@ export function EventForm({
           rows={4}
           className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
         />
+      </div>
+
+      <div>
+        <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          Couleur
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {(Object.keys(EVENT_COLORS) as EventColor[]).map((colorKey) => {
+            const colorConfig = EVENT_COLORS[colorKey];
+            const isSelected = selectedColor === colorKey;
+            return (
+              <button
+                key={colorKey}
+                type="button"
+                onClick={() => setValue("color", colorKey)}
+                className={`cursor-pointer w-10 h-10 rounded-lg ${colorConfig.bg} transition ${
+                  isSelected
+                    ? "ring-2 ring-offset-2 ring-gray-900 dark:ring-white"
+                    : "hover:opacity-80"
+                }`}
+                title={colorConfig.label}
+              />
+            );
+          })}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

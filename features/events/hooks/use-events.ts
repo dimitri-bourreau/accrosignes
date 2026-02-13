@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { EventOccurrence, RecurrenceType } from "../types/event.type";
+import { EventOccurrence, RecurrenceType, EventColor } from "../types/event.type";
 
 export const useEvents = () => {
   return useQuery({
@@ -18,6 +18,7 @@ interface CreateEventData {
   date: string;
   startTime: string;
   endTime?: string;
+  color?: EventColor;
   authorId: string;
   recurrence?: {
     type: RecurrenceType;
@@ -47,6 +48,7 @@ interface UpdateEventData {
   date: string;
   startTime: string;
   endTime?: string;
+  color?: EventColor;
   adminId: string;
   recurrence?: {
     type: RecurrenceType;

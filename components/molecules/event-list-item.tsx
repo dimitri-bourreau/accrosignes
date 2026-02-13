@@ -42,7 +42,7 @@ export function EventListItem({ event, onEdit, onDelete }: EventListItemProps) {
             <Typography className="font-semibold text-gray-900 dark:text-gray-100">
               {event.title}
             </Typography>
-            {event.isRecurrenceInstance && (
+            {event.recurrence && (
               <span className="px-2 py-0.5 text-xs font-medium bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300 rounded">
                 Récurrent
               </span>

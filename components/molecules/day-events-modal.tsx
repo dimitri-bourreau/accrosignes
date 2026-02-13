@@ -1,4 +1,4 @@
-import { EventOccurrence } from "@/features/events/types/event.type";
+import { EventOccurrence, EVENT_COLORS } from "@/features/events/types/event.type";
 import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
 
@@ -65,33 +65,36 @@ export default function DayEventsModal({
               Aucun événement ce jour
             </Typography>
           ) : (
-            events.map((eventItem) => (
-              <div
-                key={eventItem.id}
-                className="p-4 bg-teal-50 dark:bg-teal-950 border border-teal-200 dark:border-teal-800 rounded-lg"
-              >
-                <Typography
-                  variant="body-lg"
-                  className="font-semibold text-gray-900 dark:text-gray-100 mb-2"
+            events.map((eventItem) => {
+              const colorBg = EVENT_COLORS[eventItem.color || "teal"].bg;
+              return (
+                <div
+                  key={eventItem.id}
+                  className={`p-4 ${colorBg} rounded-lg`}
                 >
-                  {eventItem.title}
-                </Typography>
-                <Typography
-                  variant="body-sm"
-                  className="text-teal-700 dark:text-teal-300 font-medium"
-                >
-                  {formatTime(eventItem.startTime, eventItem.endTime)}
-                </Typography>
-                {eventItem.description && (
+                  <Typography
+                    variant="body-lg"
+                    className="font-semibold text-white mb-2"
+                  >
+                    {eventItem.title}
+                  </Typography>
                   <Typography
                     variant="body-sm"
-                    className="text-gray-700 dark:text-gray-300 mt-2"
+                    className="text-white/80 font-medium"
                   >
-                    {eventItem.description}
+                    {formatTime(eventItem.startTime, eventItem.endTime)}
                   </Typography>
-                )}
-              </div>
-            ))
+                  {eventItem.description && (
+                    <Typography
+                      variant="body-sm"
+                      className="text-white/90 mt-2"
+                    >
+                      {eventItem.description}
+                    </Typography>
+                  )}
+                </div>
+              );
+            })
           )}
         </div>
       </div>

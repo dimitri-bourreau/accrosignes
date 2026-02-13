@@ -20,10 +20,19 @@ export function generateOccurrences(
     return [{ ...event, isRecurrenceInstance: false }];
   }
 
-  const occurrences: EventOccurrence[] = [];
+  const occurrences: EventOccurrence[] = [
+    { ...event, isRecurrenceInstance: false },
+  ];
   const { type, endDate } = event.recurrence;
   let currentDate = new Date(event.date);
   const end = new Date(endDate);
+
+  // Move to the next occurrence (skip the first date as it's already added above)
+  if (type === "weekly") {
+    currentDate = addWeeks(currentDate, 1);
+  } else {
+    currentDate = addMonths(currentDate, 1);
+  }
 
   while (currentDate <= end) {
     const dateKey = currentDate.toISOString().split("T")[0];
