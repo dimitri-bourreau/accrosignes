@@ -61,14 +61,10 @@ export default async function NewsDetailPage({
             </div>
           )}
 
-          <div className="prose prose-lg max-w-none">
-            <Typography
-              variant="body-lg"
-              className="text-gray-800 dark:text-gray-200 whitespace-pre-line"
-            >
-              {newsItem.content}
-            </Typography>
-          </div>
+          <div
+            className="prose prose-lg max-w-none dark:prose-invert text-gray-800 dark:text-gray-200"
+            dangerouslySetInnerHTML={{ __html: newsItem.content }}
+          />
         </div>
       </article>
     </main>

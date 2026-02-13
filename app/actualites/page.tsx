@@ -62,7 +62,7 @@ export default async function ActualitesPage() {
                     variant="caption"
                     className="text-gray-700 dark:text-gray-200 line-clamp-3"
                   >
-                    {item.content.substring(0, 120)}...
+                    {item.content.replace(/<[^>]*>/g, "").substring(0, 120)}...
                   </Typography>
                 </div>
               </Link>
