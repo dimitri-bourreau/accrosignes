@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
+import DayEventsModal from "@/components/molecules/day-events-modal";
 import { useEvents } from "@/features/events/hooks/use-events";
 import { EventOccurrence } from "@/features/events/types/event.type";
 
@@ -11,8 +12,14 @@ function formatTime(startTime: string, endTime?: string): string {
   return startTime;
 }
 
+interface SelectedDay {
+  date: Date;
+  events: EventOccurrence[];
+}
+
 export default function AgendaPage() {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDay, setSelectedDay] = useState<SelectedDay | null>(null);
   const { data: events = [], isLoading } = useEvents();
 
   const getDaysInMonth = (date: Date) => {
@@ -121,27 +128,43 @@ export default function AgendaPage() {
                   return (
                     <div
                       key={index}
+                      onClick={() => {
+                        if (day && hasEvents) {
+                          const clickedDate = new Date(
+                            currentDate.getFullYear(),
+                            currentDate.getMonth(),
+                            day
+                          );
+                          setSelectedDay({ date: clickedDate, events: dayEvents });
+                        }
+                      }}
                       className={`min-h-32 p-2 rounded border ${
                         day === null
-                          ? "bg-gray-50 dark:bg-gray-800"
+                          ? "bg-gray-50 dark:bg-gray-800 border-transparent"
                           : hasEvents
-                            ? "bg-teal-50 dark:bg-teal-950 border-teal-300 dark:border-teal-700"
-                            : "bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+                            ? "bg-teal-50 dark:bg-teal-950 border-teal-300 dark:border-teal-700 cursor-pointer hover:shadow-md"
+                            : "bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-700"
                       } transition`}
                     >
                       {day && (
                         <div className="space-y-1">
                           <div className="font-semibold text-gray-900 dark:text-gray-100">{day}</div>
-                          {dayEvents.map((event) => (
-                            <div key={event.id} className="text-xs space-y-1">
-                              <div className="bg-teal-600 text-white rounded px-2 py-1 truncate">
-                                {event.title}
-                              </div>
-                              <div className="text-gray-600 dark:text-gray-300 text-xs">
-                                {formatTime(event.startTime, event.endTime)}
+                          {dayEvents.slice(0, 2).map((eventItem) => (
+                            <div
+                              key={eventItem.id}
+                              className="bg-teal-600 text-white rounded px-2 py-1 text-xs"
+                            >
+                              <div className="font-medium truncate">{eventItem.title}</div>
+                              <div className="text-teal-100 text-[10px]">
+                                {formatTime(eventItem.startTime, eventItem.endTime)}
                               </div>
                             </div>
                           ))}
+                          {dayEvents.length > 2 && (
+                            <div className="text-xs text-teal-600 dark:text-teal-400 font-medium text-center">
+                              +{dayEvents.length - 2} autre{dayEvents.length > 3 ? "s" : ""}
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
@@ -198,6 +221,14 @@ export default function AgendaPage() {
           </div>
         </div>
       </div>
+
+      {selectedDay && (
+        <DayEventsModal
+          date={selectedDay.date}
+          events={selectedDay.events}
+          onClose={() => setSelectedDay(null)}
+        />
+      )}
     </main>
   );
 }
