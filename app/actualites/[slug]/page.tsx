@@ -37,7 +37,10 @@ export default async function NewsDetailPage({
 
         <div className="space-y-6">
           <div>
-            <Typography variant="caption" className="text-gray-500 dark:text-gray-400 mb-4">
+            <Typography
+              variant="caption"
+              className="text-gray-500 dark:text-gray-400 mb-4"
+            >
               {new Date(newsItem.publishedAt).toLocaleDateString("fr-FR", {
                 year: "numeric",
                 month: "long",
@@ -50,13 +53,13 @@ export default async function NewsDetailPage({
           </div>
 
           {newsItem.imageUrl && (
-            <div className="aspect-video overflow-hidden rounded-lg">
+            <div className="rounded-lg overflow-hidden max-w-2xl mx-auto">
               <Image
                 src={newsItem.imageUrl}
                 alt={newsItem.title}
-                width={1200}
-                height={675}
-                className="w-full h-full object-cover"
+                width={672}
+                height={448}
+                className="w-full h-auto"
               />
             </div>
           )}
