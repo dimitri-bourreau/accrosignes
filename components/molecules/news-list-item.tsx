@@ -23,7 +23,7 @@ export function NewsListItem({ news, onEdit, onDelete }: NewsListItemProps) {
             {new Date(news.publishedAt).toLocaleDateString("fr-FR")}
           </Typography>
           <Typography variant="caption" className="text-gray-700 dark:text-gray-200 line-clamp-2">
-            {news.content.substring(0, 150)}...
+            {news.content.replace(/<[^>]*>/g, "").substring(0, 150)}...
           </Typography>
         </div>
         <div className="flex gap-2">
