@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useQueryState, parseAsIsoDate, parseAsString } from "nuqs";
 import Title from "@/components/atoms/title";
 import Typography from "@/components/atoms/typography";
@@ -19,7 +19,7 @@ interface SelectedDay {
   events: EventOccurrence[];
 }
 
-export default function AgendaPage() {
+function AgendaContent() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDay, setSelectedDay] = useState<SelectedDay | null>(null);
   const [showCourses, setShowCourses] = useState(false);
@@ -286,5 +286,13 @@ export default function AgendaPage() {
         />
       )}
     </main>
+  );
+}
+
+export default function AgendaPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white dark:bg-gray-950" />}>
+      <AgendaContent />
+    </Suspense>
   );
 }
