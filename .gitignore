@@ -45,3 +45,5 @@ storybook-static
 
 .idea/
 test-results/
+
+*debug.log
