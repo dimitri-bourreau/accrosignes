@@ -14,6 +14,7 @@ function parseEvent(doc: FirebaseFirestore.DocumentSnapshot): Event {
     startTime: data.startTime,
     endTime: data.endTime,
     color: data.color,
+    category: data.category,
     authorId: data.authorId,
     createdAt: data.createdAt.toDate(),
     updatedAt: data.updatedAt.toDate(),

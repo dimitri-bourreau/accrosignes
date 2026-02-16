@@ -5,6 +5,7 @@ import { useCreateEvent, useUpdateEvent } from "@/features/events/hooks/use-even
 import {
   RecurrenceType,
   EventColor,
+  EventCategory,
   EVENT_COLORS,
 } from "@/features/events/types/event.type";
 
@@ -15,6 +16,7 @@ type EventFormData = {
   startTime: string;
   endTime: string;
   color: EventColor;
+  category: EventCategory | "";
   isRecurrent: boolean;
   recurrenceType: RecurrenceType;
   recurrenceEndDate: string;
@@ -30,6 +32,7 @@ interface EventFormProps {
     startTime: string;
     endTime?: string;
     color?: EventColor;
+    category?: EventCategory;
     recurrence?: {
       type: RecurrenceType;
       endDate: Date | string;
@@ -63,6 +66,7 @@ export function EventForm({
           startTime: editingEvent.startTime,
           endTime: editingEvent.endTime || "",
           color: editingEvent.color || "teal",
+          category: editingEvent.category || "",
           isRecurrent: !!editingEvent.recurrence,
           recurrenceType: editingEvent.recurrence?.type || "weekly",
           recurrenceEndDate: editingEvent.recurrence
@@ -76,6 +80,7 @@ export function EventForm({
           startTime: "",
           endTime: "",
           color: "teal",
+          category: "",
           isRecurrent: false,
           recurrenceType: "weekly",
           recurrenceEndDate: "",
@@ -93,6 +98,7 @@ export function EventForm({
       data.isRecurrent && data.recurrenceEndDate
         ? { type: data.recurrenceType, endDate: data.recurrenceEndDate }
         : undefined;
+    const category = data.category === "" ? undefined : data.category;
 
     if (editingEvent) {
       const eventId =
@@ -109,6 +115,7 @@ export function EventForm({
             startTime: data.startTime,
             endTime: data.endTime,
             color: data.color,
+            category,
             adminId: userId,
             recurrence,
             scope,
@@ -127,6 +134,7 @@ export function EventForm({
           startTime: data.startTime,
           endTime: data.endTime,
           color: data.color,
+          category,
           authorId: userId,
           recurrence,
         },
@@ -161,6 +169,20 @@ export function EventForm({
           rows={4}
           className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
         />
+      </div>
+
+      <div>
+        <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          Catégorie
+        </label>
+        <select
+          {...register("category", { required: true })}
+          className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+        >
+          <option value="">Sélectionner une catégorie</option>
+          <option value="course">Cours</option>
+          <option value="public-event">Événement public</option>
+        </select>
       </div>
 
       <div>

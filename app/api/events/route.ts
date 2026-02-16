@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
       startTime,
       endTime,
       color,
+      category,
       authorId,
       recurrence,
     } = await req.json();
@@ -57,6 +58,7 @@ export async function POST(req: NextRequest) {
       startTime,
       endTime: endTime || null,
       color: color || null,
+      category: category || null,
       authorId,
       createdAt: now,
       updatedAt: now,

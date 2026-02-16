@@ -36,6 +36,7 @@ export async function PUT(
       startTime,
       endTime,
       color,
+      category,
       adminId,
       recurrence,
       scope,
@@ -72,6 +73,7 @@ export async function PUT(
         startTime,
         endTime: endTime || null,
         color: color || null,
+        category: category || null,
         authorId: adminId,
         createdAt: now,
         updatedAt: now,
@@ -90,6 +92,7 @@ export async function PUT(
       startTime,
       endTime: endTime || null,
       color: color || null,
+      category: category || null,
       updatedAt: new Date(),
     };
 

@@ -1,5 +1,7 @@
 export type RecurrenceType = "weekly" | "monthly";
 
+export type EventCategory = "course" | "public-event";
+
 export const EVENT_COLORS = {
   teal: { label: "Turquoise", bg: "bg-teal-600", hex: "#0d9488" },
   blue: { label: "Bleu", bg: "bg-blue-600", hex: "#2563eb" },
@@ -26,6 +28,7 @@ export interface Event {
   startTime: string;
   endTime?: string;
   color?: EventColor;
+  category?: EventCategory;
   authorId: string;
   createdAt: Date;
   updatedAt: Date;
