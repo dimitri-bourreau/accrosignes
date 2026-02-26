@@ -1,7 +1,21 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Title from '@/components/atoms/title';
 import HtmlContent from '@/components/atoms/html-content';
 import { getContentByKey } from '@/features/content/services/get-content.service';
+
+export const metadata: Metadata = {
+  title: 'Tarifs',
+  description:
+    'Découvrez les tarifs des cours de Langue des Signes Française proposés par AccroSignes à Grenoble. Tarif classique et tarif réduit disponibles.',
+  alternates: {
+    canonical: '/tarifs',
+  },
+  openGraph: {
+    title: 'Tarifs | AccroSignes',
+    description: 'Tarifs des cours de LSF proposés par AccroSignes à Grenoble.',
+  },
+};
 
 export const revalidate = 300;
 

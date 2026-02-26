@@ -4,6 +4,7 @@ import './globals.css';
 import Navigation from '@/components/organisms/navigation';
 import Footer from '@/components/organisms/footer';
 import { Providers } from './providers';
+import JsonLd from '@/components/atoms/json-ld';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -19,7 +20,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || 'https://accrosignes.fr',
   ),
-  title: 'AccroSignes - Cours de LSF à Grenoble',
+  title: {
+    default: 'AccroSignes - Cours de LSF à Grenoble',
+    template: '%s | AccroSignes',
+  },
   description:
     "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants à Grenoble.",
   icons: {
@@ -35,6 +39,7 @@ export const metadata: Metadata = {
     ],
     locale: 'fr_FR',
     type: 'website',
+    siteName: 'AccroSignes',
   },
   twitter: {
     card: 'summary',
@@ -44,14 +49,37 @@ export const metadata: Metadata = {
     images: ['/logo.jpeg'],
   },
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
+      index: true,
+      follow: true,
     },
   },
+  alternates: {
+    canonical: '/',
+  },
+};
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'AccroSignes',
+  url: 'https://accrosignes.fr',
+  logo: 'https://accrosignes.fr/logo.jpeg',
+  description:
+    "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants à Grenoble.",
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Grenoble',
+    addressRegion: 'Isère',
+    addressCountry: 'FR',
+  },
+  email: 'accrosignes@asg38.fr',
+  sameAs: [
+    'https://www.facebook.com/groups/1108780423184754/',
+    'https://www.instagram.com/accrosigneslsfgrenoble/',
+  ],
 };
 
 export default function RootLayout({
@@ -64,6 +92,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <JsonLd data={organizationJsonLd} />
         <Providers>
           <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
             <Navigation />

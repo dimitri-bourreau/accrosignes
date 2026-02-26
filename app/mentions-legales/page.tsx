@@ -1,6 +1,15 @@
+import type { Metadata } from 'next';
 import Title from '@/components/atoms/title';
 import HtmlContent from '@/components/atoms/html-content';
 import { getContentByKey } from '@/features/content/services/get-content.service';
+
+export const metadata: Metadata = {
+  title: 'Mentions légales',
+  description: 'Mentions légales du site AccroSignes.',
+  alternates: {
+    canonical: '/mentions-legales',
+  },
+};
 
 export const revalidate = 300;
 

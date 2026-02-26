@@ -1,5 +1,6 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /espace-membre/
+Disallow: /api/
 
-# Block all search engines from indexing
-# This is a preview/development site
+Sitemap: https://accrosignes.fr/sitemap.xml

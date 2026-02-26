@@ -1,6 +1,16 @@
+import type { Metadata } from 'next';
 import Title from '@/components/atoms/title';
 import HtmlContent from '@/components/atoms/html-content';
 import { getContentByKey } from '@/features/content/services/get-content.service';
+
+export const metadata: Metadata = {
+  title: 'Politique de confidentialité',
+  description:
+    "Politique de confidentialité et traitement des données personnelles d'AccroSignes, conforme au RGPD.",
+  alternates: {
+    canonical: '/politique-confidentialite',
+  },
+};
 
 export const revalidate = 300;
 

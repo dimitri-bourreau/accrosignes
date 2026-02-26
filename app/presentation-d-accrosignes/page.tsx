@@ -1,7 +1,22 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Title from '@/components/atoms/title';
 import HtmlContent from '@/components/atoms/html-content';
 import { getContentByKey } from '@/features/content/services/get-content.service';
+
+export const metadata: Metadata = {
+  title: "Présentation d'AccroSignes",
+  description:
+    "Découvrez AccroSignes, association grenobloise dédiée à l'enseignement de la LSF et aux échanges entre sourds et entendants.",
+  alternates: {
+    canonical: '/presentation-d-accrosignes',
+  },
+  openGraph: {
+    title: "Présentation d'AccroSignes | AccroSignes",
+    description:
+      "Association grenobloise dédiée à l'enseignement de la Langue des Signes Française et aux rencontres entre sourds et entendants.",
+  },
+};
 
 export const revalidate = 300;
 

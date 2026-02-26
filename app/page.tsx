@@ -1,8 +1,15 @@
+import type { Metadata } from 'next';
 import HomeIntroduction from '@/components/organisms/home-introduction';
 import LatestNewsSection from '@/components/organisms/latest-news-section';
 import SocialLinksSection from '@/components/organisms/social-links-section';
 import { getContentByKey } from '@/features/content/services/get-content.service';
 import { getLatestNews } from '@/features/news/services/get-latest-news.service';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export const revalidate = 300;
 

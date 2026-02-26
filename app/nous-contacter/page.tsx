@@ -1,6 +1,21 @@
+import type { Metadata } from 'next';
 import SocialLinksSection from '@/components/organisms/social-links-section';
 import Title from '@/components/atoms/title';
 import Typography from '@/components/atoms/typography';
+
+export const metadata: Metadata = {
+  title: 'Nous contacter',
+  description:
+    'Contactez AccroSignes pour toute question sur les cours de Langue des Signes Française à Grenoble. Email : accrosignes@asg38.fr',
+  alternates: {
+    canonical: '/nous-contacter',
+  },
+  openGraph: {
+    title: 'Nous contacter | AccroSignes',
+    description:
+      'Contactez AccroSignes pour toute question sur les cours de LSF à Grenoble.',
+  },
+};
 
 export default function NousContacterPage() {
   return (

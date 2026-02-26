@@ -1,8 +1,23 @@
+import type { Metadata } from 'next';
 import Title from '@/components/atoms/title';
 import Typography from '@/components/atoms/typography';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getAllNews } from '@/features/news/services/get-all-news.service';
+
+export const metadata: Metadata = {
+  title: 'Actualités',
+  description:
+    "Restez informé des dernières nouvelles d'AccroSignes : événements, cours de LSF et vie associative à Grenoble.",
+  alternates: {
+    canonical: '/actualites',
+  },
+  openGraph: {
+    title: 'Actualités | AccroSignes',
+    description:
+      "Dernières nouvelles d'AccroSignes : événements, cours de LSF et vie associative à Grenoble.",
+  },
+};
 
 export const revalidate = 300;
 
