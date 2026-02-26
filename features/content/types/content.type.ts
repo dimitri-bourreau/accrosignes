@@ -29,6 +29,9 @@ export const CONTENT_KEYS = {
   about: "Contenu complet",
   legal: "Contenu complet",
   privacy: "Contenu complet",
+  "pricing.intro": "Introduction",
+  "pricing.courses": "Tarifs des cours",
+  "pricing.additional": "Informations complémentaires",
 } as const;
 
 export type ContentKey = keyof typeof CONTENT_KEYS;
@@ -65,9 +68,20 @@ export const CONTENT_SECTIONS: ContentSection[] = [
     title: "Politique de confidentialité",
     keys: ["privacy"],
   },
+  {
+    title: "Tarifs",
+    keys: ["pricing.intro", "pricing.courses", "pricing.additional"],
+  },
 ];
 
-export const RICH_TEXT_KEYS: ContentKey[] = ["about", "legal", "privacy"];
+export const RICH_TEXT_KEYS: ContentKey[] = [
+  "about",
+  "legal",
+  "privacy",
+  "pricing.intro",
+  "pricing.courses",
+  "pricing.additional",
+];
 
 export const IMAGE_KEYS: ContentKey[] = ["home.image"];
 

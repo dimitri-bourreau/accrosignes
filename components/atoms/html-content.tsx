@@ -7,8 +7,11 @@ interface HtmlContentProps {
   className?: string;
 }
 
-const ALLOWED_TAGS = ["h1", "h2", "h3", "p", "a", "strong", "em", "ul", "ol", "li", "br"];
-const ALLOWED_ATTR = ["href", "target", "rel"];
+const ALLOWED_TAGS = [
+  "h1", "h2", "h3", "p", "a", "strong", "em", "ul", "ol", "li", "br",
+  "table", "thead", "tbody", "tr", "th", "td",
+];
+const ALLOWED_ATTR = ["href", "target", "rel", "colspan", "rowspan"];
 
 export default function HtmlContent({ html, className = "" }: HtmlContentProps) {
   const [sanitizedHtml, setSanitizedHtml] = useState("");
@@ -34,6 +37,9 @@ export default function HtmlContent({ html, className = "" }: HtmlContentProps) 
     [&_a]:text-teal-600 [&_a]:underline [&_a]:hover:text-teal-700
     [&_strong]:font-semibold
     [&_em]:italic
+    [&_table]:w-full [&_table]:border-collapse [&_table]:mb-4
+    [&_th]:border [&_th]:border-gray-200 [&_th]:bg-gray-50 [&_th]:px-4 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_th]:text-gray-900 dark:[&_th]:border-gray-700 dark:[&_th]:bg-gray-800 dark:[&_th]:text-gray-100
+    [&_td]:border [&_td]:border-gray-200 [&_td]:px-4 [&_td]:py-2 dark:[&_td]:border-gray-700
   `;
 
   if (!sanitizedHtml) {

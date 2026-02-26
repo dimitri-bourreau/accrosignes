@@ -25,6 +25,12 @@ export default function Footer() {
                 <Typography variant="body-sm">Agenda</Typography>
               </Link>
               <Link
+                href="/tarifs"
+                className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition"
+              >
+                <Typography variant="body-sm">Tarifs</Typography>
+              </Link>
+              <Link
                 href="/espace-membre"
                 className="cursor-pointer block hover:text-gray-900 dark:hover:text-gray-100 transition"
               >

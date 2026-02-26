@@ -3,6 +3,7 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
+import { Table, TableRow, TableHeader, TableCell } from "@tiptap/extension-table";
 import { useCallback, useEffect } from "react";
 
 interface ContentEditorProps {
@@ -17,6 +18,10 @@ export default function ContentEditor({ content, onChange }: ContentEditorProps)
         heading: { levels: [2, 3] },
       }),
       Link.configure({ openOnClick: false }),
+      Table.configure({ resizable: false }),
+      TableRow,
+      TableHeader,
+      TableCell,
     ],
     content,
     immediatelyRender: false,
@@ -87,8 +92,54 @@ export default function ContentEditor({ content, onChange }: ContentEditorProps)
         >
           Liste numérotée
         </ToolbarButton>
+        <ToolbarButton
+          onClick={() =>
+            editor
+              .chain()
+              .focus()
+              .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+              .run()
+          }
+          active={editor.isActive("table")}
+        >
+          Tableau
+        </ToolbarButton>
+        {editor.isActive("table") && (
+          <>
+            <ToolbarButton
+              onClick={() => editor.chain().focus().addColumnAfter().run()}
+              active={false}
+            >
+              + Colonne
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => editor.chain().focus().deleteColumn().run()}
+              active={false}
+            >
+              - Colonne
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => editor.chain().focus().addRowAfter().run()}
+              active={false}
+            >
+              + Ligne
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => editor.chain().focus().deleteRow().run()}
+              active={false}
+            >
+              - Ligne
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => editor.chain().focus().deleteTable().run()}
+              active={false}
+            >
+              Supprimer tableau
+            </ToolbarButton>
+          </>
+        )}
       </div>
-      <div className="p-4 min-h-[200px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 [&_.tiptap]:outline-none [&_.tiptap]:min-h-[180px] [&_.tiptap_h2]:text-2xl [&_.tiptap_h2]:font-bold [&_.tiptap_h2]:mt-6 [&_.tiptap_h2]:mb-3 [&_.tiptap_h3]:text-xl [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:mt-4 [&_.tiptap_h3]:mb-2 [&_.tiptap_p]:mb-3 [&_.tiptap_ul]:list-disc [&_.tiptap_ul]:ml-6 [&_.tiptap_ul]:mb-3 [&_.tiptap_ol]:list-decimal [&_.tiptap_ol]:ml-6 [&_.tiptap_ol]:mb-3 [&_.tiptap_a]:text-teal-600 [&_.tiptap_a]:underline">
+      <div className="p-4 min-h-[200px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 [&_.tiptap]:outline-none [&_.tiptap]:min-h-[180px] [&_.tiptap_h2]:text-2xl [&_.tiptap_h2]:font-bold [&_.tiptap_h2]:mt-6 [&_.tiptap_h2]:mb-3 [&_.tiptap_h3]:text-xl [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:mt-4 [&_.tiptap_h3]:mb-2 [&_.tiptap_p]:mb-3 [&_.tiptap_ul]:list-disc [&_.tiptap_ul]:ml-6 [&_.tiptap_ul]:mb-3 [&_.tiptap_ol]:list-decimal [&_.tiptap_ol]:ml-6 [&_.tiptap_ol]:mb-3 [&_.tiptap_a]:text-teal-600 [&_.tiptap_a]:underline [&_.tiptap_table]:w-full [&_.tiptap_table]:border-collapse [&_.tiptap_table]:mb-4 [&_.tiptap_th]:border [&_.tiptap_th]:border-gray-300 [&_.tiptap_th]:bg-gray-100 [&_.tiptap_th]:px-3 [&_.tiptap_th]:py-2 [&_.tiptap_th]:text-left [&_.tiptap_th]:font-semibold dark:[&_.tiptap_th]:border-gray-600 dark:[&_.tiptap_th]:bg-gray-800 [&_.tiptap_td]:border [&_.tiptap_td]:border-gray-300 [&_.tiptap_td]:px-3 [&_.tiptap_td]:py-2 dark:[&_.tiptap_td]:border-gray-600">
         <EditorContent editor={editor} />
       </div>
     </div>
