@@ -1,48 +1,51 @@
-import Image from "next/image";
 import Link from "next/link";
 import Title from "../atoms/title";
 import Typography from "../atoms/typography";
+
+interface Feature {
+  emoji: string;
+  title: string;
+  text: string;
+}
 
 interface HomeIntroductionProps {
   title: string;
   subtitle: string;
   description: string;
-  imageUrl?: string;
+  features: Feature[];
 }
-
-const DEFAULT_IMAGE = "/photo-des-goat.png";
 
 export default function HomeIntroduction({
   title,
   subtitle,
   description,
-  imageUrl,
+  features,
 }: HomeIntroductionProps) {
   return (
-    <section className="relative pt-12 pb-0 px-6 bg-white dark:bg-gray-950 overflow-hidden">
-      <div className="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full opacity-10 animate-shimmer blur-3xl"></div>
+    <section className="relative px-6 pt-6 pb-12 md:pt-8 md:pb-16 bg-white dark:bg-gray-950 overflow-hidden">
+      <div className="absolute top-20 right-10 w-72 h-72 bg-teal-500/10 rounded-full opacity-10 animate-shimmer blur-3xl" />
       <div
-        className="absolute -bottom-40 left-1/4 w-96 h-96 bg-primary/5 rounded-full opacity-5 animate-shimmer blur-3xl"
+        className="absolute -bottom-40 left-1/4 w-96 h-96 bg-teal-500/5 rounded-full opacity-5 animate-shimmer blur-3xl"
         style={{ animationDelay: "1s" }}
-      ></div>
+      />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
-          <div className="flex justify-center md:order-1">
-            <div className="relative w-full">
-              <Image
-                src={imageUrl || DEFAULT_IMAGE}
-                alt="Communauté Accrosignes - cours de LSF"
-                width={600}
-                height={700}
-                className="w-full h-auto drop-shadow-lg"
-                priority
-              />
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)] gap-10 items-center">
+          <div className="rounded-2xl overflow-clip shadow-xl mx-auto lg:mx-0 max-w-[280px] lg:max-w-none">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls
+              className="w-full h-auto"
+            >
+              <source src="/home-video.mp4" type="video/mp4" />
+            </video>
           </div>
 
-          <div className="space-y-6 md:order-2 pb-20">
-            <div className="space-y-3">
+          <div className="flex flex-col gap-5">
+            <div className="space-y-2">
               <Title level="h1" className="text-gray-900 dark:text-gray-100">
                 {title}
               </Title>
@@ -61,7 +64,7 @@ export default function HomeIntroduction({
               {description}
             </Typography>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/presentation-d-accrosignes"
                 className="cursor-pointer px-8 py-3 bg-teal-600 dark:bg-teal-500 text-white rounded-lg font-semibold hover:opacity-90 hover:shadow-md transition-all duration-200 flex items-center justify-center"
@@ -74,6 +77,20 @@ export default function HomeIntroduction({
               >
                 Voir l&apos;agenda
               </Link>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 pt-5 border-t border-gray-200 dark:border-gray-800">
+              {features.map((feature, index) => (
+                <div key={index} className="space-y-1">
+                  <Typography className="text-2xl!">{feature.emoji}</Typography>
+                  <Title level="h4" className="text-gray-900 dark:text-gray-100">
+                    {feature.title}
+                  </Title>
+                  <Typography variant="caption" className="line-clamp-2">
+                    {feature.text}
+                  </Typography>
+                </div>
+              ))}
             </div>
           </div>
         </div>

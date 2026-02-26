@@ -1,16 +1,15 @@
 import HomeIntroduction from "@/components/organisms/home-introduction";
-import FeaturesSection from "@/components/organisms/features-section";
+import LatestNewsSection from "@/components/organisms/latest-news-section";
 import { getContentByKey } from "@/features/content/services/get-content.service";
+import { getLatestNews } from "@/features/news/services/get-latest-news.service";
 
 export const revalidate = 300;
 
 export default async function Home() {
   const [
-    homeImage,
     title,
     subtitle,
     description,
-    featuresTitle,
     feature1Emoji,
     feature1Title,
     feature1Text,
@@ -20,12 +19,11 @@ export default async function Home() {
     feature3Emoji,
     feature3Title,
     feature3Text,
+    latestNews,
   ] = await Promise.all([
-    getContentByKey("home.image"),
     getContentByKey("home.title"),
     getContentByKey("home.subtitle"),
     getContentByKey("home.description"),
-    getContentByKey("home.features.title"),
     getContentByKey("home.feature1.emoji"),
     getContentByKey("home.feature1.title"),
     getContentByKey("home.feature1.text"),
@@ -35,6 +33,7 @@ export default async function Home() {
     getContentByKey("home.feature3.emoji"),
     getContentByKey("home.feature3.title"),
     getContentByKey("home.feature3.text"),
+    getLatestNews(),
   ]);
 
   const features = [
@@ -61,12 +60,9 @@ export default async function Home() {
         title={title ?? "Apprenez la LSF"}
         subtitle={subtitle ?? "Ensemble à Grenoble"}
         description={description ?? "Cours de Langue des Signes Française et rencontres authentiques entre sourds et entendants"}
-        imageUrl={homeImage ?? undefined}
-      />
-      <FeaturesSection
-        title={featuresTitle ?? "Ce que nous proposons"}
         features={features}
       />
+      <LatestNewsSection news={latestNews} />
     </>
   );
 }
