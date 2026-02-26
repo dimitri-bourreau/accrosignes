@@ -79,7 +79,7 @@ export default function HomeIntroduction({
               </Link>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 pt-5 border-t border-gray-200 dark:border-gray-800">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-5 border-t border-gray-200 dark:border-gray-800">
               {features.map((feature, index) => (
                 <div key={index} className="space-y-1">
                   <Typography className="text-2xl!">{feature.emoji}</Typography>
