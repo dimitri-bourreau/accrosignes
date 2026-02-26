@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.15",
@@ -42,9 +45,16 @@
     "eslint-config-next": "16.0.10",
     "eslint-plugin-storybook": "^10.1.9",
     "firebase-tools": "^15.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
     "storybook": "^10.1.9",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vite": "^7.3.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --fix",
+    "*.{ts,tsx,js,mjs,json,css,md}": "prettier --write"
   }
 }
