@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import SupportSection from "@/components/organisms/support-section";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import SupportSection from '@/components/organisms/support-section';
 
 const meta: Meta<typeof SupportSection> = {
-  title: "organisms/SupportSection",
+  title: 'organisms/SupportSection',
   component: SupportSection,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -18,7 +18,7 @@ export const Default: Story = {};
 export const Mobile: Story = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile1",
+      defaultViewport: 'mobile1',
     },
   },
 };

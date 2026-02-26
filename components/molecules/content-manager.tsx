@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import {
   useContent,
   useUpdateContent,
   useUploadContentImage,
-} from "@/features/content/hooks/use-content";
-import { useUploadEditorImage } from "@/features/editor/hooks/use-upload-editor-image";
+} from '@/features/content/hooks/use-content';
+import { useUploadEditorImage } from '@/features/editor/hooks/use-upload-editor-image';
 import {
   CONTENT_KEYS,
   CONTENT_SECTIONS,
   ContentKey,
   isRichTextKey,
   isImageKey,
-} from "@/features/content/types/content.type";
-import Typography from "@/components/atoms/typography";
-import Title from "@/components/atoms/title";
-import ContentEditor from "./content-editor";
-import { ImageUpload } from "./image-upload";
-import Image from "next/image";
+} from '@/features/content/types/content.type';
+import Typography from '@/components/atoms/typography';
+import Title from '@/components/atoms/title';
+import ContentEditor from './content-editor';
+import { ImageUpload } from './image-upload';
+import Image from 'next/image';
 
 interface ContentManagerProps {
   userId: string;
@@ -30,11 +30,11 @@ export default function ContentManager({ userId }: ContentManagerProps) {
   const uploadImage = useUploadContentImage();
   const uploadEditorImage = useUploadEditorImage();
   const [editingKey, setEditingKey] = useState<ContentKey | null>(null);
-  const [editValue, setEditValue] = useState("");
+  const [editValue, setEditValue] = useState('');
 
   const handleEdit = (key: ContentKey) => {
     const existing = content?.find((c) => c.key === key);
-    setEditValue(existing?.value ?? "");
+    setEditValue(existing?.value ?? '');
     setEditingKey(key);
   };
 
@@ -46,18 +46,18 @@ export default function ContentManager({ userId }: ContentManagerProps) {
       adminId: userId,
     });
     setEditingKey(null);
-    setEditValue("");
+    setEditValue('');
   };
 
   const handleCancel = () => {
     setEditingKey(null);
-    setEditValue("");
+    setEditValue('');
   };
 
   const handleDeleteImage = async (key: ContentKey) => {
     await updateContent.mutateAsync({
       key,
-      value: "",
+      value: '',
       adminId: userId,
     });
   };
@@ -106,7 +106,7 @@ export default function ContentManager({ userId }: ContentManagerProps) {
               disabled={updateContent.isPending || uploadImage.isPending}
               className="cursor-pointer px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition disabled:opacity-50"
             >
-              {updateContent.isPending ? "Enregistrement..." : "Enregistrer"}
+              {updateContent.isPending ? 'Enregistrement...' : 'Enregistrer'}
             </button>
           </div>
         </div>
@@ -116,10 +116,14 @@ export default function ContentManager({ userId }: ContentManagerProps) {
             imageUrl={editValue}
             uploading={uploadImage.isPending}
             onUpload={handleImageUpload}
-            onRemove={() => setEditValue("")}
+            onRemove={() => setEditValue('')}
           />
         ) : isRichText ? (
-          <ContentEditor content={editValue} onChange={setEditValue} onUploadImage={handleEditorImageUpload} />
+          <ContentEditor
+            content={editValue}
+            onChange={setEditValue}
+            onUploadImage={handleEditorImageUpload}
+          />
         ) : (
           <input
             type="text"
@@ -176,8 +180,8 @@ export default function ContentManager({ userId }: ContentManagerProps) {
                       className="text-gray-500 dark:text-gray-400"
                     >
                       {existing
-                        ? "Modifié le " + formatDate(existing.updatedAt)
-                        : "Non configuré"}
+                        ? 'Modifié le ' + formatDate(existing.updatedAt)
+                        : 'Non configuré'}
                     </Typography>
                   </div>
                   <div className="flex gap-2 shrink-0">
@@ -208,17 +212,17 @@ export default function ContentManager({ userId }: ContentManagerProps) {
 }
 
 function formatDate(date: Date | string): string {
-  const d = typeof date === "string" ? new Date(date) : date;
-  return d.toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  const d = typeof date === 'string' ? new Date(date) : date;
+  return d.toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   });
 }
 
 function getPreview(value?: string): string {
-  if (!value) return "";
-  const text = value.replace(/<[^>]*>/g, "").trim();
+  if (!value) return '';
+  const text = value.replace(/<[^>]*>/g, '').trim();
   if (text.length <= 60) return text;
-  return text.slice(0, 60) + "...";
+  return text.slice(0, 60) + '...';
 }

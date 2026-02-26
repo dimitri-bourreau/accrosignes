@@ -1,4 +1,4 @@
-export type ResourceType = "file" | "link" | "folder";
+export type ResourceType = 'file' | 'link' | 'folder';
 
 export interface Resource {
   id: string;

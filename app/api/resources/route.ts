@@ -1,27 +1,27 @@
-import { NextRequest, NextResponse } from "next/server";
-import * as admin from "firebase-admin";
-import { adminDb } from "@/features/auth/admin";
+import { NextRequest, NextResponse } from 'next/server';
+import * as admin from 'firebase-admin';
+import { adminDb } from '@/features/auth/admin';
 import {
   getResourcesByParent,
   getResourcePath,
-} from "@/features/resources/services/get-resources.service";
-import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
+} from '@/features/resources/services/get-resources.service';
+import { userIsAdmin } from '@/features/auth/services/user-is-admin.service';
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const parentId = searchParams.get("parentId");
-    const includePath = searchParams.get("includePath") === "true";
+    const parentId = searchParams.get('parentId');
+    const includePath = searchParams.get('includePath') === 'true';
 
     const resources = await getResourcesByParent(parentId);
     const path = includePath ? await getResourcePath(parentId) : [];
 
     return NextResponse.json({ resources, path });
   } catch (error: unknown) {
-    console.error("Error fetching resources:", error);
+    console.error('Error fetching resources:', error);
     return NextResponse.json(
-      { error: "Failed to fetch resources" },
-      { status: 500 }
+      { error: 'Failed to fetch resources' },
+      { status: 500 },
     );
   }
 }
@@ -32,14 +32,14 @@ export async function POST(req: NextRequest) {
 
     if (!name || !type || !authorId) {
       return NextResponse.json(
-        { error: "name, type et authorId sont requis" },
-        { status: 400 }
+        { error: 'name, type et authorId sont requis' },
+        { status: 400 },
       );
     }
 
     const isAdmin = await userIsAdmin(authorId);
     if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     const now = admin.firestore.Timestamp.now();
@@ -52,31 +52,28 @@ export async function POST(req: NextRequest) {
       updatedAt: now,
     };
 
-    if (type === "link") {
+    if (type === 'link') {
       try {
         const url = new URL(linkUrl);
-        if (!["http:", "https:"].includes(url.protocol)) {
+        if (!['http:', 'https:'].includes(url.protocol)) {
           return NextResponse.json(
             { error: "L'URL doit commencer par http:// ou https://" },
-            { status: 400 }
+            { status: 400 },
           );
         }
         resourceDoc.linkUrl = linkUrl;
       } catch {
-        return NextResponse.json(
-          { error: "URL invalide" },
-          { status: 400 }
-        );
+        return NextResponse.json({ error: 'URL invalide' }, { status: 400 });
       }
     }
 
-    const docRef = await adminDb.collection("resources").add(resourceDoc);
+    const docRef = await adminDb.collection('resources').add(resourceDoc);
     return NextResponse.json({ id: docRef.id, success: true });
   } catch (error: unknown) {
-    console.error("Error creating resource:", error);
+    console.error('Error creating resource:', error);
     return NextResponse.json(
-      { error: "Failed to create resource" },
-      { status: 500 }
+      { error: 'Failed to create resource' },
+      { status: 500 },
     );
   }
 }

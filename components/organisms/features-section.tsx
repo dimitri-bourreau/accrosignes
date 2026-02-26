@@ -1,5 +1,5 @@
-import Title from "../atoms/title";
-import Typography from "../atoms/typography";
+import Title from '../atoms/title';
+import Typography from '../atoms/typography';
 
 interface Feature {
   emoji: string;
@@ -12,7 +12,10 @@ interface FeaturesSectionProps {
   features: Feature[];
 }
 
-export default function FeaturesSection({ title, features }: FeaturesSectionProps) {
+export default function FeaturesSection({
+  title,
+  features,
+}: FeaturesSectionProps) {
   return (
     <section className="px-6 py-20 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
       <div className="max-w-4xl mx-auto">

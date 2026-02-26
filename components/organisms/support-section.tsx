@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Title from "../atoms/title";
-import Typography from "../atoms/typography";
+import Link from 'next/link';
+import Title from '../atoms/title';
+import Typography from '../atoms/typography';
 
 export default function SupportSection() {
   return (

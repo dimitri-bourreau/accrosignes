@@ -1,13 +1,16 @@
-"use client";
+'use client';
 
-import { useState, Suspense } from "react";
-import { useQueryState, parseAsIsoDate, parseAsString } from "nuqs";
-import Title from "@/components/atoms/title";
-import Typography from "@/components/atoms/typography";
-import DayEventsModal from "@/components/molecules/day-events-modal";
-import EventDetailModal from "@/components/molecules/event-detail-modal";
-import { useEvents } from "@/features/events/hooks/use-events";
-import { EventOccurrence, EVENT_COLORS } from "@/features/events/types/event.type";
+import { useState, Suspense } from 'react';
+import { useQueryState, parseAsIsoDate, parseAsString } from 'nuqs';
+import Title from '@/components/atoms/title';
+import Typography from '@/components/atoms/typography';
+import DayEventsModal from '@/components/molecules/day-events-modal';
+import EventDetailModal from '@/components/molecules/event-detail-modal';
+import { useEvents } from '@/features/events/hooks/use-events';
+import {
+  EventOccurrence,
+  EVENT_COLORS,
+} from '@/features/events/types/event.type';
 
 function formatTime(startTime: string, endTime?: string): string {
   if (endTime) return `${startTime}-${endTime}`;
@@ -23,8 +26,11 @@ function AgendaContent() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDay, setSelectedDay] = useState<SelectedDay | null>(null);
   const [showCourses, setShowCourses] = useState(false);
-  const [selectedDate, setSelectedDate] = useQueryState("date", parseAsIsoDate);
-  const [selectedEventId, setSelectedEventId] = useQueryState("event", parseAsString);
+  const [, setSelectedDate] = useQueryState('date', parseAsIsoDate);
+  const [selectedEventId, setSelectedEventId] = useQueryState(
+    'event',
+    parseAsString,
+  );
   const { data: events = [], isLoading } = useEvents();
 
   const selectedEvent = selectedEventId
@@ -41,11 +47,15 @@ function AgendaContent() {
   };
 
   const previousMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1),
+    );
   };
 
   const nextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1),
+    );
   };
 
   const getEventsForDay = (day: number): EventOccurrence[] => {
@@ -63,14 +73,17 @@ function AgendaContent() {
     const now = new Date();
     return events.filter((event) => {
       const isFuture = new Date(event.date) >= now;
-      const isCourse = event.category === "course";
+      const isCourse = event.category === 'course';
       return showCourses ? isFuture : isFuture && !isCourse;
     });
   };
 
   const daysInMonth = getDaysInMonth(currentDate);
   const firstDay = getFirstDayOfMonth(currentDate);
-  const monthName = currentDate.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+  const monthName = currentDate.toLocaleDateString('fr-FR', {
+    month: 'long',
+    year: 'numeric',
+  });
 
   const calendarDays: (number | null)[] = [];
   for (let i = 0; i < firstDay; i++) {
@@ -90,7 +103,10 @@ function AgendaContent() {
             <Title level="h1" className="text-gray-900 dark:text-gray-100">
               Agenda
             </Title>
-            <Typography variant="subtitle" className="text-teal-600 dark:text-teal-400">
+            <Typography
+              variant="subtitle"
+              className="text-teal-600 dark:text-teal-400"
+            >
               Découvrez tous nos événements et cours
             </Typography>
           </div>
@@ -105,7 +121,10 @@ function AgendaContent() {
               >
                 ← Mois précédent
               </button>
-              <Title level="h2" className="text-gray-900 dark:text-gray-100 capitalize">
+              <Title
+                level="h2"
+                className="text-gray-900 dark:text-gray-100 capitalize"
+              >
                 {monthName}
               </Title>
               <button
@@ -118,8 +137,11 @@ function AgendaContent() {
 
             {/* Days of Week Header */}
             <div className="grid grid-cols-7 gap-2 mb-4">
-              {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((day) => (
-                <div key={day} className="text-center font-semibold text-gray-600 dark:text-gray-300 py-2">
+              {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day) => (
+                <div
+                  key={day}
+                  className="text-center font-semibold text-gray-600 dark:text-gray-300 py-2"
+                >
                   {day}
                 </div>
               ))}
@@ -144,40 +166,52 @@ function AgendaContent() {
                           const clickedDate = new Date(
                             currentDate.getFullYear(),
                             currentDate.getMonth(),
-                            day
+                            day,
                           );
-                          setSelectedDay({ date: clickedDate, events: dayEvents });
+                          setSelectedDay({
+                            date: clickedDate,
+                            events: dayEvents,
+                          });
                           setSelectedDate(clickedDate);
                         }
                       }}
                       className={`min-h-32 p-2 rounded border ${
                         day === null
-                          ? "bg-gray-50 dark:bg-gray-800 border-transparent"
+                          ? 'bg-gray-50 dark:bg-gray-800 border-transparent'
                           : hasEvents
-                            ? "bg-teal-50 dark:bg-teal-950 border-teal-300 dark:border-teal-700 cursor-pointer hover:shadow-md"
-                            : "bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-700"
+                            ? 'bg-teal-50 dark:bg-teal-950 border-teal-300 dark:border-teal-700 cursor-pointer hover:shadow-md'
+                            : 'bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-700'
                       } transition`}
                     >
                       {day && (
                         <div className="space-y-1">
-                          <div className="font-semibold text-gray-900 dark:text-gray-100">{day}</div>
+                          <div className="font-semibold text-gray-900 dark:text-gray-100">
+                            {day}
+                          </div>
                           {dayEvents.slice(0, 2).map((eventItem) => {
-                            const colorBg = EVENT_COLORS[eventItem.color || "teal"].bg;
+                            const colorBg =
+                              EVENT_COLORS[eventItem.color || 'teal'].bg;
                             return (
                               <div
                                 key={eventItem.id}
                                 className={`${colorBg} text-white rounded px-2 py-1 text-xs`}
                               >
-                                <div className="font-medium truncate">{eventItem.title}</div>
+                                <div className="font-medium truncate">
+                                  {eventItem.title}
+                                </div>
                                 <div className="text-white/70 text-[10px]">
-                                  {formatTime(eventItem.startTime, eventItem.endTime)}
+                                  {formatTime(
+                                    eventItem.startTime,
+                                    eventItem.endTime,
+                                  )}
                                 </div>
                               </div>
                             );
                           })}
                           {dayEvents.length > 2 && (
                             <div className="text-xs text-teal-600 dark:text-teal-400 font-medium text-center">
-                              +{dayEvents.length - 2} autre{dayEvents.length > 3 ? "s" : ""}
+                              +{dayEvents.length - 2} autre
+                              {dayEvents.length > 3 ? 's' : ''}
                             </div>
                           )}
                         </div>
@@ -202,7 +236,10 @@ function AgendaContent() {
                   onChange={(event) => setShowCourses(event.target.checked)}
                   className="w-4 h-4 cursor-pointer"
                 />
-                <Typography variant="body-sm" className="text-gray-700 dark:text-gray-200">
+                <Typography
+                  variant="body-sm"
+                  className="text-gray-700 dark:text-gray-200"
+                >
                   Afficher les cours
                 </Typography>
               </label>
@@ -218,7 +255,7 @@ function AgendaContent() {
                 </Typography>
               ) : (
                 upcomingEvents.map((event) => {
-                  const colorBg = EVENT_COLORS[event.color || "teal"].bg;
+                  const colorBg = EVENT_COLORS[event.color || 'teal'].bg;
                   return (
                     <div
                       key={event.id}
@@ -234,30 +271,39 @@ function AgendaContent() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <Typography variant="body-lg" className="font-semibold text-gray-900 dark:text-gray-100">
+                          <Typography
+                            variant="body-lg"
+                            className="font-semibold text-gray-900 dark:text-gray-100"
+                          >
                             {event.title}
                           </Typography>
-                          {event.category === "course" && (
+                          {event.category === 'course' && (
                             <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">
                               Cours
                             </span>
                           )}
-                          {event.category === "public-event" && (
+                          {event.category === 'public-event' && (
                             <span className="px-2 py-0.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-medium rounded">
                               Événement public
                             </span>
                           )}
                         </div>
-                        <Typography variant="body-sm" className="text-gray-600 dark:text-gray-300">
-                          {new Date(event.date).toLocaleDateString("fr-FR", {
-                            weekday: "long",
-                            day: "numeric",
-                            month: "long",
-                          })}{" "}
+                        <Typography
+                          variant="body-sm"
+                          className="text-gray-600 dark:text-gray-300"
+                        >
+                          {new Date(event.date).toLocaleDateString('fr-FR', {
+                            weekday: 'long',
+                            day: 'numeric',
+                            month: 'long',
+                          })}{' '}
                           • {formatTime(event.startTime, event.endTime)}
                         </Typography>
                         {event.description && (
-                          <Typography variant="body-sm" className="text-gray-700 dark:text-gray-200 mt-1">
+                          <Typography
+                            variant="body-sm"
+                            className="text-gray-700 dark:text-gray-200 mt-1"
+                          >
                             {event.description}
                           </Typography>
                         )}
@@ -291,7 +337,9 @@ function AgendaContent() {
 
 export default function AgendaPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white dark:bg-gray-950" />}>
+    <Suspense
+      fallback={<div className="min-h-screen bg-white dark:bg-gray-950" />}
+    >
       <AgendaContent />
     </Suspense>
   );

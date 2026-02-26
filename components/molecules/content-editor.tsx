@@ -1,11 +1,16 @@
-"use client";
+'use client';
 
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Link from "@tiptap/extension-link";
-import { Table, TableRow, TableHeader, TableCell } from "@tiptap/extension-table";
-import Image from "@tiptap/extension-image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Link from '@tiptap/extension-link';
+import {
+  Table,
+  TableRow,
+  TableHeader,
+  TableCell,
+} from '@tiptap/extension-table';
+import Image from '@tiptap/extension-image';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface ContentEditorProps {
   content: string;
@@ -13,7 +18,11 @@ interface ContentEditorProps {
   onUploadImage?: (file: File) => Promise<string>;
 }
 
-export default function ContentEditor({ content, onChange, onUploadImage }: ContentEditorProps) {
+export default function ContentEditor({
+  content,
+  onChange,
+  onUploadImage,
+}: ContentEditorProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
 
@@ -42,7 +51,7 @@ export default function ContentEditor({ content, onChange, onUploadImage }: Cont
 
   const setLink = useCallback(() => {
     if (!editor) return;
-    const url = window.prompt("URL du lien:");
+    const url = window.prompt('URL du lien:');
     if (url) {
       editor.chain().focus().setLink({ href: url }).run();
     }
@@ -62,10 +71,10 @@ export default function ContentEditor({ content, onChange, onUploadImage }: Cont
         editor.chain().focus().setImage({ src: imageUrl }).run();
       } finally {
         setIsUploadingImage(false);
-        if (fileInputRef.current) fileInputRef.current.value = "";
+        if (fileInputRef.current) fileInputRef.current.value = '';
       }
     },
-    [editor, onUploadImage]
+    [editor, onUploadImage],
   );
 
   if (!editor) return null;
@@ -75,46 +84,50 @@ export default function ContentEditor({ content, onChange, onUploadImage }: Cont
       <div className="flex flex-wrap gap-1 p-2 bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-600">
         <ToolbarButton
           onClick={() => editor.chain().focus().setParagraph().run()}
-          active={editor.isActive("paragraph")}
+          active={editor.isActive('paragraph')}
         >
           Paragraphe
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          active={editor.isActive("heading", { level: 2 })}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 2 }).run()
+          }
+          active={editor.isActive('heading', { level: 2 })}
         >
           Titre secondaire
         </ToolbarButton>
         <ToolbarButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          active={editor.isActive("heading", { level: 3 })}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 3 }).run()
+          }
+          active={editor.isActive('heading', { level: 3 })}
         >
           Sous-titre
         </ToolbarButton>
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleBold().run()}
-          active={editor.isActive("bold")}
+          active={editor.isActive('bold')}
         >
           Gras
         </ToolbarButton>
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleItalic().run()}
-          active={editor.isActive("italic")}
+          active={editor.isActive('italic')}
         >
           Italique
         </ToolbarButton>
-        <ToolbarButton onClick={setLink} active={editor.isActive("link")}>
+        <ToolbarButton onClick={setLink} active={editor.isActive('link')}>
           Lien
         </ToolbarButton>
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          active={editor.isActive("bulletList")}
+          active={editor.isActive('bulletList')}
         >
           Liste à puces
         </ToolbarButton>
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          active={editor.isActive("orderedList")}
+          active={editor.isActive('orderedList')}
         >
           Liste numérotée
         </ToolbarButton>
@@ -126,11 +139,11 @@ export default function ContentEditor({ content, onChange, onUploadImage }: Cont
               .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
               .run()
           }
-          active={editor.isActive("table")}
+          active={editor.isActive('table')}
         >
           Tableau
         </ToolbarButton>
-        {editor.isActive("table") && (
+        {editor.isActive('table') && (
           <>
             <ToolbarButton
               onClick={() => editor.chain().focus().addColumnAfter().run()}
@@ -170,7 +183,7 @@ export default function ContentEditor({ content, onChange, onUploadImage }: Cont
             active={false}
             disabled={isUploadingImage}
           >
-            {isUploadingImage ? "Chargement..." : "Image"}
+            {isUploadingImage ? 'Chargement...' : 'Image'}
           </ToolbarButton>
         )}
       </div>
@@ -206,10 +219,10 @@ function ToolbarButton({
       disabled={disabled}
       className={`cursor-pointer px-3 py-1 rounded text-sm font-medium transition ${
         disabled
-          ? "bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+          ? 'bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-500 cursor-not-allowed'
           : active
-            ? "bg-teal-600 text-white"
-            : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+            ? 'bg-teal-600 text-white'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600'
       }`}
     >
       {children}

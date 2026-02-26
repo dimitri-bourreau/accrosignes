@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import Typography from "@/components/atoms/typography";
-import { useCreateUser } from "@/features/users/hooks/use-users";
-import { useState } from "react";
+import { useForm } from 'react-hook-form';
+import Typography from '@/components/atoms/typography';
+import { useCreateUser } from '@/features/users/hooks/use-users';
+import { useState } from 'react';
 
 interface CreateUserFormProps {
   adminId: string;
@@ -11,13 +11,17 @@ interface CreateUserFormProps {
   onCancel: () => void;
 }
 
-export function CreateUserForm({ adminId, onSuccess, onCancel }: CreateUserFormProps) {
+export function CreateUserForm({
+  adminId,
+  onSuccess,
+  onCancel,
+}: CreateUserFormProps) {
   const { register, handleSubmit, reset } = useForm<{ email: string }>();
   const createUser = useCreateUser();
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const onSubmit = (data: { email: string }) => {
-    setError("");
+    setError('');
     createUser.mutate(
       { email: data.email, adminId },
       {
@@ -26,7 +30,7 @@ export function CreateUserForm({ adminId, onSuccess, onCancel }: CreateUserFormP
           onSuccess();
         },
         onError: (err) => setError(err.message),
-      }
+      },
     );
   };
 
@@ -38,7 +42,7 @@ export function CreateUserForm({ adminId, onSuccess, onCancel }: CreateUserFormP
             Email du nouvel utilisateur
           </label>
           <input
-            {...register("email", { required: true })}
+            {...register('email', { required: true })}
             type="email"
             placeholder="utilisateur@example.com"
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
@@ -46,7 +50,9 @@ export function CreateUserForm({ adminId, onSuccess, onCancel }: CreateUserFormP
         </div>
         {error && (
           <div className="p-3 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg">
-            <Typography className="text-red-700 dark:text-red-300 text-sm">{error}</Typography>
+            <Typography className="text-red-700 dark:text-red-300 text-sm">
+              {error}
+            </Typography>
           </div>
         )}
         <div className="flex gap-3">
@@ -55,7 +61,9 @@ export function CreateUserForm({ adminId, onSuccess, onCancel }: CreateUserFormP
             disabled={createUser.isPending}
             className="cursor-pointer px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 disabled:bg-gray-400 transition duration-200"
           >
-            {createUser.isPending ? "Création en cours..." : "Créer l'utilisateur"}
+            {createUser.isPending
+              ? 'Création en cours...'
+              : "Créer l'utilisateur"}
           </button>
           <button
             type="button"

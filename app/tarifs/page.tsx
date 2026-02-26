@@ -1,7 +1,7 @@
-import Link from "next/link";
-import Title from "@/components/atoms/title";
-import HtmlContent from "@/components/atoms/html-content";
-import { getContentByKey } from "@/features/content/services/get-content.service";
+import Link from 'next/link';
+import Title from '@/components/atoms/title';
+import HtmlContent from '@/components/atoms/html-content';
+import { getContentByKey } from '@/features/content/services/get-content.service';
 
 export const revalidate = 300;
 
@@ -110,16 +110,19 @@ const DEFAULT_ADDITIONAL = `
 
 export default async function TarifsPage() {
   const [introContent, coursesContent, additionalContent] = await Promise.all([
-    getContentByKey("pricing.intro"),
-    getContentByKey("pricing.courses"),
-    getContentByKey("pricing.additional"),
+    getContentByKey('pricing.intro'),
+    getContentByKey('pricing.courses'),
+    getContentByKey('pricing.additional'),
   ]);
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">
       <div className="max-w-4xl mx-auto px-6 py-20">
         <div className="space-y-12">
-          <Title level="h1" className="text-gray-900 dark:text-gray-100 text-center">
+          <Title
+            level="h1"
+            className="text-gray-900 dark:text-gray-100 text-center"
+          >
             Tarifs
           </Title>
 

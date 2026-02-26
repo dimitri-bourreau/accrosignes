@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import SocialLinksSection from "./social-links-section";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import SocialLinksSection from './social-links-section';
 
 const meta: Meta<typeof SocialLinksSection> = {
-  title: "organisms/SocialLinksSection",
+  title: 'organisms/SocialLinksSection',
   component: SocialLinksSection,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -20,14 +20,14 @@ export const Embedded: Story = {
     embedded: true,
   },
   parameters: {
-    layout: "padded",
+    layout: 'padded',
   },
 };
 
 export const Mobile: Story = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile1",
+      defaultViewport: 'mobile1',
     },
   },
 };

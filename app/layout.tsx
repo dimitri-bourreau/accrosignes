@@ -1,43 +1,47 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Navigation from "@/components/organisms/navigation";
-import Footer from "@/components/organisms/footer";
-import { Providers } from "./providers";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
+import Navigation from '@/components/organisms/navigation';
+import Footer from '@/components/organisms/footer';
+import { Providers } from './providers';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://accrosignes.fr"),
-  title: "AccroSignes - Cours de LSF à Grenoble",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://accrosignes.fr',
+  ),
+  title: 'AccroSignes - Cours de LSF à Grenoble',
   description:
     "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants à Grenoble.",
   icons: {
-    icon: "/icon-192.png",
-    apple: "/apple-icon.png",
+    icon: '/icon-192.png',
+    apple: '/apple-icon.png',
   },
   openGraph: {
-    title: "AccroSignes - Cours de LSF à Grenoble",
+    title: 'AccroSignes - Cours de LSF à Grenoble',
     description:
       "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants à Grenoble.",
-    images: [{ url: "/logo.jpeg", width: 512, height: 512, alt: "Logo AccroSignes" }],
-    locale: "fr_FR",
-    type: "website",
+    images: [
+      { url: '/logo.jpeg', width: 512, height: 512, alt: 'Logo AccroSignes' },
+    ],
+    locale: 'fr_FR',
+    type: 'website',
   },
   twitter: {
-    card: "summary",
-    title: "AccroSignes - Cours de LSF à Grenoble",
+    card: 'summary',
+    title: 'AccroSignes - Cours de LSF à Grenoble',
     description:
       "Association dédiée à l'apprentissage de la Langue des Signes Française et aux rencontres entre sourds et entendants à Grenoble.",
-    images: ["/logo.jpeg"],
+    images: ['/logo.jpeg'],
   },
   robots: {
     index: false,

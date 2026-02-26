@@ -1,7 +1,7 @@
-import Image from "next/image";
-import Title from "@/components/atoms/title";
-import HtmlContent from "@/components/atoms/html-content";
-import { getContentByKey } from "@/features/content/services/get-content.service";
+import Image from 'next/image';
+import Title from '@/components/atoms/title';
+import HtmlContent from '@/components/atoms/html-content';
+import { getContentByKey } from '@/features/content/services/get-content.service';
 
 export const revalidate = 300;
 
@@ -24,7 +24,7 @@ const DEFAULT_CONTENT = `
 `;
 
 export default async function PresentationPage() {
-  const content = await getContentByKey("about");
+  const content = await getContentByKey('about');
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">
@@ -41,7 +41,10 @@ export default async function PresentationPage() {
           </div>
 
           <div className="space-y-8">
-            <Title level="h1" className="text-gray-900 dark:text-gray-100 text-center">
+            <Title
+              level="h1"
+              className="text-gray-900 dark:text-gray-100 text-center"
+            >
               Accrosignes
             </Title>
             <HtmlContent

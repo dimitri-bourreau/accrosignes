@@ -1,6 +1,6 @@
-import Title from "@/components/atoms/title";
-import HtmlContent from "@/components/atoms/html-content";
-import { getContentByKey } from "@/features/content/services/get-content.service";
+import Title from '@/components/atoms/title';
+import HtmlContent from '@/components/atoms/html-content';
+import { getContentByKey } from '@/features/content/services/get-content.service';
 
 export const revalidate = 300;
 
@@ -96,7 +96,7 @@ const DEFAULT_CONTENT = `
 `;
 
 export default async function PolitiqueConfidentialitePage() {
-  const content = await getContentByKey("privacy");
+  const content = await getContentByKey('privacy');
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">

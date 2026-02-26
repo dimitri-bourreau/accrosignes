@@ -1,31 +1,31 @@
-import { NextRequest, NextResponse } from "next/server";
-import { adminDb } from "@/features/auth/admin";
-import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
-import { getEventById } from "@/features/events/services/get-all-events.service";
+import { NextRequest, NextResponse } from 'next/server';
+import { adminDb } from '@/features/auth/admin';
+import { userIsAdmin } from '@/features/auth/services/user-is-admin.service';
+import { getEventById } from '@/features/events/services/get-all-events.service';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
     const event = await getEventById(id);
     if (!event) {
-      return NextResponse.json({ error: "Event not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
     return NextResponse.json(event);
   } catch (error: unknown) {
-    console.error("Error fetching event:", error);
+    console.error('Error fetching event:', error);
     return NextResponse.json(
-      { error: "Failed to fetch event" },
-      { status: 500 }
+      { error: 'Failed to fetch event' },
+      { status: 500 },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -46,25 +46,25 @@ export async function PUT(
 
     if (
       !title ||
-      typeof title !== "string" ||
+      typeof title !== 'string' ||
       !date ||
       !startTime ||
-      typeof startTime !== "string" ||
+      typeof startTime !== 'string' ||
       !adminId ||
-      typeof adminId !== "string"
+      typeof adminId !== 'string'
     ) {
       return NextResponse.json(
-        { error: "Title, date, startTime et adminId sont requis" },
-        { status: 400 }
+        { error: 'Title, date, startTime et adminId sont requis' },
+        { status: 400 },
       );
     }
 
     const isAdmin = await userIsAdmin(adminId);
     if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    if (scope === "this" && seriesId && originalDate) {
+    if (scope === 'this' && seriesId && originalDate) {
       const now = new Date();
       const exceptionDoc = {
         title,
@@ -81,7 +81,7 @@ export async function PUT(
         originalDate: new Date(originalDate),
         isDeleted: false,
       };
-      const docRef = await adminDb.collection("events").add(exceptionDoc);
+      const docRef = await adminDb.collection('events').add(exceptionDoc);
       return NextResponse.json({ id: docRef.id, success: true });
     }
 
@@ -105,44 +105,44 @@ export async function PUT(
       updateData.recurrence = null;
     }
 
-    await adminDb.collection("events").doc(id).update(updateData);
+    await adminDb.collection('events').doc(id).update(updateData);
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
-    console.error("Error updating event:", error);
+    console.error('Error updating event:', error);
     return NextResponse.json(
-      { error: "Failed to update event" },
-      { status: 500 }
+      { error: 'Failed to update event' },
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
     const { adminId, scope, originalDate, seriesId } = await req.json();
 
-    if (!adminId || typeof adminId !== "string") {
+    if (!adminId || typeof adminId !== 'string') {
       return NextResponse.json(
-        { error: "adminId est requis" },
-        { status: 400 }
+        { error: 'adminId est requis' },
+        { status: 400 },
       );
     }
 
     const isAdmin = await userIsAdmin(adminId);
     if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    if (scope === "this" && seriesId && originalDate) {
+    if (scope === 'this' && seriesId && originalDate) {
       const now = new Date();
       const parentEvent = await getEventById(seriesId);
       if (!parentEvent) {
         return NextResponse.json(
-          { error: "Parent event not found" },
-          { status: 404 }
+          { error: 'Parent event not found' },
+          { status: 404 },
         );
       }
 
@@ -159,30 +159,30 @@ export async function DELETE(
         originalDate: new Date(originalDate),
         isDeleted: true,
       };
-      await adminDb.collection("events").add(exceptionDoc);
+      await adminDb.collection('events').add(exceptionDoc);
       return NextResponse.json({ success: true });
     }
 
-    const realId = id.includes("_") ? id.split("_")[0] : id;
+    const realId = id.includes('_') ? id.split('_')[0] : id;
 
     const exceptionsSnapshot = await adminDb
-      .collection("events")
-      .where("parentEventId", "==", realId)
+      .collection('events')
+      .where('parentEventId', '==', realId)
       .get();
 
     const batch = adminDb.batch();
     exceptionsSnapshot.docs.forEach((doc) => {
       batch.delete(doc.ref);
     });
-    batch.delete(adminDb.collection("events").doc(realId));
+    batch.delete(adminDb.collection('events').doc(realId));
     await batch.commit();
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
-    console.error("Error deleting event:", error);
+    console.error('Error deleting event:', error);
     return NextResponse.json(
-      { error: "Failed to delete event" },
-      { status: 500 }
+      { error: 'Failed to delete event' },
+      { status: 500 },
     );
   }
 }

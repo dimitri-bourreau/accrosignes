@@ -1,12 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { EventOccurrence, RecurrenceType, EventColor, EventCategory } from "../types/event.type";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  EventOccurrence,
+  RecurrenceType,
+  EventColor,
+  EventCategory,
+} from '../types/event.type';
 
 export const useEvents = () => {
   return useQuery({
-    queryKey: ["events"],
+    queryKey: ['events'],
     queryFn: async () => {
-      const response = await fetch("/api/events");
-      if (!response.ok) throw new Error("Failed to fetch events");
+      const response = await fetch('/api/events');
+      if (!response.ok) throw new Error('Failed to fetch events');
       return response.json() as Promise<EventOccurrence[]>;
     },
   });
@@ -31,15 +36,15 @@ export const useCreateEvent = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: CreateEventData) => {
-      const response = await fetch("/api/events", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      if (!response.ok) throw new Error("Failed to create event");
+      if (!response.ok) throw new Error('Failed to create event');
       return response.json();
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['events'] }),
   });
 };
 
@@ -56,7 +61,7 @@ interface UpdateEventData {
     type: RecurrenceType;
     endDate: string;
   };
-  scope?: "this" | "all";
+  scope?: 'this' | 'all';
   originalDate?: string;
   seriesId?: string;
 }
@@ -66,21 +71,21 @@ export const useUpdateEvent = () => {
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: UpdateEventData }) => {
       const response = await fetch(`/api/events/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      if (!response.ok) throw new Error("Failed to update event");
+      if (!response.ok) throw new Error('Failed to update event');
       return response.json();
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['events'] }),
   });
 };
 
 interface DeleteEventData {
   id: string;
   adminId: string;
-  scope?: "this" | "all";
+  scope?: 'this' | 'all';
   originalDate?: string;
   seriesId?: string;
 }
@@ -88,15 +93,21 @@ interface DeleteEventData {
 export const useDeleteEvent = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, adminId, scope, originalDate, seriesId }: DeleteEventData) => {
+    mutationFn: async ({
+      id,
+      adminId,
+      scope,
+      originalDate,
+      seriesId,
+    }: DeleteEventData) => {
       const response = await fetch(`/api/events/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ adminId, scope, originalDate, seriesId }),
       });
-      if (!response.ok) throw new Error("Failed to delete event");
+      if (!response.ok) throw new Error('Failed to delete event');
       return response.json();
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["events"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['events'] }),
   });
 };

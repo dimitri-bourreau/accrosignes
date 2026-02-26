@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Typography from "@/components/atoms/typography";
-import { useNews, useDeleteNews } from "@/features/news/hooks/use-news";
-import { NewsForm } from "./news-form";
-import { NewsListItem } from "./news-list-item";
-import { News } from "@/features/news/types/news.type";
+import { useState } from 'react';
+import Typography from '@/components/atoms/typography';
+import { useNews, useDeleteNews } from '@/features/news/hooks/use-news';
+import { NewsForm } from './news-form';
+import { NewsListItem } from './news-list-item';
+import { News } from '@/features/news/types/news.type';
 
 interface NewsManagerProps {
   userId: string;
@@ -23,7 +23,7 @@ export default function NewsManager({ userId }: NewsManagerProps) {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm("Supprimer cette actualité ?")) {
+    if (confirm('Supprimer cette actualité ?')) {
       deleteNews.mutate({ id, adminId: userId });
     }
   };
@@ -40,7 +40,7 @@ export default function NewsManager({ userId }: NewsManagerProps) {
           onClick={() => setShowForm(!showForm)}
           className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
         >
-          {showForm ? "Annuler" : "Ajouter une actualité"}
+          {showForm ? 'Annuler' : 'Ajouter une actualité'}
         </button>
       </div>
 

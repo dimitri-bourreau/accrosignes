@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 interface HtmlContentProps {
   html: string;
@@ -8,17 +8,43 @@ interface HtmlContentProps {
 }
 
 const ALLOWED_TAGS = [
-  "h1", "h2", "h3", "p", "a", "strong", "em", "ul", "ol", "li", "br",
-  "table", "thead", "tbody", "tr", "th", "td",
-  "img",
+  'h1',
+  'h2',
+  'h3',
+  'p',
+  'a',
+  'strong',
+  'em',
+  'ul',
+  'ol',
+  'li',
+  'br',
+  'table',
+  'thead',
+  'tbody',
+  'tr',
+  'th',
+  'td',
+  'img',
 ];
-const ALLOWED_ATTR = ["href", "target", "rel", "colspan", "rowspan", "src", "alt"];
+const ALLOWED_ATTR = [
+  'href',
+  'target',
+  'rel',
+  'colspan',
+  'rowspan',
+  'src',
+  'alt',
+];
 
-export default function HtmlContent({ html, className = "" }: HtmlContentProps) {
-  const [sanitizedHtml, setSanitizedHtml] = useState("");
+export default function HtmlContent({
+  html,
+  className = '',
+}: HtmlContentProps) {
+  const [sanitizedHtml, setSanitizedHtml] = useState('');
 
   useEffect(() => {
-    import("dompurify").then((DOMPurify) => {
+    import('dompurify').then((DOMPurify) => {
       const clean = DOMPurify.default.sanitize(html, {
         ALLOWED_TAGS,
         ALLOWED_ATTR,

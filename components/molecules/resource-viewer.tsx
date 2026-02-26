@@ -1,10 +1,13 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Typography from "@/components/atoms/typography";
-import { useResources } from "@/features/resources/hooks/use-resources";
-import { Resource } from "@/features/resources/types/resource.type";
-import { getResourceIcon, formatFileSize } from "@/features/resources/utils/format-resource";
+import { useState } from 'react';
+import Typography from '@/components/atoms/typography';
+import { useResources } from '@/features/resources/hooks/use-resources';
+import { Resource } from '@/features/resources/types/resource.type';
+import {
+  getResourceIcon,
+  formatFileSize,
+} from '@/features/resources/utils/format-resource';
 
 export default function ResourceViewer() {
   const [currentFolderId, setCurrentFolderId] = useState<string | null>(null);
@@ -14,12 +17,12 @@ export default function ResourceViewer() {
   const path = data?.path ?? [];
 
   const handleOpenResource = (resource: Resource) => {
-    if (resource.type === "folder") {
+    if (resource.type === 'folder') {
       setCurrentFolderId(resource.id);
-    } else if (resource.type === "link" && resource.linkUrl) {
-      window.open(resource.linkUrl, "_blank");
-    } else if (resource.type === "file" && resource.fileUrl) {
-      window.open(resource.fileUrl, "_blank");
+    } else if (resource.type === 'link' && resource.linkUrl) {
+      window.open(resource.linkUrl, '_blank');
+    } else if (resource.type === 'file' && resource.fileUrl) {
+      window.open(resource.fileUrl, '_blank');
     }
   };
 
@@ -73,17 +76,17 @@ export default function ResourceViewer() {
                   <p className="font-medium text-gray-900 dark:text-gray-100 truncate">
                     {resource.name}
                   </p>
-                  {resource.type === "file" && resource.fileSize && (
+                  {resource.type === 'file' && resource.fileSize && (
                     <p className="text-sm text-gray-500 dark:text-gray-400">
                       {formatFileSize(resource.fileSize)}
                     </p>
                   )}
-                  {resource.type === "folder" && (
+                  {resource.type === 'folder' && (
                     <p className="text-sm text-gray-500 dark:text-gray-400">
                       Dossier
                     </p>
                   )}
-                  {resource.type === "link" && (
+                  {resource.type === 'link' && (
                     <p className="text-sm text-teal-600 dark:text-teal-400">
                       Lien externe
                     </p>

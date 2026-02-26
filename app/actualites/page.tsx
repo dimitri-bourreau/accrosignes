@@ -1,8 +1,8 @@
-import Title from "@/components/atoms/title";
-import Typography from "@/components/atoms/typography";
-import Link from "next/link";
-import Image from "next/image";
-import { getAllNews } from "@/features/news/services/get-all-news.service";
+import Title from '@/components/atoms/title';
+import Typography from '@/components/atoms/typography';
+import Link from 'next/link';
+import Image from 'next/image';
+import { getAllNews } from '@/features/news/services/get-all-news.service';
 
 export const revalidate = 300;
 
@@ -15,7 +15,10 @@ export default async function ActualitesPage() {
         <Title level="h1" className="text-gray-900 dark:text-gray-100 mb-4">
           Actualités
         </Title>
-        <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300 mb-12">
+        <Typography
+          variant="body-lg"
+          className="text-gray-600 dark:text-gray-300 mb-12"
+        >
           Restez informé des dernières nouvelles de l&apos;association
         </Typography>
 
@@ -45,11 +48,14 @@ export default async function ActualitesPage() {
                   </div>
                 )}
                 <div className="p-6">
-                  <Typography variant="caption" className="text-gray-500 dark:text-gray-400 mb-2">
-                    {new Date(item.publishedAt).toLocaleDateString("fr-FR", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
+                  <Typography
+                    variant="caption"
+                    className="text-gray-500 dark:text-gray-400 mb-2"
+                  >
+                    {new Date(item.publishedAt).toLocaleDateString('fr-FR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
                     })}
                   </Typography>
                   <Title
@@ -62,7 +68,7 @@ export default async function ActualitesPage() {
                     variant="caption"
                     className="text-gray-700 dark:text-gray-200 line-clamp-3"
                   >
-                    {item.content.replace(/<[^>]*>/g, "").substring(0, 120)}...
+                    {item.content.replace(/<[^>]*>/g, '').substring(0, 120)}...
                   </Typography>
                 </div>
               </Link>

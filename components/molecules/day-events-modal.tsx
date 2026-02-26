@@ -1,6 +1,9 @@
-import { EventOccurrence, EVENT_COLORS } from "@/features/events/types/event.type";
-import Title from "@/components/atoms/title";
-import Typography from "@/components/atoms/typography";
+import {
+  EventOccurrence,
+  EVENT_COLORS,
+} from '@/features/events/types/event.type';
+import Title from '@/components/atoms/title';
+import Typography from '@/components/atoms/typography';
 
 interface DayEventsModalProps {
   date: Date;
@@ -18,11 +21,11 @@ export default function DayEventsModal({
   events,
   onClose,
 }: DayEventsModalProps) {
-  const formattedDate = date.toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  const formattedDate = date.toLocaleDateString('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   });
 
   return (
@@ -35,7 +38,10 @@ export default function DayEventsModal({
         onClick={(event) => event.stopPropagation()}
       >
         <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-          <Title level="h3" className="text-gray-900 dark:text-gray-100 capitalize">
+          <Title
+            level="h3"
+            className="text-gray-900 dark:text-gray-100 capitalize"
+          >
             {formattedDate}
           </Title>
           <button
@@ -66,12 +72,9 @@ export default function DayEventsModal({
             </Typography>
           ) : (
             events.map((eventItem) => {
-              const colorBg = EVENT_COLORS[eventItem.color || "teal"].bg;
+              const colorBg = EVENT_COLORS[eventItem.color || 'teal'].bg;
               return (
-                <div
-                  key={eventItem.id}
-                  className={`p-4 ${colorBg} rounded-lg`}
-                >
+                <div key={eventItem.id} className={`p-4 ${colorBg} rounded-lg`}>
                   <Typography
                     variant="body-lg"
                     className="font-semibold text-white mb-2"

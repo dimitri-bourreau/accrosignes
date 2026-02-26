@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Suspense, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
-import Title from "@/components/atoms/title";
-import Typography from "@/components/atoms/typography";
-import LoginForm from "@/components/molecules/login-form";
+import { Suspense, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
+import Title from '@/components/atoms/title';
+import Typography from '@/components/atoms/typography';
+import LoginForm from '@/components/molecules/login-form';
 
 function LoginPageContent() {
   const router = useRouter();
@@ -14,23 +14,23 @@ function LoginPageContent() {
 
   useEffect(() => {
     if (!loading && user) {
-      router.push("/espace-membre");
+      router.push('/espace-membre');
     }
   }, [user, loading, router]);
 
   useEffect(() => {
     const processEmailLink = async () => {
       const link = window.location.href;
-      const storedEmail = window.localStorage.getItem("emailForSignIn");
+      const storedEmail = window.localStorage.getItem('emailForSignIn');
 
       // Check if this is a sign-in link (Firebase adds oobCode parameter)
-      if (link.includes("oobCode") && storedEmail && !isProcessingLink) {
+      if (link.includes('oobCode') && storedEmail && !isProcessingLink) {
         setIsProcessingLink(true);
         try {
           clearError();
           await signInWithLink(storedEmail, link);
         } catch (err) {
-          console.error("Error processing sign-in link:", err);
+          console.error('Error processing sign-in link:', err);
         } finally {
           setIsProcessingLink(false);
         }
@@ -40,8 +40,8 @@ function LoginPageContent() {
     processEmailLink();
   }, [signInWithLink, clearError, isProcessingLink]);
 
-  const link = typeof window !== "undefined" ? window.location.href : "";
-  const hasEmailLink = link.includes("oobCode");
+  const link = typeof window !== 'undefined' ? window.location.href : '';
+  const hasEmailLink = link.includes('oobCode');
 
   if (loading || (hasEmailLink && isProcessingLink)) {
     return (

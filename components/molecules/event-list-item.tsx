@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Typography from "@/components/atoms/typography";
-import { EventOccurrence } from "@/features/events/types/event.type";
+import Typography from '@/components/atoms/typography';
+import { EventOccurrence } from '@/features/events/types/event.type';
 
 interface EventListItemProps {
   event: EventOccurrence;
@@ -16,11 +16,14 @@ function formatTime(startTime: string, endTime?: string): string {
 
 function formatRecurrence(event: EventOccurrence): string | null {
   if (!event.recurrence) return null;
-  const endDate = new Date(event.recurrence.endDate).toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "short",
-  });
-  if (event.recurrence.type === "weekly") {
+  const endDate = new Date(event.recurrence.endDate).toLocaleDateString(
+    'fr-FR',
+    {
+      day: 'numeric',
+      month: 'short',
+    },
+  );
+  if (event.recurrence.type === 'weekly') {
     return `Chaque semaine jusqu'au ${endDate}`;
   }
   return `Chaque mois jusqu'au ${endDate}`;
@@ -48,22 +51,31 @@ export function EventListItem({ event, onEdit, onDelete }: EventListItemProps) {
               </span>
             )}
           </div>
-          <Typography variant="caption" className="text-gray-600 dark:text-gray-300">
-            {new Date(event.date).toLocaleDateString("fr-FR", {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}{" "}
+          <Typography
+            variant="caption"
+            className="text-gray-600 dark:text-gray-300"
+          >
+            {new Date(event.date).toLocaleDateString('fr-FR', {
+              weekday: 'long',
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}{' '}
             • {formatTime(event.startTime, event.endTime)}
           </Typography>
           {recurrenceLabel && (
-            <Typography variant="caption" className="text-teal-600 dark:text-teal-400 block">
+            <Typography
+              variant="caption"
+              className="text-teal-600 dark:text-teal-400 block"
+            >
               {recurrenceLabel}
             </Typography>
           )}
           {event.description && (
-            <Typography variant="caption" className="text-gray-700 dark:text-gray-200 mt-1 line-clamp-1">
+            <Typography
+              variant="caption"
+              className="text-gray-700 dark:text-gray-200 mt-1 line-clamp-1"
+            >
               {event.description}
             </Typography>
           )}

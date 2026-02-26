@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   createContext,
@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
   ReactNode,
-} from "react";
+} from 'react';
 import {
   sendSignInLinkToEmail,
   isSignInWithEmailLink,
@@ -15,10 +15,10 @@ import {
   onAuthStateChanged,
   User,
   AuthError,
-} from "firebase/auth";
-import { auth } from "@/features/auth/config";
+} from 'firebase/auth';
+import { auth } from '@/features/auth/config';
 
-type Role = "Administrateur" | "Élève" | null;
+type Role = 'Administrateur' | 'Élève' | null;
 
 interface AuthContextType {
   user: User | null;
@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const userRole = (idTokenResult.claims.role as Role) || null;
           setRole(userRole);
         } catch (err) {
-          console.error("Error fetching ID token:", err);
+          console.error('Error fetching ID token:', err);
           setRole(null);
         }
       } else {
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         handleCodeInApp: true,
       };
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      window.localStorage.setItem("emailForSignIn", email);
+      window.localStorage.setItem('emailForSignIn', email);
     } catch (err) {
       const authError = err as AuthError;
       setError(authError.message);
@@ -82,9 +82,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setError(null);
       if (isSignInWithEmailLink(auth, link)) {
         await signInWithEmailLink(auth, email, link);
-        window.localStorage.removeItem("emailForSignIn");
+        window.localStorage.removeItem('emailForSignIn');
       } else {
-        throw new Error("Le lien de connexion est invalide ou a expiré");
+        throw new Error('Le lien de connexion est invalide ou a expiré');
       }
     } catch (err) {
       const authError = err as AuthError;
@@ -99,7 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await signOut(auth);
       setUser(null);
       setRole(null);
-      window.location.href = "/";
+      window.location.href = '/';
     } catch (err) {
       const authError = err as AuthError;
       setError(authError.message);
@@ -130,7 +130,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }

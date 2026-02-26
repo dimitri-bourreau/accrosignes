@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Title from "../atoms/title";
-import Typography from "../atoms/typography";
+import Link from 'next/link';
+import Title from '../atoms/title';
+import Typography from '../atoms/typography';
 
 interface Feature {
   emoji: string;
@@ -26,7 +26,7 @@ export default function HomeIntroduction({
       <div className="absolute top-20 right-10 w-72 h-72 bg-teal-500/10 rounded-full opacity-10 animate-shimmer blur-3xl" />
       <div
         className="absolute -bottom-40 left-1/4 w-96 h-96 bg-teal-500/5 rounded-full opacity-5 animate-shimmer blur-3xl"
-        style={{ animationDelay: "1s" }}
+        style={{ animationDelay: '1s' }}
       />
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -83,7 +83,10 @@ export default function HomeIntroduction({
               {features.map((feature, index) => (
                 <div key={index} className="space-y-1">
                   <Typography className="text-2xl!">{feature.emoji}</Typography>
-                  <Title level="h4" className="text-gray-900 dark:text-gray-100">
+                  <Title
+                    level="h4"
+                    className="text-gray-900 dark:text-gray-100"
+                  >
                     {feature.title}
                   </Title>
                   <Typography variant="caption" className="line-clamp-2">

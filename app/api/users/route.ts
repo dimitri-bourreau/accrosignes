@@ -1,5 +1,5 @@
-import { adminAuth } from "@/features/auth/admin";
-import { NextResponse } from "next/server";
+import { adminAuth } from '@/features/auth/admin';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
@@ -9,17 +9,17 @@ export async function GET() {
       const customClaims = user.customClaims as { role?: string } | null;
       return {
         uid: user.uid,
-        email: user.email || "",
-        role: (customClaims?.role as "Administrateur" | "Élève" | null) || null,
+        email: user.email || '',
+        role: (customClaims?.role as 'Administrateur' | 'Élève' | null) || null,
       };
     });
 
     return NextResponse.json(users);
   } catch (error: unknown) {
-    console.error("Error listing users:", error);
+    console.error('Error listing users:', error);
     return NextResponse.json(
-      { error: "Failed to fetch users" },
-      { status: 500 }
+      { error: 'Failed to fetch users' },
+      { status: 500 },
     );
   }
 }

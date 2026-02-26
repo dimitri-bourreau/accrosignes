@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import HomeIntroduction from "@/components/organisms/home-introduction";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import HomeIntroduction from '@/components/organisms/home-introduction';
 
 const meta: Meta<typeof HomeIntroduction> = {
-  title: "organisms/HomeIntroduction",
+  title: 'organisms/HomeIntroduction',
   component: HomeIntroduction,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -18,7 +18,7 @@ export const Default: Story = {};
 export const Mobile: Story = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile1",
+      defaultViewport: 'mobile1',
     },
   },
 };
@@ -26,7 +26,7 @@ export const Mobile: Story = {
 export const Desktop: Story = {
   parameters: {
     viewport: {
-      defaultViewport: "desktop",
+      defaultViewport: 'desktop',
     },
   },
 };

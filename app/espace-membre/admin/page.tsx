@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { Suspense, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
-import { ROLES } from "@/features/auth/constants/roles";
-import Title from "@/components/atoms/title";
-import Typography from "@/components/atoms/typography";
-import Link from "next/link";
-import NewsManager from "@/components/molecules/news-manager";
-import EventManager from "@/components/molecules/event-manager";
-import ResourceManager from "@/components/molecules/resource-manager";
-import { UsersTable } from "@/components/molecules/users-table";
-import { CreateUserForm } from "@/components/molecules/create-user-form";
-import ContentManager from "@/components/molecules/content-manager";
+import { Suspense, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
+import { ROLES } from '@/features/auth/constants/roles';
+import Title from '@/components/atoms/title';
+import Typography from '@/components/atoms/typography';
+import Link from 'next/link';
+import NewsManager from '@/components/molecules/news-manager';
+import EventManager from '@/components/molecules/event-manager';
+import ResourceManager from '@/components/molecules/resource-manager';
+import { UsersTable } from '@/components/molecules/users-table';
+import { CreateUserForm } from '@/components/molecules/create-user-form';
+import ContentManager from '@/components/molecules/content-manager';
 
-type Tab = "content" | "events" | "resources" | "users" | "news";
+type Tab = 'content' | 'events' | 'resources' | 'users' | 'news';
 
 function AdminDashboard() {
   const { user: currentUser, role, loading, signOut } = useAuth();
@@ -22,12 +22,18 @@ function AdminDashboard() {
   const searchParams = useSearchParams();
 
   const getInitialTab = (): Tab => {
-    const param = searchParams.get("tab");
-    const validTabs: Tab[] = ["content", "events", "resources", "users", "news"];
+    const param = searchParams.get('tab');
+    const validTabs: Tab[] = [
+      'content',
+      'events',
+      'resources',
+      'users',
+      'news',
+    ];
     if (param && validTabs.includes(param as Tab)) {
       return param as Tab;
     }
-    return "content";
+    return 'content';
   };
 
   const [activeTab, setActiveTab] = useState<Tab>(getInitialTab);
@@ -39,11 +45,11 @@ function AdminDashboard() {
   };
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
-    { id: "content", label: "Contenu", icon: "✏️" },
-    { id: "news", label: "Actualités", icon: "📢" },
-    { id: "events", label: "Événements", icon: "📅" },
-    { id: "resources", label: "Ressources", icon: "📄" },
-    { id: "users", label: "Utilisateurs", icon: "👥" },
+    { id: 'content', label: 'Contenu', icon: '✏️' },
+    { id: 'news', label: 'Actualités', icon: '📢' },
+    { id: 'events', label: 'Événements', icon: '📅' },
+    { id: 'resources', label: 'Ressources', icon: '📄' },
+    { id: 'users', label: 'Utilisateurs', icon: '👥' },
   ];
 
   if (loading) {
@@ -111,8 +117,8 @@ function AdminDashboard() {
               onClick={() => handleTabChange(tab.id)}
               className={`cursor-pointer px-6 py-3 font-semibold border-b-2 transition duration-200 ${
                 activeTab === tab.id
-                  ? "border-teal-600 text-teal-600 dark:text-teal-400"
-                  : "border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                  ? 'border-teal-600 text-teal-600 dark:text-teal-400'
+                  : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
               }`}
             >
               {tab.icon} {tab.label}
@@ -124,45 +130,45 @@ function AdminDashboard() {
         <div className="space-y-8">
           <div className="flex justify-between items-center">
             <Title level="h2" className="text-gray-900 dark:text-gray-100">
-              {activeTab === "content"
-                ? "Gestion du contenu"
-                : activeTab === "news"
-                  ? "Gestion des actualités"
-                  : activeTab === "events"
-                    ? "Gestion des événements"
-                    : activeTab === "resources"
-                      ? "Gestion des ressources"
-                      : "Gestion des utilisateurs"}
+              {activeTab === 'content'
+                ? 'Gestion du contenu'
+                : activeTab === 'news'
+                  ? 'Gestion des actualités'
+                  : activeTab === 'events'
+                    ? 'Gestion des événements'
+                    : activeTab === 'resources'
+                      ? 'Gestion des ressources'
+                      : 'Gestion des utilisateurs'}
             </Title>
-            {activeTab === "users" && (
+            {activeTab === 'users' && (
               <button
                 onClick={() => setShowCreateUserForm(!showCreateUserForm)}
                 className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
               >
-                {showCreateUserForm ? "Annuler" : "Créer un utilisateur"}
+                {showCreateUserForm ? 'Annuler' : 'Créer un utilisateur'}
               </button>
             )}
           </div>
 
           {/* Items List */}
           <div className="space-y-3">
-            {activeTab === "news" && currentUser && (
+            {activeTab === 'news' && currentUser && (
               <NewsManager userId={currentUser.uid} />
             )}
 
-            {activeTab === "content" && currentUser && (
+            {activeTab === 'content' && currentUser && (
               <ContentManager userId={currentUser.uid} />
             )}
 
-            {activeTab === "events" && currentUser && (
+            {activeTab === 'events' && currentUser && (
               <EventManager userId={currentUser.uid} />
             )}
 
-            {activeTab === "resources" && currentUser && (
+            {activeTab === 'resources' && currentUser && (
               <ResourceManager userId={currentUser.uid} />
             )}
 
-            {activeTab === "users" && currentUser && (
+            {activeTab === 'users' && currentUser && (
               <>
                 {showCreateUserForm && (
                   <CreateUserForm

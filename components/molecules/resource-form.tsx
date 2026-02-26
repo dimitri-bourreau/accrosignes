@@ -1,9 +1,13 @@
-"use client";
+'use client';
 
-import { useState, useRef } from "react";
-import { useCreateFolder, useCreateLink, useUploadFile } from "@/features/resources/hooks/use-resources";
+import { useState, useRef } from 'react';
+import {
+  useCreateFolder,
+  useCreateLink,
+  useUploadFile,
+} from '@/features/resources/hooks/use-resources';
 
-type FormType = "folder" | "file" | "link" | null;
+type FormType = 'folder' | 'file' | 'link' | null;
 
 interface ResourceFormProps {
   userId: string;
@@ -13,8 +17,8 @@ interface ResourceFormProps {
 
 export function ResourceForm({ userId, parentId, onClose }: ResourceFormProps) {
   const [formType, setFormType] = useState<FormType>(null);
-  const [name, setName] = useState("");
-  const [linkUrl, setLinkUrl] = useState("");
+  const [name, setName] = useState('');
+  const [linkUrl, setLinkUrl] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -22,7 +26,8 @@ export function ResourceForm({ userId, parentId, onClose }: ResourceFormProps) {
   const createLink = useCreateLink();
   const uploadFile = useUploadFile();
 
-  const isLoading = createFolder.isPending || createLink.isPending || uploadFile.isPending;
+  const isLoading =
+    createFolder.isPending || createLink.isPending || uploadFile.isPending;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,13 +37,19 @@ export function ResourceForm({ userId, parentId, onClose }: ResourceFormProps) {
       onClose();
     };
 
-    if (formType === "folder") {
+    if (formType === 'folder') {
       createFolder.mutate({ name, parentId, authorId: userId }, { onSuccess });
-    } else if (formType === "link") {
+    } else if (formType === 'link') {
       if (!linkUrl.trim()) return;
-      createLink.mutate({ name, linkUrl, parentId, authorId: userId }, { onSuccess });
-    } else if (formType === "file" && file) {
-      uploadFile.mutate({ file, name, parentId, adminId: userId }, { onSuccess });
+      createLink.mutate(
+        { name, linkUrl, parentId, authorId: userId },
+        { onSuccess },
+      );
+    } else if (formType === 'file' && file) {
+      uploadFile.mutate(
+        { file, name, parentId, adminId: userId },
+        { onSuccess },
+      );
     }
   };
 
@@ -58,19 +69,19 @@ export function ResourceForm({ userId, parentId, onClose }: ResourceFormProps) {
         </p>
         <div className="flex gap-3 flex-wrap">
           <button
-            onClick={() => setFormType("folder")}
+            onClick={() => setFormType('folder')}
             className="cursor-pointer px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
           >
             📁 Dossier
           </button>
           <button
-            onClick={() => setFormType("file")}
+            onClick={() => setFormType('file')}
             className="cursor-pointer px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
           >
             📄 Fichier
           </button>
           <button
-            onClick={() => setFormType("link")}
+            onClick={() => setFormType('link')}
             className="cursor-pointer px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
           >
             🔗 Lien
@@ -92,12 +103,12 @@ export function ResourceForm({ userId, parentId, onClose }: ResourceFormProps) {
       className="p-6 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg space-y-4 mb-6"
     >
       <p className="text-gray-900 dark:text-gray-100 font-semibold">
-        {formType === "folder" && "Nouveau dossier"}
-        {formType === "file" && "Nouveau fichier"}
-        {formType === "link" && "Nouveau lien"}
+        {formType === 'folder' && 'Nouveau dossier'}
+        {formType === 'file' && 'Nouveau fichier'}
+        {formType === 'link' && 'Nouveau lien'}
       </p>
 
-      {formType === "file" && (
+      {formType === 'file' && (
         <div>
           <input
             type="file"
@@ -110,7 +121,7 @@ export function ResourceForm({ userId, parentId, onClose }: ResourceFormProps) {
             onClick={() => fileInputRef.current?.click()}
             className="cursor-pointer w-full p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-gray-300 hover:border-teal-500 hover:text-teal-600 transition"
           >
-            {file ? file.name : "Cliquez pour sélectionner un fichier"}
+            {file ? file.name : 'Cliquez pour sélectionner un fichier'}
           </button>
         </div>
       )}
@@ -128,7 +139,7 @@ export function ResourceForm({ userId, parentId, onClose }: ResourceFormProps) {
         />
       </div>
 
-      {formType === "link" && (
+      {formType === 'link' && (
         <div>
           <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
             URL
@@ -147,10 +158,10 @@ export function ResourceForm({ userId, parentId, onClose }: ResourceFormProps) {
       <div className="flex gap-3 pt-2">
         <button
           type="submit"
-          disabled={isLoading || (formType === "file" && !file)}
+          disabled={isLoading || (formType === 'file' && !file)}
           className="cursor-pointer px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoading ? "Création..." : "Créer"}
+          {isLoading ? 'Création...' : 'Créer'}
         </button>
         <button
           type="button"

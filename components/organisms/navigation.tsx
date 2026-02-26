@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -77,17 +77,17 @@ export default function Navigation() {
               <div className="w-6 h-5 flex flex-col justify-between">
                 <span
                   className={`block h-0.5 w-full bg-gray-900 dark:bg-gray-100 transition-all duration-300 ${
-                    menuOpen ? "rotate-45 translate-y-2" : ""
+                    menuOpen ? 'rotate-45 translate-y-2' : ''
                   }`}
                 ></span>
                 <span
                   className={`block h-0.5 w-full bg-gray-900 dark:bg-gray-100 transition-all duration-300 ${
-                    menuOpen ? "opacity-0" : ""
+                    menuOpen ? 'opacity-0' : ''
                   }`}
                 ></span>
                 <span
                   className={`block h-0.5 w-full bg-gray-900 dark:bg-gray-100 transition-all duration-300 ${
-                    menuOpen ? "-rotate-45 -translate-y-2" : ""
+                    menuOpen ? '-rotate-45 -translate-y-2' : ''
                   }`}
                 ></span>
               </div>
@@ -107,7 +107,7 @@ export default function Navigation() {
       {/* Mobile Menu Panel */}
       <div
         className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-900 shadow-2xl z-50 transform transition-transform duration-300 sm:hidden ${
-          menuOpen ? "translate-x-0" : "translate-x-full"
+          menuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <button

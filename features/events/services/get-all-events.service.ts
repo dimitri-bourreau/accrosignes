@@ -1,10 +1,10 @@
-import { adminDb } from "@/features/auth/admin";
-import { Event, EventOccurrence } from "../types/event.type";
-import { generateOccurrences } from "./generate-occurrences.service";
+import { adminDb } from '@/features/auth/admin';
+import { Event, EventOccurrence } from '../types/event.type';
+import { generateOccurrences } from './generate-occurrences.service';
 
 function parseEvent(doc: FirebaseFirestore.DocumentSnapshot): Event {
   const data = doc.data();
-  if (!data) throw new Error("Event data is undefined");
+  if (!data) throw new Error('Event data is undefined');
 
   return {
     id: doc.id,
@@ -31,7 +31,7 @@ function parseEvent(doc: FirebaseFirestore.DocumentSnapshot): Event {
 }
 
 export const getAllEvents = async (): Promise<EventOccurrence[]> => {
-  const querySnapshot = await adminDb.collection("events").get();
+  const querySnapshot = await adminDb.collection('events').get();
 
   const allDocs = querySnapshot.docs.map(parseEvent);
 
@@ -42,7 +42,7 @@ export const getAllEvents = async (): Promise<EventOccurrence[]> => {
 
   for (const event of mainEvents) {
     const eventExceptions = exceptions.filter(
-      (e) => e.parentEventId === event.id
+      (e) => e.parentEventId === event.id,
     );
     const generated = generateOccurrences(event, eventExceptions);
     occurrences.push(...generated);
@@ -54,16 +54,16 @@ export const getAllEvents = async (): Promise<EventOccurrence[]> => {
 };
 
 export const getEventById = async (id: string): Promise<Event | null> => {
-  const doc = await adminDb.collection("events").doc(id).get();
+  const doc = await adminDb.collection('events').doc(id).get();
   if (!doc.exists) return null;
   return parseEvent(doc);
 };
 
 export const getMainEvents = async (): Promise<Event[]> => {
   const querySnapshot = await adminDb
-    .collection("events")
-    .where("parentEventId", "==", null)
-    .orderBy("date", "asc")
+    .collection('events')
+    .where('parentEventId', '==', null)
+    .orderBy('date', 'asc')
     .get();
 
   return querySnapshot.docs.map(parseEvent);

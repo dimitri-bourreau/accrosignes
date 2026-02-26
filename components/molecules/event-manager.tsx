@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useRef } from "react";
-import Typography from "@/components/atoms/typography";
-import { useEvents, useDeleteEvent } from "@/features/events/hooks/use-events";
-import { EventForm } from "./event-form";
-import { EventListItem } from "./event-list-item";
-import { EventOccurrence } from "@/features/events/types/event.type";
+import { useState, useRef } from 'react';
+import Typography from '@/components/atoms/typography';
+import { useEvents, useDeleteEvent } from '@/features/events/hooks/use-events';
+import { EventForm } from './event-form';
+import { EventListItem } from './event-list-item';
+import { EventOccurrence } from '@/features/events/types/event.type';
 
 interface EventManagerProps {
   userId: string;
@@ -13,8 +13,10 @@ interface EventManagerProps {
 
 export default function EventManager({ userId }: EventManagerProps) {
   const [showForm, setShowForm] = useState(false);
-  const [editingEvent, setEditingEvent] = useState<EventOccurrence | null>(null);
-  const [editScope, setEditScope] = useState<"this" | "all" | undefined>();
+  const [editingEvent, setEditingEvent] = useState<EventOccurrence | null>(
+    null,
+  );
+  const [editScope, setEditScope] = useState<'this' | 'all' | undefined>();
   const { data: allEvents = [], isLoading } = useEvents();
   const deleteEvent = useDeleteEvent();
   const formRef = useRef<HTMLDivElement>(null);
@@ -23,17 +25,17 @@ export default function EventManager({ userId }: EventManagerProps) {
 
   const handleEditClick = (item: EventOccurrence) => {
     setEditingEvent(item);
-    setEditScope(item.recurrence ? "all" : undefined);
+    setEditScope(item.recurrence ? 'all' : undefined);
     setShowForm(true);
     setTimeout(() => {
-      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 50);
   };
 
   const handleDeleteClick = (item: EventOccurrence) => {
     const message = item.recurrence
-      ? "Supprimer cet événement et toutes ses occurrences ?"
-      : "Supprimer cet événement ?";
+      ? 'Supprimer cet événement et toutes ses occurrences ?'
+      : 'Supprimer cet événement ?';
 
     if (confirm(message)) {
       deleteEvent.mutate({
@@ -60,14 +62,14 @@ export default function EventManager({ userId }: EventManagerProps) {
           }}
           className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition duration-200"
         >
-          {showForm ? "Annuler" : "Ajouter un événement"}
+          {showForm ? 'Annuler' : 'Ajouter un événement'}
         </button>
       </div>
 
       {showForm && (
         <div ref={formRef}>
           <EventForm
-            key={editingEvent?.id ?? "new"}
+            key={editingEvent?.id ?? 'new'}
             userId={userId}
             editingEvent={editingEvent}
             scope={editScope}
@@ -87,7 +89,10 @@ export default function EventManager({ userId }: EventManagerProps) {
             <Typography className="font-semibold text-gray-900 dark:text-gray-100">
               Aucun événement
             </Typography>
-            <Typography variant="caption" className="text-gray-600 dark:text-gray-300">
+            <Typography
+              variant="caption"
+              className="text-gray-600 dark:text-gray-300"
+            >
               Ajoutez votre premier événement
             </Typography>
           </div>

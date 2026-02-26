@@ -1,36 +1,44 @@
-import { NextRequest, NextResponse } from "next/server";
-import { generateSlug } from "@/features/news/services/generate-slug.service";
-import { adminDb } from "@/features/auth/admin";
-import { getAllNews } from "@/features/news/services/get-all-news.service";
-import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
+import { NextRequest, NextResponse } from 'next/server';
+import { generateSlug } from '@/features/news/services/generate-slug.service';
+import { adminDb } from '@/features/auth/admin';
+import { getAllNews } from '@/features/news/services/get-all-news.service';
+import { userIsAdmin } from '@/features/auth/services/user-is-admin.service';
 
 export async function GET() {
   try {
     const news = await getAllNews();
     return NextResponse.json(news);
   } catch (error: unknown) {
-    console.error("Error fetching news:", error);
+    console.error('Error fetching news:', error);
     return NextResponse.json(
-      { error: "Failed to fetch news" },
-      { status: 500 }
+      { error: 'Failed to fetch news' },
+      { status: 500 },
     );
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { title, content, imageUrl, authorId, publishedAt } = await req.json();
+    const { title, content, imageUrl, authorId, publishedAt } =
+      await req.json();
 
-    if (!title || typeof title !== "string" || !content || typeof content !== "string" || !authorId || typeof authorId !== "string") {
+    if (
+      !title ||
+      typeof title !== 'string' ||
+      !content ||
+      typeof content !== 'string' ||
+      !authorId ||
+      typeof authorId !== 'string'
+    ) {
       return NextResponse.json(
-        { error: "Title, content et authorId sont requis" },
-        { status: 400 }
+        { error: 'Title, content et authorId sont requis' },
+        { status: 400 },
       );
     }
 
     const isAdmin = await userIsAdmin(authorId);
     if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     const slug = generateSlug(title);
@@ -45,13 +53,13 @@ export async function POST(req: NextRequest) {
       createdAt: now,
       updatedAt: now,
     };
-    const docRef = await adminDb.collection("news").add(newsDocument);
+    const docRef = await adminDb.collection('news').add(newsDocument);
     return NextResponse.json({ id: docRef.id, success: true });
   } catch (error: unknown) {
-    console.error("Error creating news:", error);
+    console.error('Error creating news:', error);
     return NextResponse.json(
-      { error: "Failed to create news" },
-      { status: 500 }
+      { error: 'Failed to create news' },
+      { status: 500 },
     );
   }
 }

@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { NewsForm } from "./news-form";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { NewsForm } from './news-form';
 
 const queryClient = new QueryClient();
 
 const meta: Meta<typeof NewsForm> = {
-  title: "molecules/NewsForm",
+  title: 'molecules/NewsForm',
   component: NewsForm,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <QueryClientProvider client={queryClient}>
@@ -16,7 +16,7 @@ const meta: Meta<typeof NewsForm> = {
     ),
   ],
   parameters: {
-    layout: "padded",
+    layout: 'padded',
   },
 };
 
@@ -25,24 +25,24 @@ type Story = StoryObj<typeof NewsForm>;
 
 export const Create: Story = {
   args: {
-    userId: "user-123",
+    userId: 'user-123',
     editingNews: null,
-    onSuccess: () => console.log("Success"),
-    onCancel: () => console.log("Cancel"),
+    onSuccess: () => console.log('Success'),
+    onCancel: () => console.log('Cancel'),
   },
 };
 
 export const Edit: Story = {
   args: {
-    userId: "user-123",
+    userId: 'user-123',
     editingNews: {
-      id: "news-1",
-      title: "Nouvelle actualité",
+      id: 'news-1',
+      title: 'Nouvelle actualité',
       content: "Contenu de l'actualité...",
-      imageUrl: "https://picsum.photos/400/300",
-      publishedAt: new Date("2025-01-15"),
+      imageUrl: 'https://picsum.photos/400/300',
+      publishedAt: new Date('2025-01-15'),
     },
-    onSuccess: () => console.log("Success"),
-    onCancel: () => console.log("Cancel"),
+    onSuccess: () => console.log('Success'),
+    onCancel: () => console.log('Cancel'),
   },
 };

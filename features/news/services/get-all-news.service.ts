@@ -1,10 +1,10 @@
-import { adminDb } from "@/features/auth/admin";
-import { News } from "../types/news.type";
+import { adminDb } from '@/features/auth/admin';
+import { News } from '../types/news.type';
 
 export const getAllNews = async (): Promise<News[]> => {
   const querySnapshot = await adminDb
-    .collection("news")
-    .orderBy("publishedAt", "desc")
+    .collection('news')
+    .orderBy('publishedAt', 'desc')
     .get();
 
   return querySnapshot.docs.map((doc) => {

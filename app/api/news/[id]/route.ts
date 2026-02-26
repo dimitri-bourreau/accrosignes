@@ -1,18 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { adminDb } from "@/features/auth/admin";
-import { generateSlug } from "@/features/news/services/generate-slug.service";
-import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
-import { News } from "@/features/news/types/news.type";
+import { NextRequest, NextResponse } from 'next/server';
+import { adminDb } from '@/features/auth/admin';
+import { generateSlug } from '@/features/news/services/generate-slug.service';
+import { userIsAdmin } from '@/features/auth/services/user-is-admin.service';
+import { News } from '@/features/news/types/news.type';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
-    const newsSnap = await adminDb.collection("news").doc(id).get();
+    const newsSnap = await adminDb.collection('news').doc(id).get();
     if (!newsSnap.exists) {
-      return NextResponse.json({ error: "News not found" }, { status: 404 });
+      return NextResponse.json({ error: 'News not found' }, { status: 404 });
     }
 
     const data = newsSnap.data();
@@ -25,79 +25,89 @@ export async function GET(
     } as News;
     return NextResponse.json(news);
   } catch (error: unknown) {
-    console.error("Error fetching news:", error);
+    console.error('Error fetching news:', error);
     return NextResponse.json(
-      { error: "Failed to fetch news" },
-      { status: 500 }
+      { error: 'Failed to fetch news' },
+      { status: 500 },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
     const { title, content, imageUrl, adminId, publishedAt } = await req.json();
 
-    if (!title || typeof title !== "string" || !content || typeof content !== "string" || !adminId || typeof adminId !== "string") {
+    if (
+      !title ||
+      typeof title !== 'string' ||
+      !content ||
+      typeof content !== 'string' ||
+      !adminId ||
+      typeof adminId !== 'string'
+    ) {
       return NextResponse.json(
-        { error: "Title, content et adminId sont requis" },
-        { status: 400 }
+        { error: 'Title, content et adminId sont requis' },
+        { status: 400 },
       );
     }
 
     const isAdmin = await userIsAdmin(adminId);
     if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    await adminDb.collection("news").doc(id).update({
-      content,
-      imageUrl,
-      title,
-      updatedAt: new Date(),
-      slug: generateSlug(title),
-      ...(publishedAt && { publishedAt: new Date(publishedAt) }),
-    });
+    await adminDb
+      .collection('news')
+      .doc(id)
+      .update({
+        content,
+        imageUrl,
+        title,
+        updatedAt: new Date(),
+        slug: generateSlug(title),
+        ...(publishedAt && { publishedAt: new Date(publishedAt) }),
+      });
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
-    console.error("Error updating news:", error);
+    console.error('Error updating news:', error);
     return NextResponse.json(
-      { error: "Failed to update news" },
-      { status: 500 }
+      { error: 'Failed to update news' },
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
     const { adminId } = await req.json();
 
-    if (!adminId || typeof adminId !== "string") {
+    if (!adminId || typeof adminId !== 'string') {
       return NextResponse.json(
-        { error: "adminId est requis" },
-        { status: 400 }
+        { error: 'adminId est requis' },
+        { status: 400 },
       );
     }
 
     const isAdmin = await userIsAdmin(adminId);
     if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    await adminDb.collection("news").doc(id).delete();
+    await adminDb.collection('news').doc(id).delete();
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
-    console.error("Error deleting news:", error);
+    console.error('Error deleting news:', error);
     return NextResponse.json(
-      { error: "Failed to delete news" },
-      { status: 500 }
+      { error: 'Failed to delete news' },
+      { status: 500 },
     );
   }
 }

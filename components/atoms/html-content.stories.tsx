@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import HtmlContent from "./html-content";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import HtmlContent from './html-content';
 
 const meta: Meta<typeof HtmlContent> = {
-  title: "atoms/HtmlContent",
+  title: 'atoms/HtmlContent',
   component: HtmlContent,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "padded",
+    layout: 'padded',
   },
 };
 

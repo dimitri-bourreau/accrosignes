@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
-import Title from "@/components/atoms/title";
-import Typography from "@/components/atoms/typography";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
+import Title from '@/components/atoms/title';
+import Typography from '@/components/atoms/typography';
 
 export default function PendingPage() {
   const router = useRouter();
@@ -12,16 +12,18 @@ export default function PendingPage() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/espace-membre/login");
+      router.push('/espace-membre/login');
     } else if (!loading && role) {
-      router.push("/espace-membre");
+      router.push('/espace-membre');
     }
   }, [user, role, loading, router]);
 
   if (loading) {
     return (
       <main className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
-        <Typography className="text-gray-600 dark:text-gray-300">Chargement...</Typography>
+        <Typography className="text-gray-600 dark:text-gray-300">
+          Chargement...
+        </Typography>
       </main>
     );
   }
@@ -33,8 +35,12 @@ export default function PendingPage() {
           <Title level="h1" className="text-gray-900 dark:text-gray-100">
             Compte en attente
           </Title>
-          <Typography variant="body-lg" className="text-gray-600 dark:text-gray-300">
-            Votre compte a été créé, mais un administrateur doit vous assigner un rôle.
+          <Typography
+            variant="body-lg"
+            className="text-gray-600 dark:text-gray-300"
+          >
+            Votre compte a été créé, mais un administrateur doit vous assigner
+            un rôle.
           </Typography>
         </div>
         <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4 space-y-2">

@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { ImageUpload } from "./image-upload";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { ImageUpload } from './image-upload';
 
 const meta: Meta<typeof ImageUpload> = {
-  title: "molecules/ImageUpload",
+  title: 'molecules/ImageUpload',
   component: ImageUpload,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
 };
 
@@ -15,27 +15,27 @@ type Story = StoryObj<typeof ImageUpload>;
 
 export const Empty: Story = {
   args: {
-    imageUrl: "",
+    imageUrl: '',
     uploading: false,
-    onUpload: (file: File) => console.log("Upload", file.name),
-    onRemove: () => console.log("Remove"),
+    onUpload: (file: File) => console.log('Upload', file.name),
+    onRemove: () => console.log('Remove'),
   },
 };
 
 export const Uploading: Story = {
   args: {
-    imageUrl: "",
+    imageUrl: '',
     uploading: true,
-    onUpload: (file: File) => console.log("Upload", file.name),
-    onRemove: () => console.log("Remove"),
+    onUpload: (file: File) => console.log('Upload', file.name),
+    onRemove: () => console.log('Remove'),
   },
 };
 
 export const WithImage: Story = {
   args: {
-    imageUrl: "https://picsum.photos/400/300",
+    imageUrl: 'https://picsum.photos/400/300',
     uploading: false,
-    onUpload: (file: File) => console.log("Upload", file.name),
-    onRemove: () => console.log("Remove"),
+    onUpload: (file: File) => console.log('Upload', file.name),
+    onRemove: () => console.log('Remove'),
   },
 };

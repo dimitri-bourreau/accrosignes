@@ -1,17 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
-import { adminDb } from "@/features/auth/admin";
-import { getAllEvents } from "@/features/events/services/get-all-events.service";
-import { userIsAdmin } from "@/features/auth/services/user-is-admin.service";
+import { NextRequest, NextResponse } from 'next/server';
+import { adminDb } from '@/features/auth/admin';
+import { getAllEvents } from '@/features/events/services/get-all-events.service';
+import { userIsAdmin } from '@/features/auth/services/user-is-admin.service';
 
 export async function GET() {
   try {
     const events = await getAllEvents();
     return NextResponse.json(events);
   } catch (error: unknown) {
-    console.error("Error fetching events:", error);
+    console.error('Error fetching events:', error);
     return NextResponse.json(
-      { error: "Failed to fetch events" },
-      { status: 500 }
+      { error: 'Failed to fetch events' },
+      { status: 500 },
     );
   }
 }
@@ -32,22 +32,22 @@ export async function POST(req: NextRequest) {
 
     if (
       !title ||
-      typeof title !== "string" ||
+      typeof title !== 'string' ||
       !date ||
       !startTime ||
-      typeof startTime !== "string" ||
+      typeof startTime !== 'string' ||
       !authorId ||
-      typeof authorId !== "string"
+      typeof authorId !== 'string'
     ) {
       return NextResponse.json(
-        { error: "Title, date, startTime et authorId sont requis" },
-        { status: 400 }
+        { error: 'Title, date, startTime et authorId sont requis' },
+        { status: 400 },
       );
     }
 
     const isAdmin = await userIsAdmin(authorId);
     if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     const now = new Date();
@@ -72,13 +72,13 @@ export async function POST(req: NextRequest) {
       };
     }
 
-    const docRef = await adminDb.collection("events").add(eventDocument);
+    const docRef = await adminDb.collection('events').add(eventDocument);
     return NextResponse.json({ id: docRef.id, success: true });
   } catch (error: unknown) {
-    console.error("Error creating event:", error);
+    console.error('Error creating event:', error);
     return NextResponse.json(
-      { error: "Failed to create event" },
-      { status: 500 }
+      { error: 'Failed to create event' },
+      { status: 500 },
     );
   }
 }

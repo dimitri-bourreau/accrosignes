@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 import {
   useCreateNews,
   useUpdateNews,
   useUploadImage,
-} from "@/features/news/hooks/use-news";
-import { useUploadEditorImage } from "@/features/editor/hooks/use-upload-editor-image";
-import { ImageUpload } from "./image-upload";
-import ContentEditor from "./content-editor";
+} from '@/features/news/hooks/use-news';
+import { useUploadEditorImage } from '@/features/editor/hooks/use-upload-editor-image';
+import { ImageUpload } from './image-upload';
+import ContentEditor from './content-editor';
 
 type NewsFormData = {
   title: string;
@@ -37,7 +37,7 @@ export function NewsForm({
   onCancel,
 }: NewsFormProps) {
   const formatDateForInput = (date: Date) =>
-    new Date(date).toISOString().split("T")[0];
+    new Date(date).toISOString().split('T')[0];
 
   const { register, handleSubmit, setValue, watch } = useForm<NewsFormData>({
     defaultValues: editingNews
@@ -48,9 +48,9 @@ export function NewsForm({
           publishedAt: formatDateForInput(editingNews.publishedAt),
         }
       : {
-          title: "",
-          content: "",
-          imageUrl: "",
+          title: '',
+          content: '',
+          imageUrl: '',
           publishedAt: formatDateForInput(new Date()),
         },
   });
@@ -60,8 +60,8 @@ export function NewsForm({
   const uploadImage = useUploadImage();
   const uploadEditorImage = useUploadEditorImage();
 
-  const imageUrl = watch("imageUrl");
-  const content = watch("content");
+  const imageUrl = watch('imageUrl');
+  const content = watch('content');
 
   const onSubmit = (data: NewsFormData) => {
     if (editingNews) {
@@ -70,19 +70,16 @@ export function NewsForm({
           id: editingNews.id,
           data: { ...data, adminId: userId },
         },
-        { onSuccess }
+        { onSuccess },
       );
     } else {
-      createNews.mutate(
-        { ...data, authorId: userId },
-        { onSuccess }
-      );
+      createNews.mutate({ ...data, authorId: userId }, { onSuccess });
     }
   };
 
   const handleImageUpload = async (file: File) => {
     const url = await uploadImage.mutateAsync({ file, userId });
-    setValue("imageUrl", url);
+    setValue('imageUrl', url);
   };
 
   const handleEditorImageUpload = async (file: File) => {
@@ -99,7 +96,7 @@ export function NewsForm({
           Titre de l&apos;actualité
         </label>
         <input
-          {...register("title", { required: true })}
+          {...register('title', { required: true })}
           className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
         />
       </div>
@@ -110,7 +107,7 @@ export function NewsForm({
         </label>
         <input
           type="date"
-          {...register("publishedAt", { required: true })}
+          {...register('publishedAt', { required: true })}
           className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
         />
       </div>
@@ -121,7 +118,7 @@ export function NewsForm({
         </label>
         <ContentEditor
           content={content}
-          onChange={(html) => setValue("content", html)}
+          onChange={(html) => setValue('content', html)}
           onUploadImage={handleEditorImageUpload}
         />
       </div>
@@ -130,7 +127,7 @@ export function NewsForm({
         imageUrl={imageUrl}
         uploading={uploadImage.isPending}
         onUpload={handleImageUpload}
-        onRemove={() => setValue("imageUrl", "")}
+        onRemove={() => setValue('imageUrl', '')}
       />
 
       <div className="flex gap-3 pt-4">
@@ -139,7 +136,7 @@ export function NewsForm({
           disabled={uploadImage.isPending}
           className="cursor-pointer px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-200"
         >
-          {editingNews ? "Mettre à jour" : "Créer l'actualité"}
+          {editingNews ? 'Mettre à jour' : "Créer l'actualité"}
         </button>
         <button
           type="button"

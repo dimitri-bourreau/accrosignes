@@ -1,10 +1,10 @@
-import Title from "@/components/atoms/title";
-import Typography from "@/components/atoms/typography";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import { getAllNews } from "@/features/news/services/get-all-news.service";
-import { getNewsBySlug } from "@/features/news/services/get-news-by-slug.service";
+import Title from '@/components/atoms/title';
+import Typography from '@/components/atoms/typography';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import { getAllNews } from '@/features/news/services/get-all-news.service';
+import { getNewsBySlug } from '@/features/news/services/get-news-by-slug.service';
 
 export const revalidate = 300;
 
@@ -41,10 +41,10 @@ export default async function NewsDetailPage({
               variant="caption"
               className="text-gray-500 dark:text-gray-400 mb-4"
             >
-              {new Date(newsItem.publishedAt).toLocaleDateString("fr-FR", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
+              {new Date(newsItem.publishedAt).toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
               })}
             </Typography>
             <Title level="h1" className="text-gray-900 dark:text-gray-100 mb-6">

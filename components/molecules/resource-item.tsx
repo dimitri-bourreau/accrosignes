@@ -1,7 +1,10 @@
-"use client";
+'use client';
 
-import { Resource } from "@/features/resources/types/resource.type";
-import { getResourceIcon, formatFileSize } from "@/features/resources/utils/format-resource";
+import { Resource } from '@/features/resources/types/resource.type';
+import {
+  getResourceIcon,
+  formatFileSize,
+} from '@/features/resources/utils/format-resource';
 
 interface ResourceItemProps {
   resource: Resource;
@@ -9,7 +12,11 @@ interface ResourceItemProps {
   onDelete: () => void;
 }
 
-export function ResourceItem({ resource, onOpen, onDelete }: ResourceItemProps) {
+export function ResourceItem({
+  resource,
+  onOpen,
+  onDelete,
+}: ResourceItemProps) {
   return (
     <div className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
       <button
@@ -21,7 +28,7 @@ export function ResourceItem({ resource, onOpen, onDelete }: ResourceItemProps) 
           <p className="font-medium text-gray-900 dark:text-gray-100">
             {resource.name}
           </p>
-          {resource.type === "file" && resource.fileSize && (
+          {resource.type === 'file' && resource.fileSize && (
             <p className="text-sm text-gray-500 dark:text-gray-400">
               {formatFileSize(resource.fileSize)}
             </p>

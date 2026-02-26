@@ -1,10 +1,10 @@
-import * as admin from "firebase-admin";
-import { adminDb } from "@/features/auth/admin";
-import { Resource } from "../types/resource.type";
+import * as admin from 'firebase-admin';
+import { adminDb } from '@/features/auth/admin';
+import { Resource } from '../types/resource.type';
 
 function parseResource(doc: FirebaseFirestore.DocumentSnapshot): Resource {
   const data = doc.data();
-  if (!data) throw new Error("Resource data is undefined");
+  if (!data) throw new Error('Resource data is undefined');
 
   return {
     id: doc.id,
@@ -22,30 +22,32 @@ function parseResource(doc: FirebaseFirestore.DocumentSnapshot): Resource {
 }
 
 export async function getAllResources(): Promise<Resource[]> {
-  const snapshot = await adminDb
-    .collection("resources")
-    .get();
+  const snapshot = await adminDb.collection('resources').get();
 
   return snapshot.docs
     .map(parseResource)
-    .sort((a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name));
+    .sort(
+      (a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name),
+    );
 }
 
 export async function getResourcesByParent(
-  parentId: string | null
+  parentId: string | null,
 ): Promise<Resource[]> {
   const snapshot = await adminDb
-    .collection("resources")
-    .where("parentId", "==", parentId)
+    .collection('resources')
+    .where('parentId', '==', parentId)
     .get();
 
   return snapshot.docs
     .map(parseResource)
-    .sort((a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name));
+    .sort(
+      (a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name),
+    );
 }
 
 export async function getResourceById(id: string): Promise<Resource | null> {
-  const doc = await adminDb.collection("resources").doc(id).get();
+  const doc = await adminDb.collection('resources').doc(id).get();
   if (!doc.exists) return null;
   return parseResource(doc);
 }
@@ -71,7 +73,10 @@ interface CollectedResource {
   fileUrl?: string;
 }
 
-async function collectResources(id: string, collected: CollectedResource[]): Promise<void> {
+async function collectResources(
+  id: string,
+  collected: CollectedResource[],
+): Promise<void> {
   const children = await getResourcesByParent(id);
   for (const child of children) {
     await collectResources(child.id, collected);
@@ -106,7 +111,7 @@ export async function deleteResourceRecursive(id: string): Promise<void> {
 
   const batch = adminDb.batch();
   for (const res of collected) {
-    batch.delete(adminDb.collection("resources").doc(res.id));
+    batch.delete(adminDb.collection('resources').doc(res.id));
   }
   await batch.commit();
 }

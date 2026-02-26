@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import Navigation from "@/components/organisms/navigation";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import Navigation from '@/components/organisms/navigation';
 
 const meta: Meta<typeof Navigation> = {
-  title: "organisms/Navigation",
+  title: 'organisms/Navigation',
   component: Navigation,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -18,7 +18,7 @@ export const Default: Story = {};
 export const Mobile: Story = {
   parameters: {
     viewport: {
-      defaultViewport: "mobile1",
+      defaultViewport: 'mobile1',
     },
   },
 };
@@ -26,7 +26,7 @@ export const Mobile: Story = {
 export const Tablet: Story = {
   parameters: {
     viewport: {
-      defaultViewport: "tablet",
+      defaultViewport: 'tablet',
     },
   },
 };

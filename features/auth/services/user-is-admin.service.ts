@@ -1,9 +1,9 @@
-import { adminDb } from "../admin";
-import { ROLES } from "../constants/roles";
+import { adminDb } from '../admin';
+import { ROLES } from '../constants/roles';
 
 export const userIsAdmin = async (uid: string): Promise<boolean> => {
   try {
-    const userDoc = await adminDb.collection("users").doc(uid).get();
+    const userDoc = await adminDb.collection('users').doc(uid).get();
     const userData = userDoc.data();
     const isAdmin = userDoc.exists && userData?.role === ROLES.ADMIN;
 

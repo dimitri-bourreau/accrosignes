@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import ContentEditor from "./content-editor";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import ContentEditor from './content-editor';
 
 const meta: Meta<typeof ContentEditor> = {
-  title: "molecules/ContentEditor",
+  title: 'molecules/ContentEditor',
   component: ContentEditor,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "padded",
+    layout: 'padded',
   },
 };
 
@@ -15,8 +15,8 @@ type Story = StoryObj<typeof ContentEditor>;
 
 export const Empty: Story = {
   args: {
-    content: "",
-    onChange: (html: string) => console.log("Content changed:", html),
+    content: '',
+    onChange: (html: string) => console.log('Content changed:', html),
   },
 };
 
@@ -33,7 +33,7 @@ export const WithContent: Story = {
       </ul>
       <p>Rejoignez-nous pour découvrir une langue riche et une communauté accueillante.</p>
     `,
-    onChange: (html: string) => console.log("Content changed:", html),
-    onUploadImage: async () => "https://picsum.photos/600/400",
+    onChange: (html: string) => console.log('Content changed:', html),
+    onUploadImage: async () => 'https://picsum.photos/600/400',
   },
 };

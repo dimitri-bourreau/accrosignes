@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useAuth } from "@/contexts/AuthContext";
-import { ROLES } from "@/features/auth/constants/roles";
-import Title from "@/components/atoms/title";
-import Typography from "@/components/atoms/typography";
-import Link from "next/link";
-import ResourceViewer from "@/components/molecules/resource-viewer";
+import { useAuth } from '@/contexts/AuthContext';
+import { ROLES } from '@/features/auth/constants/roles';
+import Title from '@/components/atoms/title';
+import Typography from '@/components/atoms/typography';
+import Link from 'next/link';
+import ResourceViewer from '@/components/molecules/resource-viewer';
 
 export default function StudentDashboard() {
   const { user, role, loading, signOut } = useAuth();
@@ -50,7 +50,7 @@ export default function StudentDashboard() {
         <div className="flex justify-between items-start mb-12">
           <div>
             <Title level="h1" className="text-gray-900 dark:text-gray-100 mb-2">
-              Bienvenue, {user?.email?.split("@")[0] || "Élève"}!
+              Bienvenue, {user?.email?.split('@')[0] || 'Élève'}!
             </Title>
             <Typography
               variant="body-lg"

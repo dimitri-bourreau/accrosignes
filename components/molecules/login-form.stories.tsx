@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import LoginForm from "./login-form";
-import { AuthProvider } from "@/contexts/AuthContext";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import LoginForm from './login-form';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 const queryClient = new QueryClient();
 
 const meta: Meta<typeof LoginForm> = {
-  title: "molecules/LoginForm",
+  title: 'molecules/LoginForm',
   component: LoginForm,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <QueryClientProvider client={queryClient}>
@@ -21,7 +21,7 @@ const meta: Meta<typeof LoginForm> = {
     ),
   ],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
 };
 
@@ -32,6 +32,6 @@ export const Default: Story = {};
 
 export const DarkMode: Story = {
   parameters: {
-    backgrounds: { default: "dark" },
+    backgrounds: { default: 'dark' },
   },
 };

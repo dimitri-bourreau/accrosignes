@@ -1,6 +1,6 @@
-import Title from "@/components/atoms/title";
-import HtmlContent from "@/components/atoms/html-content";
-import { getContentByKey } from "@/features/content/services/get-content.service";
+import Title from '@/components/atoms/title';
+import HtmlContent from '@/components/atoms/html-content';
+import { getContentByKey } from '@/features/content/services/get-content.service';
 
 export const revalidate = 300;
 
@@ -47,7 +47,7 @@ Hébergement: (À compléter)</p>
 `;
 
 export default async function MentionsLegalesPage() {
-  const content = await getContentByKey("legal");
+  const content = await getContentByKey('legal');
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">

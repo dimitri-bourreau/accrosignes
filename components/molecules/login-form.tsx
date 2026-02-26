@@ -1,29 +1,33 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import Typography from "@/components/atoms/typography";
-import { useCheckEmail } from "@/features/auth/hooks/use-check-email";
+import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import Typography from '@/components/atoms/typography';
+import { useCheckEmail } from '@/features/auth/hooks/use-check-email';
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [linkSent, setLinkSent] = useState(false);
-  const [localError, setLocalError] = useState("");
+  const [localError, setLocalError] = useState('');
   const { sendSignInLink, error, clearError } = useAuth();
   const checkEmail = useCheckEmail();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
-    setLocalError("");
+    setLocalError('');
 
     try {
       await checkEmail.mutateAsync(email);
       await sendSignInLink(email);
       setLinkSent(true);
-      setEmail("");
+      setEmail('');
     } catch (err) {
-      setLocalError(err instanceof Error ? err.message : "Une erreur s'est produite. Veuillez réessayer.");
+      setLocalError(
+        err instanceof Error
+          ? err.message
+          : "Une erreur s'est produite. Veuillez réessayer.",
+      );
     }
   };
 
@@ -35,7 +39,8 @@ export default function LoginForm() {
             Vérifiez votre email
           </Typography>
           <Typography className="text-green-600 dark:text-green-400 text-sm mt-2">
-            Un lien de connexion a été envoyé à votre adresse email. Cliquez sur le lien pour vous connecter.
+            Un lien de connexion a été envoyé à votre adresse email. Cliquez sur
+            le lien pour vous connecter.
           </Typography>
         </div>
         <button
@@ -52,7 +57,9 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       {(error || localError) && (
         <div className="p-3 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-700 rounded-lg">
-          <Typography className="text-red-700 dark:text-red-300 text-sm">{error || localError}</Typography>
+          <Typography className="text-red-700 dark:text-red-300 text-sm">
+            {error || localError}
+          </Typography>
         </div>
       )}
       <div>
@@ -73,7 +80,7 @@ export default function LoginForm() {
         disabled={checkEmail.isPending}
         className="w-full px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 disabled:bg-gray-400 transition duration-200 cursor-pointer"
       >
-        {checkEmail.isPending ? "Envoi en cours..." : "Envoyer le lien"}
+        {checkEmail.isPending ? 'Envoi en cours...' : 'Envoyer le lien'}
       </button>
     </form>
   );

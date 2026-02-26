@@ -1,8 +1,11 @@
-"use client";
+'use client';
 
-import { EventOccurrence, EVENT_COLORS } from "@/features/events/types/event.type";
-import Typography from "@/components/atoms/typography";
-import Title from "@/components/atoms/title";
+import {
+  EventOccurrence,
+  EVENT_COLORS,
+} from '@/features/events/types/event.type';
+import Typography from '@/components/atoms/typography';
+import Title from '@/components/atoms/title';
 
 interface EventDetailModalProps {
   event: EventOccurrence;
@@ -15,13 +18,16 @@ const formatTime = (startTime: string, endTime?: string): string => {
 };
 
 const getCategoryLabel = (category?: string): string => {
-  if (category === "course") return "Cours";
-  if (category === "public-event") return "Événement public";
-  return "";
+  if (category === 'course') return 'Cours';
+  if (category === 'public-event') return 'Événement public';
+  return '';
 };
 
-export default function EventDetailModal({ event, onClose }: EventDetailModalProps) {
-  const colorBg = EVENT_COLORS[event.color || "teal"].bg;
+export default function EventDetailModal({
+  event,
+  onClose,
+}: EventDetailModalProps) {
+  const colorBg = EVENT_COLORS[event.color || 'teal'].bg;
   const categoryLabel = getCategoryLabel(event.category);
 
   return (
@@ -40,11 +46,11 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
                 {event.title}
               </Title>
               <Typography variant="body-sm" className="text-white/90">
-                {new Date(event.date).toLocaleDateString("fr-FR", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
+                {new Date(event.date).toLocaleDateString('fr-FR', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
                 })}
               </Typography>
               <Typography variant="body-sm" className="text-white/90">
@@ -75,7 +81,10 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
         <div className="p-6 space-y-4">
           {categoryLabel && (
             <div>
-              <Typography variant="body-sm" className="text-gray-500 dark:text-gray-400 mb-1">
+              <Typography
+                variant="body-sm"
+                className="text-gray-500 dark:text-gray-400 mb-1"
+              >
                 Catégorie
               </Typography>
               <Typography className="text-gray-900 dark:text-gray-100 font-medium">
@@ -86,7 +95,10 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
 
           {event.description && (
             <div>
-              <Typography variant="body-sm" className="text-gray-500 dark:text-gray-400 mb-1">
+              <Typography
+                variant="body-sm"
+                className="text-gray-500 dark:text-gray-400 mb-1"
+              >
                 Description
               </Typography>
               <Typography className="text-gray-900 dark:text-gray-100">

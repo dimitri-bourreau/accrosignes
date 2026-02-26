@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { UsersTable } from "./users-table";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { UsersTable } from './users-table';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,9 +11,9 @@ const queryClient = new QueryClient({
 });
 
 const meta: Meta<typeof UsersTable> = {
-  title: "molecules/UsersTable",
+  title: 'molecules/UsersTable',
   component: UsersTable,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <QueryClientProvider client={queryClient}>
@@ -22,27 +22,27 @@ const meta: Meta<typeof UsersTable> = {
     ),
   ],
   parameters: {
-    layout: "padded",
+    layout: 'padded',
     mockData: [
       {
-        url: "/api/users",
-        method: "GET",
+        url: '/api/users',
+        method: 'GET',
         status: 200,
         response: [
           {
-            uid: "1",
-            email: "admin@accrosignes.fr",
-            role: "Administrateur",
+            uid: '1',
+            email: 'admin@accrosignes.fr',
+            role: 'Administrateur',
           },
           {
-            uid: "2",
-            email: "eleve1@example.com",
-            role: "Élève",
+            uid: '2',
+            email: 'eleve1@example.com',
+            role: 'Élève',
           },
           {
-            uid: "3",
-            email: "eleve2@example.com",
-            role: "Élève",
+            uid: '3',
+            email: 'eleve2@example.com',
+            role: 'Élève',
           },
         ],
       },
@@ -55,6 +55,6 @@ type Story = StoryObj<typeof UsersTable>;
 
 export const Default: Story = {
   args: {
-    adminId: "admin-123",
+    adminId: 'admin-123',
   },
 };

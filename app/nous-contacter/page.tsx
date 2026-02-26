@@ -1,6 +1,6 @@
-import SocialLinksSection from "@/components/organisms/social-links-section";
-import Title from "@/components/atoms/title";
-import Typography from "@/components/atoms/typography";
+import SocialLinksSection from '@/components/organisms/social-links-section';
+import Title from '@/components/atoms/title';
+import Typography from '@/components/atoms/typography';
 
 export default function NousContacterPage() {
   return (

@@ -1,4 +1,4 @@
-import { Event, EventOccurrence } from "../types/event.type";
+import { Event, EventOccurrence } from '../types/event.type';
 
 function addWeeks(date: Date, weeks: number): Date {
   const result = new Date(date);
@@ -14,7 +14,7 @@ function addMonths(date: Date, months: number): Date {
 
 export function generateOccurrences(
   event: Event,
-  exceptions: Event[]
+  exceptions: Event[],
 ): EventOccurrence[] {
   if (!event.recurrence) {
     return [{ ...event, isRecurrenceInstance: false }];
@@ -28,17 +28,17 @@ export function generateOccurrences(
   const end = new Date(endDate);
 
   // Move to the next occurrence (skip the first date as it's already added above)
-  if (type === "weekly") {
+  if (type === 'weekly') {
     currentDate = addWeeks(currentDate, 1);
   } else {
     currentDate = addMonths(currentDate, 1);
   }
 
   while (currentDate <= end) {
-    const dateKey = currentDate.toISOString().split("T")[0];
+    const dateKey = currentDate.toISOString().split('T')[0];
     const exception = exceptions.find((e) => {
       if (e.parentEventId !== event.id || !e.originalDate) return false;
-      const origKey = new Date(e.originalDate).toISOString().split("T")[0];
+      const origKey = new Date(e.originalDate).toISOString().split('T')[0];
       return origKey === dateKey;
     });
 
@@ -61,7 +61,7 @@ export function generateOccurrences(
       });
     }
 
-    if (type === "weekly") {
+    if (type === 'weekly') {
       currentDate = addWeeks(currentDate, 1);
     } else {
       currentDate = addMonths(currentDate, 1);

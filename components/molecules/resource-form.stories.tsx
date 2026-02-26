@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ResourceForm } from "./resource-form";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ResourceForm } from './resource-form';
 
 const queryClient = new QueryClient();
 
 const meta: Meta<typeof ResourceForm> = {
-  title: "molecules/ResourceForm",
+  title: 'molecules/ResourceForm',
   component: ResourceForm,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <QueryClientProvider client={queryClient}>
@@ -16,7 +16,7 @@ const meta: Meta<typeof ResourceForm> = {
     ),
   ],
   parameters: {
-    layout: "padded",
+    layout: 'padded',
   },
 };
 
@@ -25,16 +25,16 @@ type Story = StoryObj<typeof ResourceForm>;
 
 export const RootLevel: Story = {
   args: {
-    userId: "admin-123",
+    userId: 'admin-123',
     parentId: null,
-    onClose: () => console.log("Form closed"),
+    onClose: () => console.log('Form closed'),
   },
 };
 
 export const InFolder: Story = {
   args: {
-    userId: "admin-123",
-    parentId: "folder-123",
-    onClose: () => console.log("Form closed"),
+    userId: 'admin-123',
+    parentId: 'folder-123',
+    onClose: () => console.log('Form closed'),
   },
 };

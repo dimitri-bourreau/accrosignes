@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
-import { adminDb } from "@/features/auth/admin";
+import { NextResponse } from 'next/server';
+import { adminDb } from '@/features/auth/admin';
 
 export async function GET() {
   try {
     const snapshot = await adminDb
-      .collection("resources")
-      .where("type", "==", "file")
+      .collection('resources')
+      .where('type', '==', 'file')
       .get();
 
     const usedBytes = snapshot.docs.reduce((total, doc) => {
@@ -14,10 +14,10 @@ export async function GET() {
 
     return NextResponse.json({ usedBytes });
   } catch (error: unknown) {
-    console.error("Error calculating storage:", error);
+    console.error('Error calculating storage:', error);
     return NextResponse.json(
-      { error: "Failed to calculate storage" },
-      { status: 500 }
+      { error: 'Failed to calculate storage' },
+      { status: 500 },
     );
   }
 }

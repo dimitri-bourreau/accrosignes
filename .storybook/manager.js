@@ -48,8 +48,10 @@ document.head.appendChild(style);
 
 // Remove onboarding dynamically if it appears
 const observer = new MutationObserver(() => {
-  const getStartedItems = document.querySelectorAll('[data-item-id*="get-started"], [data-item-id*="onboarding"]');
-  getStartedItems.forEach(item => item.remove());
+  const getStartedItems = document.querySelectorAll(
+    '[data-item-id*="get-started"], [data-item-id*="onboarding"]',
+  );
+  getStartedItems.forEach((item) => item.remove());
 });
 
 if (document.body) {

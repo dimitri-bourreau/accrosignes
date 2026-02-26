@@ -1,20 +1,20 @@
-import Image from "next/image";
-import Link from "next/link";
-import Title from "../atoms/title";
-import Typography from "../atoms/typography";
-import { News } from "@/features/news/types/news.type";
+import Image from 'next/image';
+import Link from 'next/link';
+import Title from '../atoms/title';
+import Typography from '../atoms/typography';
+import { News } from '@/features/news/types/news.type';
 
 interface LatestNewsSectionProps {
   news: News[];
 }
 
-const stripHtml = (html: string) => html.replace(/<[^>]*>/g, "");
+const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '');
 
 const formatDate = (date: Date) =>
-  new Date(date).toLocaleDateString("fr-FR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  new Date(date).toLocaleDateString('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 
 const NewsCard = ({ article }: { article: News }) => (

@@ -1,12 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Typography from "@/components/atoms/typography";
-import { useResources, useDeleteResource } from "@/features/resources/hooks/use-resources";
-import { ResourceItem } from "./resource-item";
-import { ResourceForm } from "./resource-form";
-import { Resource } from "@/features/resources/types/resource.type";
-import { StorageBar } from "./storage-bar";
+import { useState } from 'react';
+import Typography from '@/components/atoms/typography';
+import {
+  useResources,
+  useDeleteResource,
+} from '@/features/resources/hooks/use-resources';
+import { ResourceItem } from './resource-item';
+import { ResourceForm } from './resource-form';
+import { Resource } from '@/features/resources/types/resource.type';
+import { StorageBar } from './storage-bar';
 
 interface ResourceManagerProps {
   userId: string;
@@ -23,21 +26,26 @@ export default function ResourceManager({ userId }: ResourceManagerProps) {
   const path = data?.path ?? [];
 
   const handleOpenResource = (resource: Resource) => {
-    if (resource.type === "folder") {
+    if (resource.type === 'folder') {
       setCurrentFolderId(resource.id);
-    } else if (resource.type === "link" && resource.linkUrl) {
-      window.open(resource.linkUrl, "_blank");
-    } else if (resource.type === "file" && resource.fileUrl) {
-      window.open(resource.fileUrl, "_blank");
+    } else if (resource.type === 'link' && resource.linkUrl) {
+      window.open(resource.linkUrl, '_blank');
+    } else if (resource.type === 'file' && resource.fileUrl) {
+      window.open(resource.fileUrl, '_blank');
     }
   };
 
   const handleDelete = (resource: Resource) => {
-    const message = resource.type === "folder"
-      ? "Supprimer ce dossier et tout son contenu ?"
-      : "Supprimer cette ressource ?";
+    const message =
+      resource.type === 'folder'
+        ? 'Supprimer ce dossier et tout son contenu ?'
+        : 'Supprimer cette ressource ?';
     if (confirm(message)) {
-      deleteResource.mutate({ id: resource.id, adminId: userId, parentId: resource.parentId });
+      deleteResource.mutate({
+        id: resource.id,
+        adminId: userId,
+        parentId: resource.parentId,
+      });
     }
   };
 
@@ -73,7 +81,7 @@ export default function ResourceManager({ userId }: ResourceManagerProps) {
           onClick={() => setShowForm(!showForm)}
           className="cursor-pointer px-6 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition"
         >
-          {showForm ? "Annuler" : "Ajouter"}
+          {showForm ? 'Annuler' : 'Ajouter'}
         </button>
       </div>
 
@@ -95,7 +103,10 @@ export default function ResourceManager({ userId }: ResourceManagerProps) {
             <Typography className="font-semibold text-gray-900 dark:text-gray-100">
               Dossier vide
             </Typography>
-            <Typography variant="caption" className="text-gray-600 dark:text-gray-300">
+            <Typography
+              variant="caption"
+              className="text-gray-600 dark:text-gray-300"
+            >
               Ajoutez des dossiers, fichiers ou liens
             </Typography>
           </div>
