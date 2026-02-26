@@ -6,6 +6,7 @@ import {
   useUpdateContent,
   useUploadContentImage,
 } from "@/features/content/hooks/use-content";
+import { useUploadEditorImage } from "@/features/editor/hooks/use-upload-editor-image";
 import {
   CONTENT_KEYS,
   CONTENT_SECTIONS,
@@ -27,6 +28,7 @@ export default function ContentManager({ userId }: ContentManagerProps) {
   const { data: content, isLoading } = useContent();
   const updateContent = useUpdateContent();
   const uploadImage = useUploadContentImage();
+  const uploadEditorImage = useUploadEditorImage();
   const [editingKey, setEditingKey] = useState<ContentKey | null>(null);
   const [editValue, setEditValue] = useState("");
 
@@ -78,6 +80,10 @@ export default function ContentManager({ userId }: ContentManagerProps) {
     setEditValue(url);
   };
 
+  const handleEditorImageUpload = async (file: File) => {
+    return uploadEditorImage.mutateAsync({ file, userId });
+  };
+
   if (editingKey) {
     const isRichText = isRichTextKey(editingKey);
     const isImage = isImageKey(editingKey);
@@ -113,7 +119,7 @@ export default function ContentManager({ userId }: ContentManagerProps) {
             onRemove={() => setEditValue("")}
           />
         ) : isRichText ? (
-          <ContentEditor content={editValue} onChange={setEditValue} />
+          <ContentEditor content={editValue} onChange={setEditValue} onUploadImage={handleEditorImageUpload} />
         ) : (
           <input
             type="text"

@@ -40,6 +40,7 @@ export const Edit: Story = {
       title: "Nouvelle actualité",
       content: "Contenu de l'actualité...",
       imageUrl: "https://picsum.photos/400/300",
+      publishedAt: new Date("2025-01-15"),
     },
     onSuccess: () => console.log("Success"),
     onCancel: () => console.log("Cancel"),

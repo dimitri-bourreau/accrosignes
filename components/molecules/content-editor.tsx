@@ -4,14 +4,19 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import { Table, TableRow, TableHeader, TableCell } from "@tiptap/extension-table";
-import { useCallback, useEffect } from "react";
+import Image from "@tiptap/extension-image";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ContentEditorProps {
   content: string;
   onChange: (html: string) => void;
+  onUploadImage?: (file: File) => Promise<string>;
 }
 
-export default function ContentEditor({ content, onChange }: ContentEditorProps) {
+export default function ContentEditor({ content, onChange, onUploadImage }: ContentEditorProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -22,6 +27,7 @@ export default function ContentEditor({ content, onChange }: ContentEditorProps)
       TableRow,
       TableHeader,
       TableCell,
+      Image.configure({ inline: false, allowBase64: false }),
     ],
     content,
     immediatelyRender: false,
@@ -41,6 +47,26 @@ export default function ContentEditor({ content, onChange }: ContentEditorProps)
       editor.chain().focus().setLink({ href: url }).run();
     }
   }, [editor]);
+
+  const handleImageButtonClick = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleFileSelected = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file || !editor || !onUploadImage) return;
+      setIsUploadingImage(true);
+      try {
+        const imageUrl = await onUploadImage(file);
+        editor.chain().focus().setImage({ src: imageUrl }).run();
+      } finally {
+        setIsUploadingImage(false);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+      }
+    },
+    [editor, onUploadImage]
+  );
 
   if (!editor) return null;
 
@@ -138,9 +164,25 @@ export default function ContentEditor({ content, onChange }: ContentEditorProps)
             </ToolbarButton>
           </>
         )}
+        {onUploadImage && (
+          <ToolbarButton
+            onClick={handleImageButtonClick}
+            active={false}
+            disabled={isUploadingImage}
+          >
+            {isUploadingImage ? "Chargement..." : "Image"}
+          </ToolbarButton>
+        )}
       </div>
-      <div className="p-4 min-h-[200px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 [&_.tiptap]:outline-none [&_.tiptap]:min-h-[180px] [&_.tiptap_h2]:text-2xl [&_.tiptap_h2]:font-bold [&_.tiptap_h2]:mt-6 [&_.tiptap_h2]:mb-3 [&_.tiptap_h3]:text-xl [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:mt-4 [&_.tiptap_h3]:mb-2 [&_.tiptap_p]:mb-3 [&_.tiptap_ul]:list-disc [&_.tiptap_ul]:ml-6 [&_.tiptap_ul]:mb-3 [&_.tiptap_ol]:list-decimal [&_.tiptap_ol]:ml-6 [&_.tiptap_ol]:mb-3 [&_.tiptap_a]:text-teal-600 [&_.tiptap_a]:underline [&_.tiptap_table]:w-full [&_.tiptap_table]:border-collapse [&_.tiptap_table]:mb-4 [&_.tiptap_th]:border [&_.tiptap_th]:border-gray-300 [&_.tiptap_th]:bg-gray-100 [&_.tiptap_th]:px-3 [&_.tiptap_th]:py-2 [&_.tiptap_th]:text-left [&_.tiptap_th]:font-semibold dark:[&_.tiptap_th]:border-gray-600 dark:[&_.tiptap_th]:bg-gray-800 [&_.tiptap_td]:border [&_.tiptap_td]:border-gray-300 [&_.tiptap_td]:px-3 [&_.tiptap_td]:py-2 dark:[&_.tiptap_td]:border-gray-600">
+      <div className="p-4 min-h-[200px] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 [&_.tiptap]:outline-none [&_.tiptap]:min-h-[180px] [&_.tiptap_h2]:text-2xl [&_.tiptap_h2]:font-bold [&_.tiptap_h2]:mt-6 [&_.tiptap_h2]:mb-3 [&_.tiptap_h3]:text-xl [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:mt-4 [&_.tiptap_h3]:mb-2 [&_.tiptap_p]:mb-3 [&_.tiptap_ul]:list-disc [&_.tiptap_ul]:ml-6 [&_.tiptap_ul]:mb-3 [&_.tiptap_ol]:list-decimal [&_.tiptap_ol]:ml-6 [&_.tiptap_ol]:mb-3 [&_.tiptap_a]:text-teal-600 [&_.tiptap_a]:underline [&_.tiptap_table]:w-full [&_.tiptap_table]:border-collapse [&_.tiptap_table]:mb-4 [&_.tiptap_th]:border [&_.tiptap_th]:border-gray-300 [&_.tiptap_th]:bg-gray-100 [&_.tiptap_th]:px-3 [&_.tiptap_th]:py-2 [&_.tiptap_th]:text-left [&_.tiptap_th]:font-semibold dark:[&_.tiptap_th]:border-gray-600 dark:[&_.tiptap_th]:bg-gray-800 [&_.tiptap_td]:border [&_.tiptap_td]:border-gray-300 [&_.tiptap_td]:px-3 [&_.tiptap_td]:py-2 dark:[&_.tiptap_td]:border-gray-600 [&_.tiptap_img]:max-w-full [&_.tiptap_img]:h-auto [&_.tiptap_img]:rounded-lg [&_.tiptap_img]:my-4">
         <EditorContent editor={editor} />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileSelected}
+          className="hidden"
+        />
       </div>
     </div>
   );
@@ -150,19 +192,24 @@ function ToolbarButton({
   onClick,
   active,
   children,
+  disabled = false,
 }: {
   onClick: () => void;
   active: boolean;
   children: React.ReactNode;
+  disabled?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      disabled={disabled}
       className={`cursor-pointer px-3 py-1 rounded text-sm font-medium transition ${
-        active
-          ? "bg-teal-600 text-white"
-          : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+        disabled
+          ? "bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+          : active
+            ? "bg-teal-600 text-white"
+            : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
       }`}
     >
       {children}

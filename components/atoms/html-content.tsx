@@ -10,8 +10,9 @@ interface HtmlContentProps {
 const ALLOWED_TAGS = [
   "h1", "h2", "h3", "p", "a", "strong", "em", "ul", "ol", "li", "br",
   "table", "thead", "tbody", "tr", "th", "td",
+  "img",
 ];
-const ALLOWED_ATTR = ["href", "target", "rel", "colspan", "rowspan"];
+const ALLOWED_ATTR = ["href", "target", "rel", "colspan", "rowspan", "src", "alt"];
 
 export default function HtmlContent({ html, className = "" }: HtmlContentProps) {
   const [sanitizedHtml, setSanitizedHtml] = useState("");
@@ -40,6 +41,7 @@ export default function HtmlContent({ html, className = "" }: HtmlContentProps) 
     [&_table]:w-full [&_table]:border-collapse [&_table]:mb-4
     [&_th]:border [&_th]:border-gray-200 [&_th]:bg-gray-50 [&_th]:px-4 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_th]:text-gray-900 dark:[&_th]:border-gray-700 dark:[&_th]:bg-gray-800 dark:[&_th]:text-gray-100
     [&_td]:border [&_td]:border-gray-200 [&_td]:px-4 [&_td]:py-2 dark:[&_td]:border-gray-700
+    [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg [&_img]:my-4
   `;
 
   if (!sanitizedHtml) {

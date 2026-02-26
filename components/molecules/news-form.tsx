@@ -6,6 +6,7 @@ import {
   useUpdateNews,
   useUploadImage,
 } from "@/features/news/hooks/use-news";
+import { useUploadEditorImage } from "@/features/editor/hooks/use-upload-editor-image";
 import { ImageUpload } from "./image-upload";
 import ContentEditor from "./content-editor";
 
@@ -57,6 +58,7 @@ export function NewsForm({
   const createNews = useCreateNews();
   const updateNews = useUpdateNews();
   const uploadImage = useUploadImage();
+  const uploadEditorImage = useUploadEditorImage();
 
   const imageUrl = watch("imageUrl");
   const content = watch("content");
@@ -81,6 +83,10 @@ export function NewsForm({
   const handleImageUpload = async (file: File) => {
     const url = await uploadImage.mutateAsync({ file, userId });
     setValue("imageUrl", url);
+  };
+
+  const handleEditorImageUpload = async (file: File) => {
+    return uploadEditorImage.mutateAsync({ file, userId });
   };
 
   return (
@@ -116,6 +122,7 @@ export function NewsForm({
         <ContentEditor
           content={content}
           onChange={(html) => setValue("content", html)}
+          onUploadImage={handleEditorImageUpload}
         />
       </div>
 
