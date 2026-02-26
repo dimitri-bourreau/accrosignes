@@ -8,7 +8,7 @@ A Next.js web application for a Grenoble association teaching French Sign Langua
 
 ## Tech Stack
 
-React 19, Next.js 16 (App Router), TypeScript, Tailwind CSS 4 (CSS-first config, no tailwind.config file), Playwright, TanStack Query, shadcn/ui, Firebase (Firestore, Auth, Storage), Firebase Admin SDK, Tiptap v3 (rich text editor), nuqs (URL state), react-hook-form, DOMPurify, Storybook 10 (Vite-based via `@storybook/nextjs-vite`)
+React 19, Next.js 16 (App Router), TypeScript, Tailwind CSS 4 (CSS-first config, no tailwind.config file), TanStack Query, Firebase (Firestore, Auth, Storage), Firebase Admin SDK, Tiptap v3 (rich text editor), nuqs (URL state), react-hook-form, DOMPurify, Storybook 10 (Vite-based via `@storybook/nextjs-vite`), Chromatic (visual regression)
 
 ## Development Commands
 
@@ -21,19 +21,9 @@ npm run build                  # Build production bundle
 npm start                      # Start production server
 
 # Code Quality
-npm run lint                   # Run ESLint (flat config, extends next/core-web-vitals + typescript)
-
-# Testing - Jest
-npm run test                   # Run all Jest unit tests
-npm run test:watch             # Run Jest in watch mode
-npx jest path/to/file.test.ts  # Run a single test file
-npx jest --testPathPattern=slug # Run tests matching pattern
-
-# Testing - Playwright
-npm run test:e2e               # Run Playwright e2e tests (auto-starts Firebase emulators & dev server)
-npx playwright test e2e/file.spec.ts  # Run a single e2e test
-npx playwright test --headed          # Run with browser visible
-npx playwright test --ui              # Open Playwright UI mode
+npm run lint                   # Run ESLint (flat config, extends next/core-web-vitals + typescript + storybook)
+npm run format                 # Format all files with Prettier
+npm run format:check           # Check formatting without writing
 
 # Storybook
 npm run storybook              # Start Storybook on localhost:6006 (no auto-open)
@@ -43,18 +33,27 @@ npm run build-storybook        # Build Storybook static site
 firebase emulators:start       # Start emulators (Auth:9099, Firestore:8080, Storage:9199)
 ```
 
+## Formatting & Linting
+
+- **Prettier** (`.prettierrc`): `singleQuote: true`, `trailingComma: "all"`, `semi: true`
+- **Husky pre-commit hook** runs `lint-staged`:
+  - `*.{ts,tsx}` → `eslint --fix`
+  - `*.{ts,tsx,js,mjs,json,css,md}` → `prettier --write`
+
 ## Path Alias
 
-`@/*` maps to project root (configured in `tsconfig.json` and `jest.config.ts`). Use `@/features/...`, `@/components/...`, etc.
+`@/*` maps to project root (configured in `tsconfig.json`). Use `@/features/...`, `@/components/...`, etc.
 
 ## Environment Setup
 
 Copy [.env.example](.env.example) to `.env.local` and fill in:
+
 - Firebase client config (`NEXT_PUBLIC_*` variables)
 - Firebase Admin SDK credentials (service account)
 - `NEXT_PUBLIC_SITE_URL` (used for metadata base URL in `layout.tsx`, not in `.env.example`)
 
 For local development with emulators, set:
+
 ```bash
 FIRESTORE_EMULATOR_HOST=localhost:8080
 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099
@@ -81,18 +80,23 @@ FIREBASE_STORAGE_EMULATOR_HOST=localhost:9199
 ### Data Flow Patterns
 
 **Public Pages (SSR with ISR):**
+
 ```
 Next.js Server Component → Firebase Admin SDK → Firestore → Static response (revalidate: 300s)
 ```
+
 Example: [app/actualites/page.tsx](app/actualites/page.tsx) directly calls `getAllNews()` using Admin SDK.
 
 **Client Pages (Client-side fetching):**
+
 ```
 Client Component → useQuery hook → fetch(/api/*) → API route validates auth → Admin SDK → Firestore
 ```
+
 Example: [app/agenda/page.tsx](app/agenda/page.tsx) uses `useEvents()` hook → calls `/api/events`.
 
 **Mutations:**
+
 ```
 useMutation → POST/PUT/DELETE to /api/* → userIsAdmin() check → Admin SDK writes → Query invalidation
 ```
@@ -100,22 +104,25 @@ useMutation → POST/PUT/DELETE to /api/* → userIsAdmin() check → Admin SDK 
 ### Feature-Based Organization
 
 Each domain in `features/` typically has `types/`, `services/`, `hooks/` (not all domains have every subfolder):
+
 ```
 features/{domain}/
   types/              # TypeScript interfaces (e.g., News, Event)
   services/           # Business logic functions (use Admin SDK)
   hooks/              # TanStack Query hooks (useFoo, useCreateFoo, etc.)
   constants/          # Domain constants
-  mocks/              # Mock data for tests
+  mocks/              # Mock data for Storybook
 ```
 
 **Key domains:**
+
 - `auth/` - Authentication (email-link), role management, Firebase SDK config
 - `news/` - News articles with slug-based routing
 - `events/` - Calendar events with recurrence (weekly/monthly), color coding, categories (`"course"` | `"public-event"`)
 - `content/` - CMS content blocks (home page, legal pages) with Tiptap rich text editing
 - `resources/` - File/folder/link management for member resources (Firebase Storage)
 - `users/` - User CRUD operations
+- `editor/` - Editor image upload hook
 - `firebase/` - Firebase error handling utilities
 
 ### Component Organization (Atomic Design)
@@ -127,11 +134,10 @@ components/
   organisms/          # Complex components with business logic
 ```
 
-shadcn/ui components are consumed from `node_modules`.
-
 ### API Routes Pattern
 
 All API routes in [app/api/](app/api/) follow this pattern:
+
 ```typescript
 export async function GET/POST/PUT/DELETE(request: NextRequest) {
   // 1. Parse request data
@@ -191,54 +197,23 @@ Events support `weekly` and `monthly` recurrence with `parentEventId`, `original
 - Buttons must have pointer cursor
 - Prefer subtle animations, never move content itself
 
-## Testing
-
-### E2E Tests (Playwright)
-
-- Location: [e2e/](e2e/)
-- Config: [playwright.config.ts](playwright.config.ts)
-- **Auto-starts Firebase emulators + dev server** (reuses existing server locally, fresh in CI)
-- Tests run on Chromium, no retries
-- Base URL: `http://localhost:3000`
-- Timeout: 30 seconds
-
-**When implementing features:**
-- Propose e2e test systematically
-- When updating logic, check if e2e test exists and update it
-- Test both presence AND absence of features (e.g., table not shown when condition unmet)
-- Keep tests short, assert one thing only
-- Use mock data from `features/{domain}/mocks/`
-
-### Unit Tests (Jest)
-
-- Preset: `ts-jest`, test environment: `node`
-- Test match: `**/*.test.ts`
-- Run with `npm test` or `npm run test:watch`
-- Run single file: `npx jest path/to/file.test.ts`
-
-### Storybook
+## Storybook
 
 - Framework: `@storybook/nextjs-vite` (Vite-based)
-- Stories in `components/**/*.stories.*`
+- Stories in `components/**/*.stories.tsx`
+- Import types from `@storybook/nextjs-vite` (not `@storybook/react`)
 - Accessibility: `a11y: { test: "error" }` — violations fail (enforces `color-contrast`, `button-name`, `aria-allowed-attr`)
 - Chromatic integration for visual regression testing
 
 ## Firebase Emulators for Local Development
 
 The [firebase.json](firebase.json) configures emulators:
+
 - **Firestore:** localhost:8080
 - **Auth:** localhost:9099
 - **Storage:** localhost:9199
 - **Realtime Database:** localhost:9000
 - **Emulator UI:** localhost:4000
-
-Playwright automatically starts emulators before tests. For manual development:
-```bash
-FIRESTORE_EMULATOR_HOST=localhost:8080 \
-FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 \
-FIREBASE_STORAGE_EMULATOR_HOST=localhost:9199 \
-npm run dev
-```
 
 ## Key Files to Know
 
