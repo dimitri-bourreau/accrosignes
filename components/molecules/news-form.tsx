@@ -13,6 +13,7 @@ type NewsFormData = {
   title: string;
   content: string;
   imageUrl: string;
+  publishedAt: string;
 };
 
 interface NewsFormProps {
@@ -22,6 +23,7 @@ interface NewsFormProps {
     title: string;
     content: string;
     imageUrl: string;
+    publishedAt: Date;
   } | null;
   onSuccess: () => void;
   onCancel: () => void;
@@ -33,8 +35,23 @@ export function NewsForm({
   onSuccess,
   onCancel,
 }: NewsFormProps) {
+  const formatDateForInput = (date: Date) =>
+    new Date(date).toISOString().split("T")[0];
+
   const { register, handleSubmit, setValue, watch } = useForm<NewsFormData>({
-    defaultValues: editingNews || { title: "", content: "", imageUrl: "" },
+    defaultValues: editingNews
+      ? {
+          title: editingNews.title,
+          content: editingNews.content,
+          imageUrl: editingNews.imageUrl,
+          publishedAt: formatDateForInput(editingNews.publishedAt),
+        }
+      : {
+          title: "",
+          content: "",
+          imageUrl: "",
+          publishedAt: formatDateForInput(new Date()),
+        },
   });
 
   const createNews = useCreateNews();
@@ -47,11 +64,17 @@ export function NewsForm({
   const onSubmit = (data: NewsFormData) => {
     if (editingNews) {
       updateNews.mutate(
-        { id: editingNews.id, data: { ...data, adminId: userId } },
+        {
+          id: editingNews.id,
+          data: { ...data, adminId: userId },
+        },
         { onSuccess }
       );
     } else {
-      createNews.mutate({ ...data, authorId: userId }, { onSuccess });
+      createNews.mutate(
+        { ...data, authorId: userId },
+        { onSuccess }
+      );
     }
   };
 
@@ -71,6 +94,17 @@ export function NewsForm({
         </label>
         <input
           {...register("title", { required: true })}
+          className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          Date de publication
+        </label>
+        <input
+          type="date"
+          {...register("publishedAt", { required: true })}
           className="w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
         />
       </div>

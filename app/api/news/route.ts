@@ -19,7 +19,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { title, content, imageUrl, authorId } = await req.json();
+    const { title, content, imageUrl, authorId, publishedAt } = await req.json();
 
     if (!title || typeof title !== "string" || !content || typeof content !== "string" || !authorId || typeof authorId !== "string") {
       return NextResponse.json(
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
       imageUrl,
       authorId,
       slug,
-      publishedAt: now,
+      publishedAt: publishedAt ? new Date(publishedAt) : now,
       createdAt: now,
       updatedAt: now,
     };

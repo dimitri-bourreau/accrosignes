@@ -5,5 +5,6 @@ export interface UpdateNews {
   slug?: string;
   content?: string;
   imageUrl?: string;
+  publishedAt?: Date;
   updatedAt?: Timestamp;
 }

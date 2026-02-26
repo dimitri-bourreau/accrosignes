@@ -15,7 +15,7 @@ export const useNews = () => {
 export const useCreateNews = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: { title: string; content: string; imageUrl: string; authorId: string }) => {
+    mutationFn: async (data: { title: string; content: string; imageUrl: string; publishedAt: string; authorId: string }) => {
       const response = await fetch("/api/news", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -31,7 +31,7 @@ export const useCreateNews = () => {
 export const useUpdateNews = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: { title: string; content: string; imageUrl: string; adminId: string } }) => {
+    mutationFn: async ({ id, data }: { id: string; data: { title: string; content: string; imageUrl: string; publishedAt: string; adminId: string } }) => {
       const response = await fetch(`/api/news/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

@@ -39,7 +39,7 @@ export async function PUT(
 ) {
   try {
     const { id } = await params;
-    const { title, content, imageUrl, adminId } = await req.json();
+    const { title, content, imageUrl, adminId, publishedAt } = await req.json();
 
     if (!title || typeof title !== "string" || !content || typeof content !== "string" || !adminId || typeof adminId !== "string") {
       return NextResponse.json(
@@ -59,6 +59,7 @@ export async function PUT(
       title,
       updatedAt: new Date(),
       slug: generateSlug(title),
+      ...(publishedAt && { publishedAt: new Date(publishedAt) }),
     });
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
