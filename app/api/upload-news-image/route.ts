@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     });
 
     await fileUpload.makePublic();
-    const imageUrl = `https://storage.googleapis.com/${bucket.name}/${filename}`;
+    const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(filename)}?alt=media`;
 
     return NextResponse.json({ imageUrl });
   } catch (error: unknown) {
